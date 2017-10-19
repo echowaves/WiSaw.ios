@@ -12,6 +12,7 @@
 		0A48FDA91F983CCA0004F72B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A48FDA71F983CCA0004F72B /* Main.storyboard */; };
 		0A48FDAB1F983CCA0004F72B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A48FDAA1F983CCA0004F72B /* Assets.xcassets */; };
 		0A48FDAE1F983CCA0004F72B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A48FDAC1F983CCA0004F72B /* LaunchScreen.storyboard */; };
+		BD19BE48EAE28A147770607A /* Pods_Echowaves.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99FF5F01D6B131F5B150D1B1 /* Pods_Echowaves.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,9 @@
 		0A48FDAA1F983CCA0004F72B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0A48FDAD1F983CCA0004F72B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0A48FDAF1F983CCA0004F72B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		99FF5F01D6B131F5B150D1B1 /* Pods_Echowaves.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Echowaves.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA1D18813A9DF6BDBD89F7CF /* Pods-Echowaves.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Echowaves.release.xcconfig"; path = "Pods/Target Support Files/Pods-Echowaves/Pods-Echowaves.release.xcconfig"; sourceTree = "<group>"; };
+		FFA7974F1C17BD9FDA668E96 /* Pods-Echowaves.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Echowaves.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Echowaves/Pods-Echowaves.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD19BE48EAE28A147770607A /* Pods_Echowaves.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +45,8 @@
 			children = (
 				0A48FDA21F983CCA0004F72B /* Echowaves */,
 				0A48FDA11F983CCA0004F72B /* Products */,
+				64F2C62DC1A0B34AE2946514 /* Pods */,
+				C5965028E3A875AC078CDEC2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -64,6 +71,23 @@
 			path = Echowaves;
 			sourceTree = "<group>";
 		};
+		64F2C62DC1A0B34AE2946514 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FFA7974F1C17BD9FDA668E96 /* Pods-Echowaves.debug.xcconfig */,
+				EA1D18813A9DF6BDBD89F7CF /* Pods-Echowaves.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		C5965028E3A875AC078CDEC2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				99FF5F01D6B131F5B150D1B1 /* Pods_Echowaves.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -71,9 +95,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0A48FDB21F983CCA0004F72B /* Build configuration list for PBXNativeTarget "Echowaves" */;
 			buildPhases = (
+				BF1682627F522C4CFDDFA403 /* [CP] Check Pods Manifest.lock */,
 				0A48FD9C1F983CCA0004F72B /* Sources */,
 				0A48FD9D1F983CCA0004F72B /* Frameworks */,
 				0A48FD9E1F983CCA0004F72B /* Resources */,
+				35CCC2CB05F5EA4A332648F2 /* [CP] Embed Pods Frameworks */,
+				47254D2973A77F250CAB231E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -130,6 +157,60 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		35CCC2CB05F5EA4A332648F2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Echowaves/Pods-Echowaves-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Echowaves/Pods-Echowaves-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		47254D2973A77F250CAB231E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Echowaves/Pods-Echowaves-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BF1682627F522C4CFDDFA403 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Echowaves-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0A48FD9C1F983CCA0004F72B /* Sources */ = {
@@ -272,6 +353,7 @@
 		};
 		0A48FDB31F983CCA0004F72B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FFA7974F1C17BD9FDA668E96 /* Pods-Echowaves.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -287,6 +369,7 @@
 		};
 		0A48FDB41F983CCA0004F72B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA1D18813A9DF6BDBD89F7CF /* Pods-Echowaves.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
