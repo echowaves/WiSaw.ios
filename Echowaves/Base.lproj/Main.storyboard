@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13526"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,19 +30,63 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XfI-pR-7jy">
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="I4B-mL-qSr">
+                                    <size key="itemSize" width="102" height="85"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="ba0-t9-wva" customClass="CellClass" customModule="Echowaves" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="acj-sm-rmb">
+                                                    <rect key="frame" x="2" y="-2" width="116" height="124"/>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="acj-sm-rmb" firstAttribute="centerY" secondItem="ba0-t9-wva" secondAttribute="centerY" id="93h-zc-tOB"/>
+                                            <constraint firstItem="acj-sm-rmb" firstAttribute="centerY" secondItem="ba0-t9-wva" secondAttribute="centerY" id="HFb-fK-qmO"/>
+                                            <constraint firstItem="acj-sm-rmb" firstAttribute="centerX" secondItem="ba0-t9-wva" secondAttribute="centerX" id="Qxv-Dg-IVj"/>
+                                            <constraint firstItem="acj-sm-rmb" firstAttribute="top" secondItem="ba0-t9-wva" secondAttribute="topMargin" constant="-10" id="ZEF-YL-h4O"/>
+                                            <constraint firstItem="acj-sm-rmb" firstAttribute="centerX" secondItem="ba0-t9-wva" secondAttribute="centerX" id="jJe-Cn-Zom"/>
+                                            <constraint firstItem="acj-sm-rmb" firstAttribute="leading" secondItem="ba0-t9-wva" secondAttribute="leadingMargin" constant="-6" id="mnW-uR-35s"/>
+                                        </constraints>
+                                        <size key="customSize" width="120" height="120"/>
+                                        <connections>
+                                            <outlet property="uiImage" destination="acj-sm-rmb" id="vag-kK-WHX"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="aXx-v9-Py5" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="8Lu-6t-wvR"/>
                             <constraint firstItem="aXx-v9-Py5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Wwd-rl-vHY"/>
+                            <constraint firstItem="XfI-pR-7jy" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="iyN-hd-C9e"/>
                             <constraint firstItem="aXx-v9-Py5" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="oWt-RE-TBC"/>
+                            <constraint firstItem="XfI-pR-7jy" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="qMK-VH-1sl"/>
+                            <constraint firstItem="XfI-pR-7jy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="t90-Vy-PKm"/>
+                            <constraint firstItem="XfI-pR-7jy" firstAttribute="top" secondItem="aXx-v9-Py5" secondAttribute="bottom" id="zBg-U5-WR2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="collectionview" destination="XfI-pR-7jy" id="Hq4-pU-moh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="152.80000000000001" y="115.59220389805098"/>
+            <point key="canvasLocation" x="152.17391304347828" y="114.94565217391305"/>
         </scene>
     </scenes>
 </document>

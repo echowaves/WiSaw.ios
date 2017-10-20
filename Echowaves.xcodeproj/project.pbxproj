@@ -13,6 +13,7 @@
 		0A48FDAB1F983CCA0004F72B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A48FDAA1F983CCA0004F72B /* Assets.xcassets */; };
 		0A48FDAE1F983CCA0004F72B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A48FDAC1F983CCA0004F72B /* LaunchScreen.storyboard */; };
 		0A9A5CEA1F99868C0055127F /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9A5CE91F99868C0055127F /* Photo.swift */; };
+		0A9C32301F9A2FF7007AC177 /* CellClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9C322F1F9A2FF7007AC177 /* CellClass.swift */; };
 		BD19BE48EAE28A147770607A /* Pods_Echowaves.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99FF5F01D6B131F5B150D1B1 /* Pods_Echowaves.framework */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +26,7 @@
 		0A48FDAD1F983CCA0004F72B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0A48FDAF1F983CCA0004F72B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A9A5CE91F99868C0055127F /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		0A9C322F1F9A2FF7007AC177 /* CellClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellClass.swift; sourceTree = "<group>"; };
 		99FF5F01D6B131F5B150D1B1 /* Pods_Echowaves.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Echowaves.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA1D18813A9DF6BDBD89F7CF /* Pods-Echowaves.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Echowaves.release.xcconfig"; path = "Pods/Target Support Files/Pods-Echowaves/Pods-Echowaves.release.xcconfig"; sourceTree = "<group>"; };
 		FFA7974F1C17BD9FDA668E96 /* Pods-Echowaves.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Echowaves.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Echowaves/Pods-Echowaves.debug.xcconfig"; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				0A9A5CE81F9986690055127F /* models */,
 				0A48FDA31F983CCA0004F72B /* AppDelegate.swift */,
 				0A48FDA51F983CCA0004F72B /* HomeViewController.swift */,
+				0A9C322F1F9A2FF7007AC177 /* CellClass.swift */,
 				0A48FDA71F983CCA0004F72B /* Main.storyboard */,
 				0A48FDAA1F983CCA0004F72B /* Assets.xcassets */,
 				0A48FDAC1F983CCA0004F72B /* LaunchScreen.storyboard */,
@@ -231,6 +234,7 @@
 				0A9A5CEA1F99868C0055127F /* Photo.swift in Sources */,
 				0A48FDA61F983CCA0004F72B /* HomeViewController.swift in Sources */,
 				0A48FDA41F983CCA0004F72B /* AppDelegate.swift in Sources */,
+				0A9C32301F9A2FF7007AC177 /* CellClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

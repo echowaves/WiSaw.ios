@@ -21,6 +21,7 @@ class HomeViewController: UIViewController {
     }
 
   
+    @IBOutlet weak var collectionview: UICollectionView!
     
 }
 
