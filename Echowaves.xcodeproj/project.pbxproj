@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0A48FDA41F983CCA0004F72B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A48FDA31F983CCA0004F72B /* AppDelegate.swift */; };
-		0A48FDA61F983CCA0004F72B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A48FDA51F983CCA0004F72B /* ViewController.swift */; };
+		0A48FDA61F983CCA0004F72B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A48FDA51F983CCA0004F72B /* HomeViewController.swift */; };
 		0A48FDA91F983CCA0004F72B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A48FDA71F983CCA0004F72B /* Main.storyboard */; };
 		0A48FDAB1F983CCA0004F72B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A48FDAA1F983CCA0004F72B /* Assets.xcassets */; };
 		0A48FDAE1F983CCA0004F72B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A48FDAC1F983CCA0004F72B /* LaunchScreen.storyboard */; };
@@ -18,7 +18,7 @@
 /* Begin PBXFileReference section */
 		0A48FDA01F983CCA0004F72B /* Echowaves.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Echowaves.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A48FDA31F983CCA0004F72B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0A48FDA51F983CCA0004F72B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0A48FDA51F983CCA0004F72B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		0A48FDA81F983CCA0004F72B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0A48FDAA1F983CCA0004F72B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0A48FDAD1F983CCA0004F72B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -62,7 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				0A48FDA31F983CCA0004F72B /* AppDelegate.swift */,
-				0A48FDA51F983CCA0004F72B /* ViewController.swift */,
+				0A48FDA51F983CCA0004F72B /* HomeViewController.swift */,
 				0A48FDA71F983CCA0004F72B /* Main.storyboard */,
 				0A48FDAA1F983CCA0004F72B /* Assets.xcassets */,
 				0A48FDAC1F983CCA0004F72B /* LaunchScreen.storyboard */,
@@ -217,7 +217,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A48FDA61F983CCA0004F72B /* ViewController.swift in Sources */,
+				0A48FDA61F983CCA0004F72B /* HomeViewController.swift in Sources */,
 				0A48FDA41F983CCA0004F72B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -359,6 +359,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 33P3Q88Y8K;
 				INFOPLIST_FILE = Echowaves/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.echowaves.Echowaves;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -375,6 +376,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 33P3Q88Y8K;
 				INFOPLIST_FILE = Echowaves/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.echowaves.Echowaves;
 				PRODUCT_NAME = "$(TARGET_NAME)";
