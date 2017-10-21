@@ -35,7 +35,9 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSCameraUsageDescription</key>
-	<string>Photo will be stored in local galery and uploaded to the feed where it will be visible for 24 hours.</string>
+	<string>Photo will be uploaded to the shared feed where it will be visible for 24 hours.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Photo will be stored in local gallery.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
