@@ -26,7 +26,11 @@
                                 </constraints>
                                 <items>
                                     <navigationItem title="What's near me today" id="eVP-76-I75">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="camera" id="iK5-ij-Tbs"/>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="camera" id="iK5-ij-Tbs">
+                                            <connections>
+                                                <action selector="openCameraButtonClicked:" destination="BYZ-38-t0r" id="FYJ-85-uRh"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>

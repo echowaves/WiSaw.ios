@@ -8,12 +8,18 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class HomeViewController:
+    UIViewController,
+//    UICollectionViewDataSource,
+    UICollectionViewDelegate,
+    UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate {
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+         picker.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,14 +34,38 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     
     
+//
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        <#code#>
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        <#code#>
+//    }
+//
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+    let picker = UIImagePickerController()
+    
+    @IBAction func openCameraButtonClicked(_ sender: Any) {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            
+            picker.delegate = self
+            picker.sourceType = .camera;
+            picker.allowsEditing = false
+            self.present(picker, animated: true, completion: nil)
+        }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+    //MARK: - Delegates
+    private func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [String : AnyObject])
+    {
+        //this is where we have to store locally and upload the photo
+        
     }
-
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        
+    }
+    
 }
 
