@@ -49,7 +49,7 @@
 		0A48FD971F983CCA0004F72B = {
 			isa = PBXGroup;
 			children = (
-				0A48FDA21F983CCA0004F72B /* Echowaves */,
+				0A48FDA21F983CCA0004F72B /* WiSaw */,
 				0A48FDA11F983CCA0004F72B /* Products */,
 				64F2C62DC1A0B34AE2946514 /* Pods */,
 				C5965028E3A875AC078CDEC2 /* Frameworks */,
@@ -64,7 +64,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0A48FDA21F983CCA0004F72B /* Echowaves */ = {
+		0A48FDA21F983CCA0004F72B /* WiSaw */ = {
 			isa = PBXGroup;
 			children = (
 				0A9A5CE81F9986690055127F /* models */,
@@ -77,7 +77,7 @@
 				0A48FDAC1F983CCA0004F72B /* LaunchScreen.storyboard */,
 				0A48FDAF1F983CCA0004F72B /* Info.plist */,
 			);
-			path = Echowaves;
+			path = WiSaw;
 			sourceTree = "<group>";
 		};
 		0A9A5CE81F9986690055127F /* models */ = {
@@ -108,9 +108,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0A48FD9F1F983CCA0004F72B /* Echowaves */ = {
+		0A48FD9F1F983CCA0004F72B /* WiSaw */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0A48FDB21F983CCA0004F72B /* Build configuration list for PBXNativeTarget "Echowaves" */;
+			buildConfigurationList = 0A48FDB21F983CCA0004F72B /* Build configuration list for PBXNativeTarget "WiSaw" */;
 			buildPhases = (
 				BF1682627F522C4CFDDFA403 /* [CP] Check Pods Manifest.lock */,
 				0A48FD9C1F983CCA0004F72B /* Sources */,
@@ -123,7 +123,7 @@
 			);
 			dependencies = (
 			);
-			name = Echowaves;
+			name = WiSaw;
 			productName = Echowaves;
 			productReference = 0A48FDA01F983CCA0004F72B /* Echowaves.app */;
 			productType = "com.apple.product-type.application";
@@ -144,7 +144,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0A48FD9B1F983CCA0004F72B /* Build configuration list for PBXProject "Echowaves" */;
+			buildConfigurationList = 0A48FD9B1F983CCA0004F72B /* Build configuration list for PBXProject "WiSaw" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -157,7 +157,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0A48FD9F1F983CCA0004F72B /* Echowaves */,
+				0A48FD9F1F983CCA0004F72B /* WiSaw */,
 			);
 		};
 /* End PBXProject section */
@@ -383,7 +383,7 @@
 				INFOPLIST_FILE = Echowaves/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.echowaves.Echowaves;
+				PRODUCT_BUNDLE_IDENTIFIER = com.echowaves.Wisaw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -400,7 +400,7 @@
 				INFOPLIST_FILE = Echowaves/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.echowaves.Echowaves;
+				PRODUCT_BUNDLE_IDENTIFIER = com.echowaves.Wisaw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -410,7 +410,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0A48FD9B1F983CCA0004F72B /* Build configuration list for PBXProject "Echowaves" */ = {
+		0A48FD9B1F983CCA0004F72B /* Build configuration list for PBXProject "WiSaw" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0A48FDB01F983CCA0004F72B /* Debug */,
@@ -419,7 +419,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0A48FDB21F983CCA0004F72B /* Build configuration list for PBXNativeTarget "Echowaves" */ = {
+		0A48FDB21F983CCA0004F72B /* Build configuration list for PBXNativeTarget "WiSaw" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0A48FDB31F983CCA0004F72B /* Debug */,
