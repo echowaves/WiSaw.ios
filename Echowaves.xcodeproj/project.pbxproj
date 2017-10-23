@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A2B046B1F9E7AD70003BF0C /* DetailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2B046A1F9E7AD70003BF0C /* DetailedViewController.swift */; };
 		0A48FDA41F983CCA0004F72B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A48FDA31F983CCA0004F72B /* AppDelegate.swift */; };
 		0A48FDA61F983CCA0004F72B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A48FDA51F983CCA0004F72B /* HomeViewController.swift */; };
 		0A48FDA91F983CCA0004F72B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A48FDA71F983CCA0004F72B /* Main.storyboard */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A2B046A1F9E7AD70003BF0C /* DetailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedViewController.swift; sourceTree = "<group>"; };
 		0A48FDA01F983CCA0004F72B /* Echowaves.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Echowaves.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A48FDA31F983CCA0004F72B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0A48FDA51F983CCA0004F72B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				0A9A5CE81F9986690055127F /* models */,
 				0A48FDA31F983CCA0004F72B /* AppDelegate.swift */,
 				0A48FDA51F983CCA0004F72B /* HomeViewController.swift */,
+				0A2B046A1F9E7AD70003BF0C /* DetailedViewController.swift */,
 				0A9C322F1F9A2FF7007AC177 /* CellClass.swift */,
 				0A48FDA71F983CCA0004F72B /* Main.storyboard */,
 				0A48FDAA1F983CCA0004F72B /* Assets.xcassets */,
@@ -235,6 +238,7 @@
 			files = (
 				0A9A5CEA1F99868C0055127F /* Photo.swift in Sources */,
 				0A48FDA61F983CCA0004F72B /* HomeViewController.swift in Sources */,
+				0A2B046B1F9E7AD70003BF0C /* DetailedViewController.swift in Sources */,
 				0A48FDA41F983CCA0004F72B /* AppDelegate.swift in Sources */,
 				0A9C32301F9A2FF7007AC177 /* CellClass.swift in Sources */,
 			);

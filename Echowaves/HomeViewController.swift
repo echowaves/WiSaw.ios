@@ -40,8 +40,10 @@ CLLocationManagerDelegate {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         uuid = appDelegate.uuid
         
+
         picker.delegate = self
         collectionView.dataSource = self
+        collectionView.delegate = self
         
         refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -62,6 +64,7 @@ CLLocationManagerDelegate {
         super.viewWillAppear(animated)
         
         determineMyCurrentLocation()
+        
     }
     
     
@@ -138,14 +141,6 @@ CLLocationManagerDelegate {
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photos.count
     }
@@ -166,9 +161,16 @@ CLLocationManagerDelegate {
     }
     
     
+   
     
     
-    
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("item clicked: \(indexPath.row)")
+
+        let detailedViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailedViewController") as! DetailedViewController
+        self.navigationController?.pushViewController(detailedViewController, animated: true)
+        
+    }
     
     
     

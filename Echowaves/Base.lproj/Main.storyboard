@@ -50,7 +50,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="acj-sm-rmb">
+                                                <imageView contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="acj-sm-rmb">
                                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                                 </imageView>
                                             </subviews>
@@ -88,6 +88,59 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="152.17391304347828" y="114.94565217391305"/>
+        </scene>
+        <!--Detailed View Controller-->
+        <scene sceneID="jGe-2l-8v8">
+            <objects>
+                <viewController storyboardIdentifier="DetailedViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="peZ-1k-WQg" customClass="DetailedViewController" customModule="Echowaves" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tL4-gz-POM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="va2-p2-HiI">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="qkz-uL-b6d"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem id="1Po-7a-zrI">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="eZ6-re-LBc">
+                                            <connections>
+                                                <action selector="cancelButtonClicked:" destination="peZ-1k-WQg" id="JHA-H5-GPF"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="Woh-uh-xle">
+                                            <connections>
+                                                <action selector="trashButtonClicked:" destination="peZ-1k-WQg" id="8Ia-eH-0nG"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MjT-NI-B6q">
+                                <rect key="frame" x="0.0" y="44" width="414" height="692"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="MjT-NI-B6q" firstAttribute="top" secondItem="va2-p2-HiI" secondAttribute="bottom" id="AbV-U2-eKt"/>
+                            <constraint firstItem="MjT-NI-B6q" firstAttribute="trailing" secondItem="aZM-dl-r7U" secondAttribute="trailing" id="Ayz-Pl-Md0"/>
+                            <constraint firstItem="MjT-NI-B6q" firstAttribute="top" secondItem="va2-p2-HiI" secondAttribute="bottom" id="KJZ-ob-TJ2"/>
+                            <constraint firstItem="va2-p2-HiI" firstAttribute="top" secondItem="tL4-gz-POM" secondAttribute="top" id="KOb-Zs-FXr"/>
+                            <constraint firstItem="MjT-NI-B6q" firstAttribute="leading" secondItem="aZM-dl-r7U" secondAttribute="leading" id="Mxm-c6-TYj"/>
+                            <constraint firstItem="va2-p2-HiI" firstAttribute="leading" secondItem="aZM-dl-r7U" secondAttribute="leading" id="Y5D-S1-Plw"/>
+                            <constraint firstItem="va2-p2-HiI" firstAttribute="trailing" secondItem="aZM-dl-r7U" secondAttribute="trailing" id="ijp-5q-6w2"/>
+                            <constraint firstItem="MjT-NI-B6q" firstAttribute="bottom" secondItem="aZM-dl-r7U" secondAttribute="bottom" id="rem-QA-4gZ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="aZM-dl-r7U"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="MjT-NI-B6q" id="AyC-U7-ppC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AMQ-kX-HnZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1057.9710144927537" y="114.94565217391305"/>
         </scene>
     </scenes>
 </document>
