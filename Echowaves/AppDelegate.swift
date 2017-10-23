@@ -13,9 +13,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    var uuid: String?
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // retrieve UUID, if not there generate one.
+        
+        let defaults = UserDefaults.standard
+        uuid = defaults.string(forKey: "UUID")
+        if(uuid == nil) {
+            uuid = UUID().uuidString
+            defaults.set(uuid, forKey: "UUID")
+        }
+        print("UUID:", uuid!)
+        
         return true
     }
 
