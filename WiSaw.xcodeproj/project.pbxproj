@@ -13,25 +13,28 @@
 		0A48FDA91F983CCA0004F72B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A48FDA71F983CCA0004F72B /* Main.storyboard */; };
 		0A48FDAB1F983CCA0004F72B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A48FDAA1F983CCA0004F72B /* Assets.xcassets */; };
 		0A48FDAE1F983CCA0004F72B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A48FDAC1F983CCA0004F72B /* LaunchScreen.storyboard */; };
+		0A53655A1F9EA32F0071BF65 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A5365591F9EA32F0071BF65 /* Default-568h@2x.png */; };
 		0A9A5CEA1F99868C0055127F /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9A5CE91F99868C0055127F /* Photo.swift */; };
 		0A9C32301F9A2FF7007AC177 /* CellClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9C322F1F9A2FF7007AC177 /* CellClass.swift */; };
-		BD19BE48EAE28A147770607A /* Pods_Echowaves.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99FF5F01D6B131F5B150D1B1 /* Pods_Echowaves.framework */; };
+		9A5EFEE93C53C77A23373B0A /* Pods_WiSaw.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D6DC6FE81B70C623DB127D /* Pods_WiSaw.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0A2B046A1F9E7AD70003BF0C /* DetailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedViewController.swift; sourceTree = "<group>"; };
-		0A48FDA01F983CCA0004F72B /* Echowaves.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Echowaves.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A48FDA01F983CCA0004F72B /* WiSaw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WiSaw.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A48FDA31F983CCA0004F72B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0A48FDA51F983CCA0004F72B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		0A48FDA81F983CCA0004F72B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0A48FDAA1F983CCA0004F72B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0A48FDAD1F983CCA0004F72B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0A48FDAF1F983CCA0004F72B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0A5365591F9EA32F0071BF65 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		0A9A5CE91F99868C0055127F /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		0A9C322F1F9A2FF7007AC177 /* CellClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellClass.swift; sourceTree = "<group>"; };
+		3368ECC188274B7A4D1F94E2 /* Pods-WiSaw.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WiSaw.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WiSaw/Pods-WiSaw.debug.xcconfig"; sourceTree = "<group>"; };
 		99FF5F01D6B131F5B150D1B1 /* Pods_Echowaves.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Echowaves.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EA1D18813A9DF6BDBD89F7CF /* Pods-Echowaves.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Echowaves.release.xcconfig"; path = "Pods/Target Support Files/Pods-Echowaves/Pods-Echowaves.release.xcconfig"; sourceTree = "<group>"; };
-		FFA7974F1C17BD9FDA668E96 /* Pods-Echowaves.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Echowaves.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Echowaves/Pods-Echowaves.debug.xcconfig"; sourceTree = "<group>"; };
+		C0D6DC6FE81B70C623DB127D /* Pods_WiSaw.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WiSaw.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8CBE544228A15CCEE0293E8 /* Pods-WiSaw.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WiSaw.release.xcconfig"; path = "Pods/Target Support Files/Pods-WiSaw/Pods-WiSaw.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,7 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD19BE48EAE28A147770607A /* Pods_Echowaves.framework in Frameworks */,
+				9A5EFEE93C53C77A23373B0A /* Pods_WiSaw.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -49,6 +52,7 @@
 		0A48FD971F983CCA0004F72B = {
 			isa = PBXGroup;
 			children = (
+				0A5365591F9EA32F0071BF65 /* Default-568h@2x.png */,
 				0A48FDA21F983CCA0004F72B /* WiSaw */,
 				0A48FDA11F983CCA0004F72B /* Products */,
 				64F2C62DC1A0B34AE2946514 /* Pods */,
@@ -59,7 +63,7 @@
 		0A48FDA11F983CCA0004F72B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0A48FDA01F983CCA0004F72B /* Echowaves.app */,
+				0A48FDA01F983CCA0004F72B /* WiSaw.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -91,8 +95,8 @@
 		64F2C62DC1A0B34AE2946514 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				FFA7974F1C17BD9FDA668E96 /* Pods-Echowaves.debug.xcconfig */,
-				EA1D18813A9DF6BDBD89F7CF /* Pods-Echowaves.release.xcconfig */,
+				3368ECC188274B7A4D1F94E2 /* Pods-WiSaw.debug.xcconfig */,
+				C8CBE544228A15CCEE0293E8 /* Pods-WiSaw.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -101,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				99FF5F01D6B131F5B150D1B1 /* Pods_Echowaves.framework */,
+				C0D6DC6FE81B70C623DB127D /* Pods_WiSaw.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -125,7 +130,7 @@
 			);
 			name = WiSaw;
 			productName = Echowaves;
-			productReference = 0A48FDA01F983CCA0004F72B /* Echowaves.app */;
+			productReference = 0A48FDA01F983CCA0004F72B /* WiSaw.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -168,6 +173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A48FDAE1F983CCA0004F72B /* LaunchScreen.storyboard in Resources */,
+				0A53655A1F9EA32F0071BF65 /* Default-568h@2x.png in Resources */,
 				0A48FDAB1F983CCA0004F72B /* Assets.xcassets in Resources */,
 				0A48FDA91F983CCA0004F72B /* Main.storyboard in Resources */,
 			);
@@ -182,7 +188,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Echowaves/Pods-Echowaves-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-WiSaw/Pods-WiSaw-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 			);
@@ -193,7 +199,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Echowaves/Pods-Echowaves-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WiSaw/Pods-WiSaw-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		47254D2973A77F250CAB231E /* [CP] Copy Pods Resources */ = {
@@ -208,7 +214,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Echowaves/Pods-Echowaves-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WiSaw/Pods-WiSaw-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BF1682627F522C4CFDDFA403 /* [CP] Check Pods Manifest.lock */ = {
@@ -222,7 +228,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Echowaves-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-WiSaw-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -375,12 +381,12 @@
 		};
 		0A48FDB31F983CCA0004F72B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FFA7974F1C17BD9FDA668E96 /* Pods-Echowaves.debug.xcconfig */;
+			baseConfigurationReference = 3368ECC188274B7A4D1F94E2 /* Pods-WiSaw.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 33P3Q88Y8K;
-				INFOPLIST_FILE = Echowaves/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/WiSaw/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.echowaves.Wisaw;
@@ -392,12 +398,12 @@
 		};
 		0A48FDB41F983CCA0004F72B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EA1D18813A9DF6BDBD89F7CF /* Pods-Echowaves.release.xcconfig */;
+			baseConfigurationReference = C8CBE544228A15CCEE0293E8 /* Pods-WiSaw.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 33P3Q88Y8K;
-				INFOPLIST_FILE = Echowaves/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/WiSaw/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.echowaves.Wisaw;

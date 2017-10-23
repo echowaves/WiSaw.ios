@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_EchowavesVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_EchowavesVersionString[];
+FOUNDATION_EXPORT double Pods_WiSawVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_WiSawVersionString[];
 
