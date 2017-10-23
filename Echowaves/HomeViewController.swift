@@ -167,10 +167,20 @@ CLLocationManagerDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("item clicked: \(indexPath.row)")
 
-        let detailedViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailedViewController") as! DetailedViewController
+        let photoJSON = self.photos[indexPath.row] as! [String: Any]
+        let photoId = photoJSON["id"]
+        
+        print("photoId selected: \(photoId!)")
+        
+        
 
+        
+        
+        let detailedViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailedViewController") as! DetailedViewController
+        detailedViewController.photoId = (photoId as! Int).description
+        
         present(detailedViewController, animated: true) {
-            self.loadImages()
+            print("showing detailed image")
         }
         
         
@@ -231,7 +241,7 @@ CLLocationManagerDelegate {
         let size = CGSize(width: 500.0, height: 500.0)
         let aspectScaledToFitImage = chosenImage.af_imageAspectScaled(toFit: size)
         
-        let imageData:Data! = UIImageJPEGRepresentation(aspectScaledToFitImage, 0.5)
+        let imageData:Data! = UIImageJPEGRepresentation(aspectScaledToFitImage, 0.7)
         let imageBytes:[UInt8] = Array(imageData)
         
         let parameters: [String: Any] = [
