@@ -18,7 +18,8 @@ class HomeViewController:
     UIImagePickerControllerDelegate,
     UINavigationControllerDelegate,
 CLLocationManagerDelegate {
-    
+    var refreshControl: UIRefreshControl!
+
     let picker = UIImagePickerController()
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -35,15 +36,27 @@ CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        
+                
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         uuid = appDelegate.uuid
         
         picker.delegate = self
         collectionView.dataSource = self
+        
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        collectionView.addSubview(refreshControl) // not required when using UITableViewController
+    }
+    
+    
+    @objc func refresh(sender:AnyObject) {
+        // Code to refresh table view        
+        loadImages()
+        self.refreshControl?.endRefreshing()
 
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
