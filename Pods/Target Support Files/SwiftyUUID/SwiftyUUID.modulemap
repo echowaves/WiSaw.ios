@@ -1,0 +1,6 @@
+framework module SwiftyUUID {
+  umbrella header "SwiftyUUID-umbrella.h"
+
+  export *
+  module * { export * }
+}
