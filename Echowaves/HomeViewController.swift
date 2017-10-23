@@ -103,8 +103,8 @@ CLLocationManagerDelegate {
                     print("photos length: \(self.photos.count)")
                     
                     
-                    
                     self.collectionView.reloadData()
+                    
                 }
         }
         
@@ -142,7 +142,7 @@ CLLocationManagerDelegate {
         
         let photoJSON = self.photos[indexPath.row] as! [String: Any]
         let thumbNailJson = photoJSON["thumbNail"] as! [String: Any]
-                
+        
         let thumbData = thumbNailJson["data"] as! [UInt8]
         let imageData = Data(bytes: thumbData)
         
@@ -227,12 +227,14 @@ CLLocationManagerDelegate {
         Alamofire.request("https://www.echowaves.com/api/photos", method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .responseJSON { response in
                 print(response)
+                self.loadImages()
         }
         
         
         
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        loadImages()
         dismiss(animated: true, completion: nil)
     }
     
@@ -240,16 +242,18 @@ CLLocationManagerDelegate {
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         dismiss(animated: true, completion: nil)
         
-        if let error = error {
-            // we got back an error!
-            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
-        } else {
-            let ac = UIAlertController(title: "Saved!", message: "Your image has been saved to your photos.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
-        }
+//        if let error = error {
+//            // we got back an error!
+//            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
+//            ac.addAction(UIAlertAction(title: "OK", style: .default))
+//            present(ac, animated: true)
+//        } else {
+//            let ac = UIAlertController(title: "Saved!", message: "Your image has been saved to your photos.", preferredStyle: .alert)
+//            ac.addAction(UIAlertAction(title: "OK", style: .default))
+//            present(ac, animated: true)
+//        }
+        
+        loadImages()
     }
     
     
