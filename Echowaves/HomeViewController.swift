@@ -168,7 +168,9 @@ CLLocationManagerDelegate {
         print("item clicked: \(indexPath.row)")
 
         let detailedViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailedViewController") as! DetailedViewController
-        self.navigationController?.pushViewController(detailedViewController, animated: true)
+        let theController = UIApplication.shared.keyWindow?.rootViewController
+
+        theController?.navigationController?.pushViewController(detailedViewController, animated: true)
         
     }
     
