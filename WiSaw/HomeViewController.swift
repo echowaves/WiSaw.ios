@@ -110,7 +110,7 @@ CLLocationManagerDelegate {
             ]
             
         ]
-        Alamofire.request("https://www.echowaves.com/api/photos/feed", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        Alamofire.request("https://www.wisaw.com/api/photos/feed", method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .responseJSON { response in
                 print("response------------------------------")
                 if let json = response.result.value as? [String: Any] {
@@ -253,7 +253,7 @@ CLLocationManagerDelegate {
             "imageData": imageBytes
         ]
         
-        Alamofire.request("https://www.echowaves.com/api/photos", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        Alamofire.request("https://www.wisaw.com/api/photos", method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .responseJSON { response in
                 print(response)
                 self.loadImages()

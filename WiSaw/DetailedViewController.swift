@@ -23,7 +23,7 @@ class DetailedViewController:
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        Alamofire.request("https://www.echowaves.com/api/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
+        Alamofire.request("https://www.wisaw.com/api/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
             .responseJSON { response in
                 print("loaded detailed photo ----------------- \(self.photoId!)")
                 if let json = response.result.value as? [String: Any] {
@@ -61,7 +61,7 @@ class DetailedViewController:
             UIAlertAction(title: "Delete", style: .destructive) { (alert: UIAlertAction!) -> Void in
                 
                     
-                Alamofire.request("https://www.echowaves.com/api/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
+                Alamofire.request("https://www.wisaw.com/api/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
                     .responseJSON { response in
                         print("deleted detailed photo ----------------- \(self.photoId!)")
                         self.dismiss(animated: true) {
