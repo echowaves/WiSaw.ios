@@ -97,10 +97,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MjT-NI-B6q">
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                            </imageView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="va2-p2-HiI">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="qkz-uL-b6d"/>
+                                    <constraint firstAttribute="height" constant="44" id="cdp-di-s2F"/>
                                 </constraints>
                                 <items>
                                     <navigationItem id="1Po-7a-zrI">
@@ -117,20 +120,16 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MjT-NI-B6q">
-                                <rect key="frame" x="0.0" y="44" width="414" height="692"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="MjT-NI-B6q" firstAttribute="top" secondItem="va2-p2-HiI" secondAttribute="bottom" id="AbV-U2-eKt"/>
+                            <constraint firstItem="va2-p2-HiI" firstAttribute="trailing" secondItem="aZM-dl-r7U" secondAttribute="trailing" id="5Cb-qm-G1C"/>
+                            <constraint firstItem="va2-p2-HiI" firstAttribute="leading" secondItem="aZM-dl-r7U" secondAttribute="leading" id="7tZ-PV-NfD"/>
                             <constraint firstItem="MjT-NI-B6q" firstAttribute="trailing" secondItem="aZM-dl-r7U" secondAttribute="trailing" id="Ayz-Pl-Md0"/>
-                            <constraint firstItem="MjT-NI-B6q" firstAttribute="top" secondItem="va2-p2-HiI" secondAttribute="bottom" id="KJZ-ob-TJ2"/>
-                            <constraint firstItem="va2-p2-HiI" firstAttribute="top" secondItem="tL4-gz-POM" secondAttribute="top" id="KOb-Zs-FXr"/>
+                            <constraint firstItem="va2-p2-HiI" firstAttribute="top" secondItem="aZM-dl-r7U" secondAttribute="top" id="Hlx-1w-mIP"/>
                             <constraint firstItem="MjT-NI-B6q" firstAttribute="leading" secondItem="aZM-dl-r7U" secondAttribute="leading" id="Mxm-c6-TYj"/>
-                            <constraint firstItem="va2-p2-HiI" firstAttribute="leading" secondItem="aZM-dl-r7U" secondAttribute="leading" id="Y5D-S1-Plw"/>
-                            <constraint firstItem="va2-p2-HiI" firstAttribute="trailing" secondItem="aZM-dl-r7U" secondAttribute="trailing" id="ijp-5q-6w2"/>
                             <constraint firstItem="MjT-NI-B6q" firstAttribute="bottom" secondItem="aZM-dl-r7U" secondAttribute="bottom" id="rem-QA-4gZ"/>
+                            <constraint firstItem="MjT-NI-B6q" firstAttribute="top" secondItem="va2-p2-HiI" secondAttribute="bottom" id="xCY-PU-RYE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="aZM-dl-r7U"/>
                     </view>

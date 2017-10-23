@@ -168,9 +168,11 @@ CLLocationManagerDelegate {
         print("item clicked: \(indexPath.row)")
 
         let detailedViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailedViewController") as! DetailedViewController
-        let theController = UIApplication.shared.keyWindow?.rootViewController
 
-        theController?.navigationController?.pushViewController(detailedViewController, animated: true)
+        present(detailedViewController, animated: true) {
+            self.loadImages()
+        }
+        
         
     }
     
