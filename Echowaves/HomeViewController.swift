@@ -13,18 +13,23 @@ import AlamofireImage
 
 class HomeViewController:
     UIViewController,
-    //    UICollectionViewDataSource,
+    UICollectionViewDataSource,
     UICollectionViewDelegate,
     UIImagePickerControllerDelegate,
     UINavigationControllerDelegate,
-    CLLocationManagerDelegate {
+CLLocationManagerDelegate {
+    
+    
+    @IBOutlet weak var collectionView: UICollectionView!
     
     var locationManager:CLLocationManager!
-
+    
     var lattitude: String!
     var longitude: String!
     
     var uuid: String!
+    
+    var photos: [Any] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,9 +39,9 @@ class HomeViewController:
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         uuid = appDelegate.uuid
         
-        
-        
         picker.delegate = self
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,7 +70,7 @@ class HomeViewController:
         // Call stopUpdatingLocation() to stop listening for location updates,
         // other wise this function will be called every time when user location changes.
         
-         manager.stopUpdatingLocation()
+        manager.stopUpdatingLocation()
         
         lattitude = userLocation.coordinate.latitude.description
         longitude = userLocation.coordinate.longitude.description
@@ -73,7 +78,37 @@ class HomeViewController:
         print("------------------------------")
         print("user latitude = \(lattitude!)")
         print("user longitude = \(longitude!)")
+        
+        loadImages()
+        
     }
+    
+    
+    func loadImages() {
+        // load images here, can only do it after the gps data is obtained
+        let parameters: [String: Any] = [
+            "location" : [
+                "type": "Point",
+                "coordinates": [ lattitude!, longitude!]
+            ]
+            
+        ]
+        Alamofire.request("https://www.echowaves.com/api/photos/feed", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .responseJSON { response in
+                print("response------------------------------")
+                if let json = response.result.value as? [String: Any] {
+                    
+                    self.photos = json["photos"] as! [Any]
+                    print("photos length: \(self.photos.count)")
+                    
+                    
+                    
+                    self.collectionView.reloadData()
+                }
+        }
+        
+    }
+    
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
     {
@@ -86,21 +121,47 @@ class HomeViewController:
     }
     
     
-    @IBOutlet weak var collectionview: UICollectionView!
     
     
     
     
     
-    //
-    //    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    //        <#code#>
-    //    }
-    //
-    //    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    //        <#code#>
-    //    }
-    //
+    
+    
+    
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return photos.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell:CellClass = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CellClass
+        
+        let photoJSON = self.photos[indexPath.row] as! [String: Any]
+        let thumbData = photoJSON["thumbNail"] as! [UInt8]
+        let imageData = Data(bytes: thumbData)
+        
+        
+        cell.uiImage.image = UIImage(data:imageData as Data)
+        
+        return cell
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     let picker = UIImagePickerController()
     
@@ -140,7 +201,7 @@ class HomeViewController:
         //this is where we have to store locally and upload the photo
         var chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage //2        
         chosenImage = self.imageOrientation(chosenImage)
-
+        
         
         // save to photo albom
         UIImageWriteToSavedPhotosAlbum(chosenImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
@@ -148,7 +209,7 @@ class HomeViewController:
         // send over to the API
         let size = CGSize(width: 500.0, height: 500.0)
         let aspectScaledToFitImage = chosenImage.af_imageAspectScaled(toFit: size)
-
+        
         let imageData:Data! = UIImageJPEGRepresentation(aspectScaledToFitImage, 0.5)
         let imageBytes:[UInt8] = Array(imageData)
         
@@ -167,7 +228,7 @@ class HomeViewController:
         }
         
         
-
+        
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
@@ -176,7 +237,7 @@ class HomeViewController:
     //MARK: - Add image to Library
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         dismiss(animated: true, completion: nil)
-
+        
         if let error = error {
             // we got back an error!
             let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
@@ -188,8 +249,6 @@ class HomeViewController:
             present(ac, animated: true)
         }
     }
-    
-    
     
     
     
@@ -245,7 +304,7 @@ class HomeViewController:
         
         return img
     }
-
+    
     
 }
 
