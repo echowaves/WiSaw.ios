@@ -10,4 +10,6 @@ target 'Echowaves' do
 
   # Pods for Echowaves
   pod 'Alamofire', '~> 4.5'
+  pod 'AlamofireImage', '~> 3.3'
+
 end

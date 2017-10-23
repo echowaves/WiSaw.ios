@@ -38,6 +38,10 @@
 	<string>Photo will be uploaded to the shared feed where it will be visible for 24 hours.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Photo will be stored in local gallery.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>When you allow the app to know your location, we will always be able to show what&apos;s happening around you.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>When you allow the app to know your location, we will be able to show what&apos;s happening around you while your using the app.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

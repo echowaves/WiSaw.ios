@@ -7,19 +7,77 @@
 //
 
 import UIKit
+import CoreLocation
+import Alamofire
+import AlamofireImage
 
 class HomeViewController:
     UIViewController,
     //    UICollectionViewDataSource,
     UICollectionViewDelegate,
     UIImagePickerControllerDelegate,
-    UINavigationControllerDelegate {
+    UINavigationControllerDelegate,
+    CLLocationManagerDelegate {
     
+    var locationManager:CLLocationManager!
+
+    var lattitude: String!
+    var longitude: String!
+    
+    var uuid: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        uuid = appDelegate.uuid
+        
+        
+        
         picker.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        determineMyCurrentLocation()
+    }
+    
+    
+    func determineMyCurrentLocation() {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers // we do not need the best possibble location accuracy, we need to preserve the battery as a priority
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+            //locationManager.startUpdatingHeading()
+        }
+    }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let userLocation:CLLocation = locations[0] as CLLocation
+        
+        // Call stopUpdatingLocation() to stop listening for location updates,
+        // other wise this function will be called every time when user location changes.
+        
+         manager.stopUpdatingLocation()
+        
+        lattitude = userLocation.coordinate.latitude.description
+        longitude = userLocation.coordinate.longitude.description
+        
+        print("------------------------------")
+        print("user latitude = \(lattitude!)")
+        print("user longitude = \(longitude!)")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
+    {
+        print("Error \(error)")
     }
     
     override func didReceiveMemoryWarning() {
@@ -83,7 +141,32 @@ class HomeViewController:
         var chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage //2        
         chosenImage = self.imageOrientation(chosenImage)
 
+        
+        // save to photo albom
         UIImageWriteToSavedPhotosAlbum(chosenImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+        
+        // send over to the API
+        let size = CGSize(width: 500.0, height: 500.0)
+        let aspectScaledToFitImage = chosenImage.af_imageAspectScaled(toFit: size)
+
+        let imageData:Data! = UIImageJPEGRepresentation(aspectScaledToFitImage, 0.5)
+        let imageBytes:[UInt8] = Array(imageData)
+        
+        let parameters: [String: Any] = [
+            "uuid" : uuid,
+            "location" : [
+                "type": "Point",
+                "coordinates": [ lattitude!, longitude!]
+            ],
+            "imageData": imageBytes
+        ]
+        
+        Alamofire.request("https://www.echowaves.com/api/photos", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .responseJSON { response in
+                print(response)
+        }
+        
+        
 
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
