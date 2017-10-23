@@ -19,7 +19,8 @@ class HomeViewController:
     UINavigationControllerDelegate,
 CLLocationManagerDelegate {
     
-    
+    let picker = UIImagePickerController()
+
     @IBOutlet weak var collectionView: UICollectionView!
     
     var locationManager:CLLocationManager!
@@ -40,8 +41,8 @@ CLLocationManagerDelegate {
         uuid = appDelegate.uuid
         
         picker.delegate = self
-        
-        
+        collectionView.dataSource = self
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -137,10 +138,12 @@ CLLocationManagerDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell:CellClass = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CellClass
+        let cell:CellClass = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as! CellClass
         
         let photoJSON = self.photos[indexPath.row] as! [String: Any]
-        let thumbData = photoJSON["thumbNail"] as! [UInt8]
+        let thumbNailJson = photoJSON["thumbNail"] as! [String: Any]
+                
+        let thumbData = thumbNailJson["data"] as! [UInt8]
         let imageData = Data(bytes: thumbData)
         
         
@@ -163,7 +166,6 @@ CLLocationManagerDelegate {
     
     
     
-    let picker = UIImagePickerController()
     
     @IBAction func openCameraButtonClicked(_ sender: Any) {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
