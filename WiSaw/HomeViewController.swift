@@ -56,7 +56,6 @@ CLLocationManagerDelegate {
         // Code to refresh table view        
         loadImages()
         self.refreshControl?.endRefreshing()
-
     }
     
     
