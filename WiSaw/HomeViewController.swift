@@ -10,6 +10,8 @@ import UIKit
 import CoreLocation
 import Alamofire
 import AlamofireImage
+import SwiftKeychainWrapper
+
 
 class HomeViewController:
     UIViewController,
@@ -30,7 +32,6 @@ CLLocationManagerDelegate {
     var longitude: String!
     
     var uuid: String!
-    var agreedToTerms = false
     var appDelegate:AppDelegate!
     
     var photos: [Any] = []
@@ -41,7 +42,7 @@ CLLocationManagerDelegate {
                 
         appDelegate = UIApplication.shared.delegate as! AppDelegate
         uuid = appDelegate.uuid
-        agreedToTerms = appDelegate.agreedToTerms
+        
 
         picker.delegate = self
         collectionView.dataSource = self
@@ -73,21 +74,27 @@ CLLocationManagerDelegate {
     
     
     func presentTandCAlert() {
-        let alert = UIAlertController(title: "* When you take a photo with WiSaw, it gets added to your Photo AlbUm and will be posted to GEO feed.\n* People close by can see your photo for 24 hours.\n* If you find any photo abusive or inappropriate, you can delete it from the feed, which will remove it from the cloud.\n* We will not tolerate objectionable content or abusive users.\n* The abusive users will be banned from WiSaw.", message: "Do you agree to Terns and Conditions?", preferredStyle: .alert)
         
-        alert.addAction(
-            UIAlertAction(title: "Yes", style: .default) { (alert: UIAlertAction!) -> Void in
-                
-        })
+        let tandc =  KeychainWrapper.standard.bool(forKey: "WiSaw-tandc")
         
-        alert.addAction(UIAlertAction(title: "No", style: .default) { (alert: UIAlertAction!) -> Void in
-            //print("You pressed Cancel")
+        
+        if(tandc == nil) {
+            let alert = UIAlertController(title: "* When you take a photo with WiSaw, it gets added to your Photo AlbUm and will be posted to GEO feed.\n* People close by can see your photo for 24 hours.\n* If you find any photo abusive or inappropriate, you can delete it from the feed, which will remove it from the cloud.\n* We will not tolerate objectionable content or abusive users.\n* The abusive users will be banned from WiSaw.", message: "By using WiSaw I agree to Terms and Conditions.", preferredStyle: .alert)
             
-            self.dismiss(animated: true) {
-            }
-        })
+            alert.addAction(
+                UIAlertAction(title: "Agree", style: .destructive) { (alert: UIAlertAction!) -> Void in
+                    KeychainWrapper.standard.set(true, forKey: "WiSaw-tandc")
+                    self.appDelegate.tandc = true
+            })
+            
+            
+            present(alert, animated: true, completion:nil)
+           
+        } else {
+            appDelegate.tandc = tandc!
+        }
         
-        present(alert, animated: true, completion:nil)
+        
         
     }
     
