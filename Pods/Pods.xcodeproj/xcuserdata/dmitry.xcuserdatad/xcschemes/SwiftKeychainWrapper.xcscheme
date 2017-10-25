@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E0AD68A1640BA270EFD315D1DD94C29C"
-               BuildableName = "Pods_WiSaw.framework"
-               BlueprintName = "Pods-WiSaw"
+               BlueprintIdentifier = "1462CE9A76A03FF20AE0201B74D50E13"
+               BuildableName = "SwiftKeychainWrapper.framework"
+               BlueprintName = "SwiftKeychainWrapper"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,9 +47,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E0AD68A1640BA270EFD315D1DD94C29C"
-            BuildableName = "Pods_WiSaw.framework"
-            BlueprintName = "Pods-WiSaw"
+            BlueprintIdentifier = "1462CE9A76A03FF20AE0201B74D50E13"
+            BuildableName = "SwiftKeychainWrapper.framework"
+            BlueprintName = "SwiftKeychainWrapper"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

@@ -30,6 +30,8 @@ CLLocationManagerDelegate {
     var longitude: String!
     
     var uuid: String!
+    var agreedToTerms = false
+    var appDelegate:AppDelegate!
     
     var photos: [Any] = []
     
@@ -37,9 +39,9 @@ CLLocationManagerDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
                 
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate = UIApplication.shared.delegate as! AppDelegate
         uuid = appDelegate.uuid
-        
+        agreedToTerms = appDelegate.agreedToTerms
 
         picker.delegate = self
         collectionView.dataSource = self
@@ -49,6 +51,8 @@ CLLocationManagerDelegate {
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         collectionView.addSubview(refreshControl) // not required when using UITableViewController
+        
+        
     }
     
     
@@ -59,12 +63,43 @@ CLLocationManagerDelegate {
     }
     
     
+    
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        presentTandCAlert()
+    }
+    
+    
+    func presentTandCAlert() {
+        let alert = UIAlertController(title: "* When you take a photo with WiSaw, it gets added to your Photo AlbUm and will be posted to GEO feed.\n* People close by can see your photo for 24 hours.\n* If you find any photo abusive or inappropriate, you can delete it from the feed, which will remove it from the cloud.\n* We will not tolerate objectionable content or abusive users.\n* The abusive users will be banned from WiSaw.", message: "Do you agree to Terns and Conditions?", preferredStyle: .alert)
+        
+        alert.addAction(
+            UIAlertAction(title: "Yes", style: .default) { (alert: UIAlertAction!) -> Void in
+                
+        })
+        
+        alert.addAction(UIAlertAction(title: "No", style: .default) { (alert: UIAlertAction!) -> Void in
+            //print("You pressed Cancel")
+            
+            self.dismiss(animated: true) {
+            }
+        })
+        
+        present(alert, animated: true, completion:nil)
+        
+    }
+    
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         determineMyCurrentLocation()
         
     }
+    
     
     
     func determineMyCurrentLocation() {

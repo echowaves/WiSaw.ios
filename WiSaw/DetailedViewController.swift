@@ -50,7 +50,12 @@ class DetailedViewController:
         dismiss(animated: true) {
             //refresh
         }
+        
     }
+    
+    
+    
+ 
     
     @IBAction func trashButtonClicked(_ sender: Any) {
         

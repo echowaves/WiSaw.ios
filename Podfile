@@ -11,5 +11,7 @@ target 'WiSaw' do
   # Pods for WiSaw
   pod 'Alamofire', '~> 4.5'
   pod 'AlamofireImage', '~> 3.3'
+  pod 'SwiftKeychainWrapper', '~> 3.0.1'
+
 
 end

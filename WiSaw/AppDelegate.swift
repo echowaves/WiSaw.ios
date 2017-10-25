@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftKeychainWrapper
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,7 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     var uuid: String?
-    
+    var agreedToTerms = false
+
     
     let themeColor = UIColor(red: 0.01, green: 0.41, blue: 0.22, alpha: 1.0)
 
@@ -25,13 +27,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // retrieve UUID, if not there generate one.
         
-        let defaults = UserDefaults.standard
-        uuid = defaults.string(forKey: "UUID")
+        uuid =  KeychainWrapper.standard.string(forKey: "WiSaw-UUID")
+
         if(uuid == nil) {
             uuid = UUID().uuidString
-            defaults.set(uuid, forKey: "UUID")
+            KeychainWrapper.standard.set(uuid!, forKey: "WiSaw-UUID")
         }
         print("UUID:", uuid!)
+        
         
         return true
     }
