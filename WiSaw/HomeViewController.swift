@@ -202,9 +202,6 @@ CLLocationManagerDelegate {
     }
     
     
-   
-    
-    
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("item clicked: \(indexPath.row)")
 
@@ -227,12 +224,8 @@ CLLocationManagerDelegate {
             print("showing detailed image")
         }
         
-        
     }
 
-    
-    
-    
     
     @IBAction func openCameraButtonClicked(_ sender: Any) {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
@@ -294,6 +287,18 @@ CLLocationManagerDelegate {
         Alamofire.request("https://www.wisaw.com/api/photos", method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .responseJSON { response in
                 print(response)
+                let statusCode = response.response?.statusCode
+                print(statusCode!)
+                
+                if(statusCode! == 401) {
+                    
+                                let ac = UIAlertController(title: "Unauthorized", message: "Sorry, looks like you are banned from WiSaw", preferredStyle: .alert)
+                                ac.addAction(UIAlertAction(title: "OK", style: .default))
+                                self.present(ac, animated: true)
+
+                    
+                }
+                
                 self.loadImages()
         }
         
