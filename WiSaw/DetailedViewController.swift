@@ -17,6 +17,8 @@ class DetailedViewController:
     
     var photoId: String!
     
+    var uuid: String!
+    
     @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
@@ -58,9 +60,7 @@ class DetailedViewController:
  
     
     @IBAction func trashButtonClicked(_ sender: Any) {
-        
-        
-        let alert = UIAlertController(title: "This photo will be obliterated for everyone for ever", message: "Are you sure?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "This photo will be obliterated from the cloud.", message: "Are you sure?", preferredStyle: .alert)
         
         alert.addAction(
             UIAlertAction(title: "Delete", style: .destructive) { (alert: UIAlertAction!) -> Void in
@@ -84,17 +84,52 @@ class DetailedViewController:
         })
             
         present(alert, animated: true, completion:nil)
+    }
+    
 
+    @IBAction func reportAbuseButtonClicked(_ sender: Any) {
+        let alert = UIAlertController(title: "The user who posted this photo wlll be baned.", message: "Are you sure?", preferredStyle: .alert)
         
+        alert.addAction(
+            UIAlertAction(title: "Report", style: .destructive) { (alert: UIAlertAction!) -> Void in
+                
         
+                let parameters: [String: Any] = [
+                    "uuid" : self.uuid!
+                ]
+                
+                Alamofire.request("https://www.wisaw.com/api/abusereport", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+                    .responseJSON { response in
+                        print(response)
+                        
+                        
+                        Alamofire.request("https://www.wisaw.com/api/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
+                            .responseJSON { response in
+                                print("deleted detailed photo ----------------- \(self.photoId!)")
+                                self.dismiss(animated: true) {
+                                    
+                                }
+                                
+                        }
+                        
+                }
+                
+                
+                
+                
+                
+                
+                
+        })
         
-
+        alert.addAction(UIAlertAction(title: "No", style: .default) { (alert: UIAlertAction!) -> Void in
+            //print("You pressed Cancel")
+            
+            self.dismiss(animated: true) {
+            }
+        })
         
-        
-        
-        
-            //refresh
-        
+        present(alert, animated: true, completion:nil)
     }
     
 }
