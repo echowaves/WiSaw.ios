@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E0AD68A1640BA270EFD315D1DD94C29C"
-               BuildableName = "Pods_WiSaw.framework"
-               BlueprintName = "Pods-WiSaw"
-               ReferencedContainer = "container:Pods.xcodeproj">
+               BlueprintIdentifier = "0A48FD9F1F983CCA0004F72B"
+               BuildableName = "WiSaw.app"
+               BlueprintName = "WiSaw"
+               ReferencedContainer = "container:WiSaw.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -30,6 +30,15 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "0A48FD9F1F983CCA0004F72B"
+            BuildableName = "WiSaw.app"
+            BlueprintName = "WiSaw"
+            ReferencedContainer = "container:WiSaw.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -44,15 +53,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E0AD68A1640BA270EFD315D1DD94C29C"
-            BuildableName = "Pods_WiSaw.framework"
-            BlueprintName = "Pods-WiSaw"
-            ReferencedContainer = "container:Pods.xcodeproj">
+            BlueprintIdentifier = "0A48FD9F1F983CCA0004F72B"
+            BuildableName = "WiSaw.app"
+            BlueprintName = "WiSaw"
+            ReferencedContainer = "container:WiSaw.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -62,6 +72,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "0A48FD9F1F983CCA0004F72B"
+            BuildableName = "WiSaw.app"
+            BlueprintName = "WiSaw"
+            ReferencedContainer = "container:WiSaw.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

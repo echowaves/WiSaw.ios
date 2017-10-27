@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13528" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13526"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -26,6 +26,11 @@
                                 </constraints>
                                 <items>
                                     <navigationItem title="What's near me today" id="eVP-76-I75">
+                                        <barButtonItem key="leftBarButtonItem" title="Contact Us" id="RHO-tR-7z2">
+                                            <connections>
+                                                <action selector="contactUsButtonClicked:" destination="BYZ-38-t0r" id="fdq-8Y-ffN"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" systemItem="camera" id="iK5-ij-Tbs">
                                             <connections>
                                                 <action selector="openCameraButtonClicked:" destination="BYZ-38-t0r" id="FYJ-85-uRh"/>
@@ -147,7 +152,75 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AMQ-kX-HnZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="941" y="115"/>
+            <point key="canvasLocation" x="971" y="115"/>
+        </scene>
+        <!--Contact Form View Controller-->
+        <scene sceneID="NCx-JB-ooF">
+            <objects>
+                <viewController storyboardIdentifier="ContactFormViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eTj-Gn-FaE" customClass="ContactFormViewController" customModule="WiSaw" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="x2y-s0-xYu">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c1h-qq-Dlu">
+                                <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="f82-C7-iiH"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem id="mvq-v9-wnV">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="gFm-ep-4Vw">
+                                            <connections>
+                                                <action selector="cancelButtonClicked:" destination="eTj-Gn-FaE" id="sjP-TO-AdL"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Done" id="s29-BC-cQn">
+                                            <connections>
+                                                <action selector="doneButtonClicked:" destination="eTj-Gn-FaE" id="cdI-jj-dio"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Pj3-OT-SQk">
+                                <rect key="frame" x="20" y="93" width="374" height="623"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send us any feedback:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jXs-Ia-wfF">
+                                <rect key="frame" x="20" y="64" width="374" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="h6o-JS-fs3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="jXs-Ia-wfF" firstAttribute="top" secondItem="c1h-qq-Dlu" secondAttribute="bottom" id="30n-GD-xHa"/>
+                            <constraint firstItem="Pj3-OT-SQk" firstAttribute="top" secondItem="jXs-Ia-wfF" secondAttribute="bottom" constant="8" id="36e-eC-X4H"/>
+                            <constraint firstItem="2j1-dQ-Nvp" firstAttribute="bottom" secondItem="Pj3-OT-SQk" secondAttribute="bottom" constant="20" id="A1n-iP-3Ll"/>
+                            <constraint firstItem="c1h-qq-Dlu" firstAttribute="top" secondItem="2j1-dQ-Nvp" secondAttribute="top" id="B0u-AZ-cYj"/>
+                            <constraint firstItem="Pj3-OT-SQk" firstAttribute="leading" secondItem="2j1-dQ-Nvp" secondAttribute="leading" constant="20" id="DD1-KM-wtV"/>
+                            <constraint firstItem="jXs-Ia-wfF" firstAttribute="leading" secondItem="2j1-dQ-Nvp" secondAttribute="leading" constant="20" id="GTD-iU-jhY"/>
+                            <constraint firstItem="2j1-dQ-Nvp" firstAttribute="trailing" secondItem="jXs-Ia-wfF" secondAttribute="trailing" constant="20" id="Lbo-Cz-VnG"/>
+                            <constraint firstItem="c1h-qq-Dlu" firstAttribute="trailing" secondItem="2j1-dQ-Nvp" secondAttribute="trailing" id="T9H-FQ-dVN"/>
+                            <constraint firstItem="Pj3-OT-SQk" firstAttribute="top" secondItem="jXs-Ia-wfF" secondAttribute="bottom" constant="8" id="VWF-hd-cme"/>
+                            <constraint firstItem="2j1-dQ-Nvp" firstAttribute="trailing" secondItem="Pj3-OT-SQk" secondAttribute="trailing" constant="20" id="a2A-zt-WV2"/>
+                            <constraint firstItem="c1h-qq-Dlu" firstAttribute="leading" secondItem="2j1-dQ-Nvp" secondAttribute="leading" id="ocK-iz-zOe"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="2j1-dQ-Nvp"/>
+                    </view>
+                    <connections>
+                        <outlet property="descriptionField" destination="Pj3-OT-SQk" id="6ZC-nR-fZH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AQz-zg-gp3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="118.84057971014494" y="835.59782608695662"/>
         </scene>
     </scenes>
 </document>

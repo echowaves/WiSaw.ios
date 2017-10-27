@@ -382,7 +382,19 @@ CLLocationManagerDelegate {
         
         return img
     }
+
     
+    
+    @IBAction func contactUsButtonClicked(_ sender: Any) {
+        
+        let contactFormViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ContactFormViewController") as! ContactFormViewController
+        
+        present(contactFormViewController, animated: true) {
+            print("showing detailed image")
+        }
+
+        
+    }
     
 }
 
