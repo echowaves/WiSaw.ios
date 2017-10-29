@@ -292,11 +292,10 @@ CLLocationManagerDelegate {
                 
                 if(statusCode! == 401) {
                     
-                                let ac = UIAlertController(title: "Unauthorized", message: "Sorry, looks like you are banned from WiSaw", preferredStyle: .alert)
+                                let ac = UIAlertController(title: "Unauthorized", message: "Sorry, looks like you are banned from WiSaw.", preferredStyle: .alert)
                                 ac.addAction(UIAlertAction(title: "OK", style: .default))
                                 self.present(ac, animated: true)
-
-                    
+                
                 }
                 
                 self.loadImages()
