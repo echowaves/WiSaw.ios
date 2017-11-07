@@ -11,7 +11,7 @@ import CoreLocation
 import Alamofire
 import AlamofireImage
 import SwiftKeychainWrapper
-
+import FontAwesome_swift
 
 class HomeViewController:
     UIViewController,
@@ -20,6 +20,9 @@ class HomeViewController:
     UIImagePickerControllerDelegate,
     UINavigationControllerDelegate,
 CLLocationManagerDelegate {
+    @IBOutlet weak var contactUsButton: UIBarButtonItem!
+    @IBOutlet weak var cameraButton: UIBarButtonItem!
+    
     var refreshControl: UIRefreshControl!
 
     let picker = UIImagePickerController()
@@ -39,7 +42,11 @@ CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-                
+        
+        
+        contactUsButton.image = UIImage.fontAwesomeIcon(name: .lifeSaver, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+        cameraButton.image = UIImage.fontAwesomeIcon(name: .camera, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+        
         appDelegate = UIApplication.shared.delegate as! AppDelegate
         uuid = appDelegate.uuid
         

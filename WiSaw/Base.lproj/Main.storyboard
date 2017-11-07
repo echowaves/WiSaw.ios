@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -31,7 +31,7 @@
                                                 <action selector="contactUsButtonClicked:" destination="BYZ-38-t0r" id="fdq-8Y-ffN"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="camera" id="iK5-ij-Tbs">
+                                        <barButtonItem key="rightBarButtonItem" title="camera" id="iK5-ij-Tbs">
                                             <connections>
                                                 <action selector="openCameraButtonClicked:" destination="BYZ-38-t0r" id="FYJ-85-uRh"/>
                                             </connections>
@@ -88,7 +88,9 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="cameraButton" destination="iK5-ij-Tbs" id="Odo-2T-Df9"/>
                         <outlet property="collectionView" destination="XfI-pR-7jy" id="PKe-2t-9Yd"/>
+                        <outlet property="contactUsButton" destination="RHO-tR-7z2" id="93C-nH-HpH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -113,13 +115,13 @@
                                 </constraints>
                                 <items>
                                     <navigationItem id="1Po-7a-zrI">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="eZ6-re-LBc">
+                                        <barButtonItem key="leftBarButtonItem" title="cancel" id="eZ6-re-LBc">
                                             <connections>
                                                 <action selector="cancelButtonClicked:" destination="peZ-1k-WQg" id="JHA-H5-GPF"/>
                                             </connections>
                                         </barButtonItem>
                                         <rightBarButtonItems>
-                                            <barButtonItem systemItem="trash" id="Woh-uh-xle">
+                                            <barButtonItem title="trash" id="Woh-uh-xle">
                                                 <connections>
                                                     <action selector="trashButtonClicked:" destination="peZ-1k-WQg" id="8Ia-eH-0nG"/>
                                                 </connections>
@@ -147,7 +149,10 @@
                         <viewLayoutGuide key="safeArea" id="aZM-dl-r7U"/>
                     </view>
                     <connections>
+                        <outlet property="cancelButton" destination="eZ6-re-LBc" id="dKQ-1f-bez"/>
                         <outlet property="imageView" destination="MjT-NI-B6q" id="AyC-U7-ppC"/>
+                        <outlet property="reportAbuseButton" destination="F4e-cd-93A" id="gZn-U2-ulR"/>
+                        <outlet property="trashButton" destination="Woh-uh-xle" id="nD1-wJ-8fS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AMQ-kX-HnZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -169,7 +174,7 @@
                                 </constraints>
                                 <items>
                                     <navigationItem id="mvq-v9-wnV">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="gFm-ep-4Vw">
+                                        <barButtonItem key="leftBarButtonItem" title="cancel" id="gFm-ep-4Vw">
                                             <connections>
                                                 <action selector="cancelButtonClicked:" destination="eTj-Gn-FaE" id="sjP-TO-AdL"/>
                                             </connections>
@@ -193,7 +198,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="h6o-JS-fs3"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -215,12 +220,14 @@
                         <viewLayoutGuide key="safeArea" id="2j1-dQ-Nvp"/>
                     </view>
                     <connections>
+                        <outlet property="cancelButton" destination="gFm-ep-4Vw" id="hnz-Ff-KKp"/>
                         <outlet property="descriptionField" destination="Pj3-OT-SQk" id="6ZC-nR-fZH"/>
+                        <outlet property="doneButton" destination="s29-BC-cQn" id="kUD-Vv-yZ1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AQz-zg-gp3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="118.84057971014494" y="835.59782608695662"/>
+            <point key="canvasLocation" x="120" y="963"/>
         </scene>
     </scenes>
 </document>

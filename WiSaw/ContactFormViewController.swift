@@ -20,11 +20,14 @@ import Foundation
 
 import UIKit
 import Alamofire
+import FontAwesome_swift
 
 class ContactFormViewController:
     UIViewController
 {
     
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
     
     @IBOutlet weak var descriptionField: UITextView!
     
@@ -32,7 +35,8 @@ class ContactFormViewController:
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+        cancelButton.image = UIImage.fontAwesomeIcon(name: .chevronLeft, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+        doneButton.image = UIImage.fontAwesomeIcon(name: .send, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
     }
     
     
@@ -41,7 +45,8 @@ class ContactFormViewController:
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.descriptionField.becomeFirstResponder()
-
+        
+        
     }
     
     
