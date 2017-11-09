@@ -6,8 +6,14 @@
 //  Copyright © 2017 EchoWaves. All rights reserved.
 //
 
+import Fabric
+import Crashlytics
+
+
 import UIKit
 import SwiftKeychainWrapper
+
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -35,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         print("UUID:", uuid!)
         
-        
+        Fabric.with([Crashlytics.self])
         return true
     }
 
