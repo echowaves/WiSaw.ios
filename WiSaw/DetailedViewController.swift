@@ -19,6 +19,9 @@ class DetailedViewController:
     var photoId: String!
     
     var uuid: String!
+    let viewControllerUtils = ViewControllerUtils()
+
+    
     
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var reportAbuseButton: UIBarButtonItem!
@@ -33,9 +36,11 @@ class DetailedViewController:
         reportAbuseButton.image = UIImage.fontAwesomeIcon(name: .ban, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
         trashButton.image = UIImage.fontAwesomeIcon(name: .trash, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
 
-        
+        viewControllerUtils.showActivityIndicator(uiView: self.view)
         Alamofire.request("https://www.wisaw.com/api/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
             .responseJSON { response in
+                self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+
                 print("loaded detailed photo ----------------- \(self.photoId!)")
                 if let json = response.result.value as? [String: Any] {
 
@@ -74,9 +79,11 @@ class DetailedViewController:
         alert.addAction(
             UIAlertAction(title: "Delete", style: .destructive) { (alert: UIAlertAction!) -> Void in
                 
-                    
+                self.viewControllerUtils.showActivityIndicator(uiView: self.view)
                 Alamofire.request("https://www.wisaw.com/api/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
                     .responseJSON { response in
+                        self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+
                         print("deleted detailed photo ----------------- \(self.photoId!)")
                         self.dismiss(animated: true) {
                             
@@ -106,14 +113,18 @@ class DetailedViewController:
                 let parameters: [String: Any] = [
                     "uuid" : self.uuid!
                 ]
-                
+                self.viewControllerUtils.showActivityIndicator(uiView: self.view)
                 Alamofire.request("https://www.wisaw.com/api/abusereport", method: .post, parameters: parameters, encoding: JSONEncoding.default)
                     .responseJSON { response in
+                        self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+
                         print(response)
                         
-                        
+                        self.viewControllerUtils.showActivityIndicator(uiView: self.view)
                         Alamofire.request("https://www.wisaw.com/api/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
                             .responseJSON { response in
+                                self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+
                                 print("deleted detailed photo ----------------- \(self.photoId!)")
                                 self.dismiss(animated: true) {
                                     

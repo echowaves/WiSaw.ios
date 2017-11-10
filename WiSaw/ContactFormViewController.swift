@@ -31,7 +31,8 @@ class ContactFormViewController:
     
     @IBOutlet weak var descriptionField: UITextView!
     
-    
+    let viewControllerUtils = ViewControllerUtils()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -70,8 +71,11 @@ class ContactFormViewController:
             "description" : descriptionField.text!
         ]
         
+        viewControllerUtils.showActivityIndicator(uiView: self.view)
         Alamofire.request("https://www.wisaw.com/api/contactform", method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .responseJSON { response in
+                self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+
                 print(response)
 //
 //                let alert = UIAlertController(title: "Thank you for submitting a feedback.", message: "We will review every requiest in the order it was received.", preferredStyle: .alert)

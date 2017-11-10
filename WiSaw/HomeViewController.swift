@@ -39,6 +39,9 @@ CLLocationManagerDelegate {
     
     var photos: [Any] = []
     
+    
+    let viewControllerUtils = ViewControllerUtils()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -158,14 +161,15 @@ CLLocationManagerDelegate {
             ]
             
         ]
+        viewControllerUtils.showActivityIndicator(uiView: self.view)
         Alamofire.request("https://www.wisaw.com/api/photos/feed", method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .responseJSON { response in
                 print("response------------------------------")
+                self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                 if let json = response.result.value as? [String: Any] {
                     
                     self.photos = json["photos"] as! [Any]
                     print("photos length: \(self.photos.count)")
-                    
                     
                     self.collectionView.reloadData()
                     
@@ -290,10 +294,12 @@ CLLocationManagerDelegate {
             ],
             "imageData": imageBytes
         ]
-        
+
+        viewControllerUtils.showActivityIndicator(uiView: self.view)
         Alamofire.request("https://www.wisaw.com/api/photos", method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .responseJSON { response in
-                print(response)
+                self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+
                 let statusCode = response.response?.statusCode
                 print(statusCode!)
                 
