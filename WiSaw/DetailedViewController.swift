@@ -16,8 +16,10 @@ class DetailedViewController:
     UIViewController
      {
     
-    var photoId: String!
+    var photos: [Any] = []
+    var index = 0
     
+    var photoId: Int!
     var uuid: String!
     let viewControllerUtils = ViewControllerUtils()
 
@@ -37,6 +39,20 @@ class DetailedViewController:
         trashButton.image = UIImage.fontAwesomeIcon(name: .trash, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
 
         viewControllerUtils.showActivityIndicator(uiView: self.view)
+        
+        
+        let photoJSON = self.photos[index] as! [String: Any]
+        photoId = photoJSON["id"] as! Int
+        uuid = photoJSON["uuid"] as! String
+
+        
+        let thumbNailJson = photoJSON["thumbNail"] as! [String: Any]
+        let imageDataArray = thumbNailJson["data"] as! [UInt8]
+        let imageData = Data(bytes: imageDataArray)
+        self.imageView.image = UIImage(data:imageData as Data)
+
+        
+        
         Alamofire.request("https://www.wisaw.com/api/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
             .responseJSON { response in
                 self.viewControllerUtils.hideActivityIndicator(uiView: self.view)

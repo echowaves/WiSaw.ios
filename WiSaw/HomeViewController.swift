@@ -216,19 +216,12 @@ CLLocationManagerDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("item clicked: \(indexPath.row)")
 
-        let photoJSON = self.photos[indexPath.row] as! [String: Any]
-        let photoId = photoJSON["id"]
-        let UUID = photoJSON["uuid"]
-
-        print("photoId selected: \(photoId!)")
-        print("uuid    selected: \(uuid!)")
-        
-
         
         
         let detailedViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailedViewController") as! DetailedViewController
-        detailedViewController.photoId = (photoId as! Int).description
-        detailedViewController.uuid = UUID as! String
+        
+        detailedViewController.photos = self.photos
+        detailedViewController.index = indexPath.row
         
         
         present(detailedViewController, animated: true) {
