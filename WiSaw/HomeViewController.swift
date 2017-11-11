@@ -191,8 +191,6 @@ CLLocationManagerDelegate {
     
     
     
-    
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photos.count
     }
@@ -273,7 +271,7 @@ CLLocationManagerDelegate {
         UIImageWriteToSavedPhotosAlbum(chosenImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
         
         // send over to the API
-        let size = CGSize(width: 500.0, height: 500.0)
+        let size = CGSize(width: 1000, height: 1000)
         let aspectScaledToFitImage = chosenImage.af_imageAspectScaled(toFit: size)
         
         let imageData:Data! = UIImageJPEGRepresentation(aspectScaledToFitImage, 0.7)
