@@ -13,7 +13,8 @@ import FontAwesome_swift
 
 
 class DetailedViewController:
-    UIViewController
+    UIViewController,
+    UIScrollViewDelegate
      {
     
     var photos: [Any] = []
@@ -28,11 +29,14 @@ class DetailedViewController:
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var reportAbuseButton: UIBarButtonItem!
     @IBOutlet weak var trashButton: UIBarButtonItem!
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 5.0
         
         cancelButton.image = UIImage.fontAwesomeIcon(name: .chevronLeft, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
         reportAbuseButton.image = UIImage.fontAwesomeIcon(name: .ban, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
@@ -149,12 +153,7 @@ class DetailedViewController:
                         }
                         
                 }
-                
-                
-                
-                
-                
-                
+            
                 
         })
         
@@ -168,5 +167,13 @@ class DetailedViewController:
         present(alert, animated: true, completion:nil)
     }
     
+    
+//    UIScrollViewDelegate methods
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
+    
 }
+
+//http://artoftheapp.com/ios/zoom-uiscrollview-swift/
 
