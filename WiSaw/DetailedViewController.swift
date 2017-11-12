@@ -176,4 +176,5 @@ class DetailedViewController:
 }
 
 //http://artoftheapp.com/ios/zoom-uiscrollview-swift/
+//https://www.raywenderlich.com/159481/uiscrollview-tutorial-getting-started
 
