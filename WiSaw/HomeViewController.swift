@@ -216,14 +216,14 @@ CLLocationManagerDelegate {
 
         
         
-        let detailedViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailedViewController") as! DetailedViewController
+        let pageViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PageViewController") as! PageViewController
         
-        detailedViewController.photos = self.photos
-        detailedViewController.index = indexPath.row
+        pageViewController.photos = self.photos
+        pageViewController.pageIndex = indexPath.row
         
         
-        present(detailedViewController, animated: true) {
-            print("showing detailed image")
+        present(pageViewController, animated: true) {
+            print("showing PageViewController")
         }
         
     }

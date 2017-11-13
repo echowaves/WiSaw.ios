@@ -97,6 +97,14 @@
             </objects>
             <point key="canvasLocation" x="120" y="115"/>
         </scene>
+        <!--Page View Controller-->
+        <scene sceneID="7Ud-6o-nMh">
+            <objects>
+                <pageViewController storyboardIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="tAj-mC-1Qt" customClass="PageViewController" customModule="WiSaw" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dEG-oX-aPe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="908" y="119"/>
+        </scene>
         <!--Detailed View Controller-->
         <scene sceneID="jGe-2l-8v8">
             <objects>
@@ -174,7 +182,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AMQ-kX-HnZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="969.56521739130437" y="114.94565217391305"/>
+            <point key="canvasLocation" x="1688" y="115"/>
         </scene>
         <!--Contact Form View Controller-->
         <scene sceneID="NCx-JB-ooF">

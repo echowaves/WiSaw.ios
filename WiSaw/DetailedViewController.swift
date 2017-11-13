@@ -17,11 +17,13 @@ class DetailedViewController:
     UIScrollViewDelegate
      {
     
-    var photos: [Any] = []
-    var index = 0
+//    var photos: [Any] = []
+//    var pageIndex = 0
     
     var photoId: Int!
     var uuid: String!
+    var photoJSON: [String: Any]!
+    
     let viewControllerUtils = ViewControllerUtils()
 
     
@@ -45,7 +47,7 @@ class DetailedViewController:
         viewControllerUtils.showActivityIndicator(uiView: self.view)
         
         
-        let photoJSON = self.photos[index] as! [String: Any]
+//        let photoJSON = self.photos[pageIndex] as! [String: Any]
         photoId = photoJSON["id"] as! Int
         uuid = photoJSON["uuid"] as! String
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A1D46571FB91E0700965A73 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1D46561FB91E0700965A73 /* PageViewController.swift */; };
 		0A2B046B1F9E7AD70003BF0C /* DetailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2B046A1F9E7AD70003BF0C /* DetailedViewController.swift */; };
 		0A48FDA41F983CCA0004F72B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A48FDA31F983CCA0004F72B /* AppDelegate.swift */; };
 		0A48FDA61F983CCA0004F72B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A48FDA51F983CCA0004F72B /* HomeViewController.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A1D46561FB91E0700965A73 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		0A2B046A1F9E7AD70003BF0C /* DetailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedViewController.swift; sourceTree = "<group>"; };
 		0A48FDA01F983CCA0004F72B /* WiSaw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WiSaw.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A48FDA31F983CCA0004F72B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 			children = (
 				0A48FDA31F983CCA0004F72B /* AppDelegate.swift */,
 				0A48FDA51F983CCA0004F72B /* HomeViewController.swift */,
+				0A1D46561FB91E0700965A73 /* PageViewController.swift */,
 				0A2B046A1F9E7AD70003BF0C /* DetailedViewController.swift */,
 				0A754D9C1FA3E8C000D18251 /* ContactFormViewController.swift */,
 				0A9C322F1F9A2FF7007AC177 /* CellClass.swift */,
@@ -256,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A754D9D1FA3E8C000D18251 /* ContactFormViewController.swift in Sources */,
+				0A1D46571FB91E0700965A73 /* PageViewController.swift in Sources */,
 				0A48FDA61F983CCA0004F72B /* HomeViewController.swift in Sources */,
 				0AF315EB1FB60092004DCD67 /* ViewControllerUtils.swift in Sources */,
 				0A2B046B1F9E7AD70003BF0C /* DetailedViewController.swift in Sources */,
