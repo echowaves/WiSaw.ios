@@ -52,31 +52,38 @@ class DetailedViewController:
         uuid = photoJSON["uuid"] as! String
 
         
+        
+        
         let thumbNailJson = photoJSON["thumbNail"] as! [String: Any]
         let imageDataArray = thumbNailJson["data"] as! [UInt8]
         let imageData = Data(bytes: imageDataArray)
         self.imageView.image = UIImage(data:imageData as Data)
-
         
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
+        if let image = appDelegate.imagesCache[photoId] { // get image from cache
+            self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+            self.imageView.image = image
+        } else {
         
-        Alamofire.request("https://www.wisaw.com/api/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
-            .responseJSON { response in
-                self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+            Alamofire.request("https://www.wisaw.com/api/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
+                .responseJSON { response in
+                    self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
 
-                print("loaded detailed photo ----------------- \(self.photoId!)")
-                if let json = response.result.value as? [String: Any] {
+                    print("loaded detailed photo ----------------- \(self.photoId!)")
+                    if let json = response.result.value as? [String: Any] {
 
-                    let photoJson = json["photo"] as! [String: Any]
-                    let imageDataJson = photoJson["imageData"] as! [String: Any]                    
-                    let imageDataArray = imageDataJson["data"] as! [UInt8]
-                    let imageData = Data(bytes: imageDataArray)
-                    
-                    self.imageView.image = UIImage(data:imageData as Data)
-                }
+                        let photoJson = json["photo"] as! [String: Any]
+                        let imageDataJson = photoJson["imageData"] as! [String: Any]
+                        let imageDataArray = imageDataJson["data"] as! [UInt8]
+                        let imageData = Data(bytes: imageDataArray)
+                        
+                        self.imageView.image = UIImage(data:imageData as Data)
+                        appDelegate.imagesCache[self.photoId] = self.imageView.image
+                    }
+            }
         }
     }
-    
-    
     
     
     override func viewWillAppear(_ animated: Bool) {
