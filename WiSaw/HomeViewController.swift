@@ -292,7 +292,6 @@ CLLocationManagerDelegate {
                 self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
 
                 let statusCode = response.response?.statusCode
-                print(statusCode!)
                 
                 if(statusCode! == 401) {
                     

@@ -69,17 +69,20 @@ class DetailedViewController:
             Alamofire.request("https://www.wisaw.com/api/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
                 .responseJSON { response in
                     self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+                    let statusCode = response.response?.statusCode
 
-                    print("loaded detailed photo ----------------- \(self.photoId!)")
-                    if let json = response.result.value as? [String: Any] {
+                    if(statusCode! == 200) {
+//                    print("loaded detailed photo ----------------- \(self.photoId!)")
+                        if let json = response.result.value as? [String: Any] {
 
-                        let photoJson = json["photo"] as! [String: Any]
-                        let imageDataJson = photoJson["imageData"] as! [String: Any]
-                        let imageDataArray = imageDataJson["data"] as! [UInt8]
-                        let imageData = Data(bytes: imageDataArray)
-                        
-                        self.imageView.image = UIImage(data:imageData as Data)
-                        appDelegate.imagesCache[self.photoId] = self.imageView.image
+                            let photoJson = json["photo"] as! [String: Any]
+                            let imageDataJson = photoJson["imageData"] as! [String: Any]
+                            let imageDataArray = imageDataJson["data"] as! [UInt8]
+                            let imageData = Data(bytes: imageDataArray)
+                            
+                            self.imageView.image = UIImage(data:imageData as Data)
+                            appDelegate.imagesCache[self.photoId] = self.imageView.image
+                        }
                     }
             }
         }
