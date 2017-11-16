@@ -76,7 +76,7 @@ class ContactFormViewController:
             .responseJSON { response in
                 self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
 
-                print(response)
+//                print(response)
 //
 //                let alert = UIAlertController(title: "Thank you for submitting a feedback.", message: "We will review every requiest in the order it was received.", preferredStyle: .alert)
 //

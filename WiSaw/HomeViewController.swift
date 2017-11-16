@@ -164,16 +164,16 @@ CLLocationManagerDelegate {
         viewControllerUtils.showActivityIndicator(uiView: self.view)
         Alamofire.request("https://www.wisaw.com/api/photos/feed", method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .responseJSON { response in
-                print("response------------------------------")
-                self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
-                if let json = response.result.value as? [String: Any] {
-                    
-                    self.photos = json["photos"] as! [Any]
-                    print("photos length: \(self.photos.count)")
-                    
-                    self.collectionView.reloadData()
-                    
+                if let statusCode = response.response?.statusCode {
+                    if(statusCode == 200) {
+                        if let json = response.result.value as? [String: Any] {
+                            self.photos = json["photos"] as! [Any]
+                            print("photos length: \(self.photos.count)")
+                            self.collectionView.reloadData()
+                        }
+                    }
                 }
+                self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
         }
         
     }
@@ -290,18 +290,16 @@ CLLocationManagerDelegate {
         Alamofire.request("https://www.wisaw.com/api/photos", method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .responseJSON { response in
                 self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
-
-                let statusCode = response.response?.statusCode
-                
-                if(statusCode! == 401) {
+                if let statusCode = response.response?.statusCode {
+                    if(statusCode == 401) {
+                        
+                                    let ac = UIAlertController(title: "Unauthorized", message: "Sorry, looks like you are banned from WiSaw.", preferredStyle: .alert)
+                                    ac.addAction(UIAlertAction(title: "OK", style: .default))
+                                    self.present(ac, animated: true)
                     
-                                let ac = UIAlertController(title: "Unauthorized", message: "Sorry, looks like you are banned from WiSaw.", preferredStyle: .alert)
-                                ac.addAction(UIAlertAction(title: "OK", style: .default))
-                                self.present(ac, animated: true)
-                
-                }
-                
+                    }
                 self.loadImages()
+                }
         }
         
         
