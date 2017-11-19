@@ -133,7 +133,7 @@ class DetailedViewController:
     
 
     @IBAction func reportAbuseButtonClicked(_ sender: Any) {
-        let alert = UIAlertController(title: "The user who posted this photo wlll be baned.", message: "Are you sure?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "The user who posted this photo will be banned.", message: "Are you sure?", preferredStyle: .alert)
         
         alert.addAction(
             UIAlertAction(title: "Report", style: .destructive) { (alert: UIAlertAction!) -> Void in
