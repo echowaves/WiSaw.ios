@@ -274,7 +274,7 @@ CLLocationManagerDelegate {
         let size = CGSize(width: 1000, height: 1000)
         let aspectScaledToFitImage = chosenImage.af_imageAspectScaled(toFit: size)
         
-        let imageData:Data! = UIImageJPEGRepresentation(aspectScaledToFitImage, 0.7)
+        let imageData:Data! = UIImageJPEGRepresentation(aspectScaledToFitImage, 0.4)
         let imageBytes:[UInt8] = Array(imageData)
         
         let parameters: [String: Any] = [
