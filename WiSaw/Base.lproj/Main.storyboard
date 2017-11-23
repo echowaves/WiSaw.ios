@@ -31,11 +31,6 @@
                                                 <action selector="contactUsButtonClicked:" destination="BYZ-38-t0r" id="fdq-8Y-ffN"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="camera" id="iK5-ij-Tbs">
-                                            <connections>
-                                                <action selector="openCameraButtonClicked:" destination="BYZ-38-t0r" id="FYJ-85-uRh"/>
-                                            </connections>
-                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -74,12 +69,20 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dp0-Qd-DeS">
+                                <rect key="frame" x="192.33333333333334" y="706" width="30" height="30"/>
+                                <connections>
+                                    <action selector="openCameraButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="14G-Lm-khJ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="dp0-Qd-DeS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5UV-Tc-moI"/>
                             <constraint firstItem="aXx-v9-Py5" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="8Lu-6t-wvR"/>
                             <constraint firstItem="XfI-pR-7jy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="BvS-Se-IHU"/>
                             <constraint firstItem="XfI-pR-7jy" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Kpd-E1-7Pk"/>
+                            <constraint firstItem="dp0-Qd-DeS" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="QMu-F9-sgO"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="XfI-pR-7jy" secondAttribute="trailing" constant="20" id="Uq4-OT-AiI"/>
                             <constraint firstItem="aXx-v9-Py5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Wwd-rl-vHY"/>
                             <constraint firstItem="XfI-pR-7jy" firstAttribute="top" secondItem="aXx-v9-Py5" secondAttribute="bottom" id="bDc-tF-pHf"/>
@@ -88,14 +91,14 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="cameraButton" destination="iK5-ij-Tbs" id="Odo-2T-Df9"/>
+                        <outlet property="cameraButton" destination="dp0-Qd-DeS" id="IJx-bJ-w6A"/>
                         <outlet property="collectionView" destination="XfI-pR-7jy" id="PKe-2t-9Yd"/>
                         <outlet property="contactUsButton" destination="RHO-tR-7z2" id="93C-nH-HpH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="120" y="115"/>
+            <point key="canvasLocation" x="118.84057971014494" y="114.94565217391305"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="7Ud-6o-nMh">
@@ -252,7 +255,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AQz-zg-gp3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="119" y="837"/>
+            <point key="canvasLocation" x="118" y="972"/>
         </scene>
     </scenes>
 </document>

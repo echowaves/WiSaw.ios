@@ -22,11 +22,14 @@ class ViewControllerUtils {
      @param uiView - add activity indicator to this view
      */
     func showActivityIndicator(uiView: UIView) {
-        activityIndicator.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0);
+        uiView.addSubview(activityIndicator)
+//        activityIndicator.frame = CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0);
+//        activityIndicator.sizeToFit()
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
+        activityIndicator.color = UIColor.darkGray
         activityIndicator.center = uiView.center
         
-        uiView.addSubview(activityIndicator)
+        
         activityIndicator.startAnimating()
     }
     

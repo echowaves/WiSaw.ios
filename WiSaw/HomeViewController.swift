@@ -21,7 +21,7 @@ class HomeViewController:
     UINavigationControllerDelegate,
 CLLocationManagerDelegate {
     @IBOutlet weak var contactUsButton: UIBarButtonItem!
-    @IBOutlet weak var cameraButton: UIBarButtonItem!
+    @IBOutlet weak var cameraButton: UIButton!
     
     var refreshControl: UIRefreshControl!
 
@@ -48,7 +48,8 @@ CLLocationManagerDelegate {
         
         
         contactUsButton.image = UIImage.fontAwesomeIcon(name: .lifeSaver, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
-        cameraButton.image = UIImage.fontAwesomeIcon(name: .camera, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+        cameraButton.setImage( UIImage.fontAwesomeIcon(name: .camera, textColor: UIColor.black, size: CGSize(width: 60, height: 60)), for: UIControlState.normal)
+        
         
         appDelegate = UIApplication.shared.delegate as! AppDelegate
         uuid = appDelegate.uuid
@@ -396,5 +397,11 @@ CLLocationManagerDelegate {
         
     }
     
+    
+    //lock orientation to portratin
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.portrait
+    }
+    //lock orientation to portratin
 }
 
