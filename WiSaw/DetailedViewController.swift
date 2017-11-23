@@ -62,7 +62,7 @@ class DetailedViewController:
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
         if let image = appDelegate.imagesCache[photoId] { // get image from cache
-            self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+            viewControllerUtils.hideActivityIndicator(uiView: self.view)
             self.imageView.image = image
         } else {
         

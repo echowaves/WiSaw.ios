@@ -22,18 +22,15 @@ class ViewControllerUtils {
      @param uiView - add activity indicator to this view
      */
     func showActivityIndicator(uiView: UIView) {
-        uiView.addSubview(activityIndicator)
-//        activityIndicator.frame = CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0);
-        activityIndicator.frame = CGRect(x:uiView.frame.size.width/2 - 25, y:uiView.frame.size.height-100, width: 50, height: 0)
+        activityIndicator.frame = CGRect(x: uiView.frame.size.width/2 - 25, y: uiView.frame.size.height-150, width: 50, height: 50)
+        activityIndicator.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        activityIndicator.layer.cornerRadius = 25
 
-
-//        activityIndicator.sizeToFit()
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
         activityIndicator.color = UIColor.darkGray
-//        activityIndicator.center = uiView.center
-        
-        
+
         activityIndicator.startAnimating()
+        uiView.addSubview(activityIndicator)
     }
     
     /*
@@ -43,7 +40,7 @@ class ViewControllerUtils {
      @param uiView - remove activity indicator from this view
      */
     func hideActivityIndicator(uiView: UIView) {
-        activityIndicator.stopAnimating()
+//        activityIndicator.stopAnimating()
         activityIndicator.removeFromSuperview()
     }
     

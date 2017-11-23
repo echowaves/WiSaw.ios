@@ -51,6 +51,7 @@ CLLocationManagerDelegate {
         cameraButton.setImage( UIImage.fontAwesomeIcon(name: .camera, textColor: UIColor.black, size: CGSize(width: 60, height: 60)), for: UIControlState.normal)
         
         
+        
         appDelegate = UIApplication.shared.delegate as! AppDelegate
         uuid = appDelegate.uuid
         
