@@ -63,11 +63,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("photo id: \(params!["$photo_id"]!)")
                 // Option 1: read deep link data
                 
-//                // Option 3: display data
-//                let alert = UIAlertController(title: "Deep link data", message: "\(data)", preferredStyle: .alert)
-//                alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-//                self.window?.rootViewController?.present(alert, animated: true, completion: nil)
-//
+                
+                let sharedViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SharedViewController") as! SharedViewController
+                
+                sharedViewController.photoId = (params!["$photo_id"]! as! NSString).integerValue
+                
+                 self.window?.rootViewController?.present(sharedViewController, animated: true) {
+                    print("showing SharedViewController")
+                }
+                
+                
 
                 
                 

@@ -18,12 +18,10 @@ class SharedViewController:
     UIScrollViewDelegate
      {
     
-//    var photos: [Any] = []
-//    var pageIndex = 0
     
     var photoId: Int!
     var uuid: String!
-    var photoJSON: [String: Any]!
+//    var photoJSON: [String: Any]!
     
     let viewControllerUtils = ViewControllerUtils()
 
@@ -47,27 +45,25 @@ class SharedViewController:
         trashButton.image = UIImage.fontAwesomeIcon(name: .trash, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
         shareButton.setImage( UIImage.fontAwesomeIcon(name: .share, textColor: UIColor.black, size: CGSize(width: 60, height: 60)), for: UIControlState.normal)
 
+        
+        reportAbuseButton.isEnabled = false
+        trashButton.isEnabled = false
+        shareButton.isHidden = true
+
+        
         viewControllerUtils.showActivityIndicator(uiView: self.view)
         
         
 //        let photoJSON = self.photos[pageIndex] as! [String: Any]
-        photoId = photoJSON["id"] as! Int
-        uuid = photoJSON["uuid"] as! String
+//        photoId = photoJSON["id"] as! Int
+//        uuid = photoJSON["uuid"] as! String
 
         
         
         
-        let thumbNailJson = photoJSON["thumbNail"] as! [String: Any]
-        let imageDataArray = thumbNailJson["data"] as! [UInt8]
-        let imageData = Data(bytes: imageDataArray)
-        self.imageView.image = UIImage(data:imageData as Data)
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-        if let image = appDelegate.imagesCache[photoId] { // get image from cache
-            viewControllerUtils.hideActivityIndicator(uiView: self.view)
-            self.imageView.image = image
-        } else {
         
             Alamofire.request("https://www.wisaw.com/api/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
                 .responseJSON { response in
@@ -82,12 +78,17 @@ class SharedViewController:
                                 let imageDataArray = imageDataJson["data"] as! [UInt8]
                                 let imageData = Data(bytes: imageDataArray)
                                 
+                                self.uuid = photoJson["uuid"] as! String
                                 self.imageView.image = UIImage(data:imageData as Data)
                                 appDelegate.imagesCache[self.photoId] = self.imageView.image
+                                
+                                self.reportAbuseButton.isEnabled = true
+                                self.trashButton.isEnabled = true
+                                self.shareButton.isHidden = false
+
                             }
                         }
                     }
-            }
         }
     }
     
