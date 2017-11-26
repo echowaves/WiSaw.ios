@@ -13,7 +13,7 @@ import FontAwesome_swift
 import Branch
 
 
-class DetailedViewController:
+class SharedViewController:
     UIViewController,
     UIScrollViewDelegate
      {
@@ -186,45 +186,7 @@ class DetailedViewController:
     }
     
     
-    
-    
     @IBAction func shareButtonClicked(_ sender: Any) {
-        let buo = BranchUniversalObject(canonicalIdentifier: "photo/\(photoId!)")
-//        buo.canonicalUrl = "https://example.com/content/123"
-        buo.title = "Photo \(photoId!) shared"
-//        buo.contentDescription = "Content 123 Description \(Date())"
-//        buo.imageUrl = "http://lorempixel.com/400/400/"
-//        buo.price = 12.12
-//        buo.currency = "USD"
-    
-        buo.contentIndexMode = .private
-        buo.automaticallyListOnSpotlight = false
-//        buo.addMetadataKey("photoId", value: "\(photoId!)")
-        
-        
-        let lp: BranchLinkProperties = BranchLinkProperties()
-        lp.channel = "direct"
-        lp.feature = "sharing"
-        lp.campaign = "photo sharing"
-//        lp.stage = "new user"
-//        lp.tags = ["one", "two", "three"]
-        
-//        lp.addControlParam("$desktop_url", withValue: "http://example.com/desktop")
-//        lp.addControlParam("$ios_url", withValue: "http://example.com/ios")
-//        lp.addControlParam("$ipad_url", withValue: "http://example.com/ios")
-//        lp.addControlParam("$android_url", withValue: "http://example.com/android")
-//        lp.addControlParam("$match_duration", withValue: "2000")
-//
-//        lp.addControlParam("custom_data", withValue: "yes")
-//        lp.addControlParam("look_at", withValue: "this")
-        lp.addControlParam("$photo_id", withValue: "\(photoId!)")
-//        lp.addControlParam("random", withValue: UUID.init().uuidString)
-        
-        let message = "Check out what I saw today:"
-        buo.showShareSheet(with: lp, andShareText: message, from: self) { (activityType, completed) in
-            print("shared")
-        }
-        
     }
     
 }

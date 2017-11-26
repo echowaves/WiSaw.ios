@@ -17,6 +17,7 @@
 		0A53655A1F9EA32F0071BF65 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A5365591F9EA32F0071BF65 /* Default-568h@2x.png */; };
 		0A754D9D1FA3E8C000D18251 /* ContactFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A754D9C1FA3E8C000D18251 /* ContactFormViewController.swift */; };
 		0A9C32301F9A2FF7007AC177 /* CellClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9C322F1F9A2FF7007AC177 /* CellClass.swift */; };
+		0AB5AC1F1FCA48CB00463A13 /* SharedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB5AC1E1FCA48CB00463A13 /* SharedViewController.swift */; };
 		0AF315EB1FB60092004DCD67 /* ViewControllerUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF315EA1FB60092004DCD67 /* ViewControllerUtils.swift */; };
 		9A5EFEE93C53C77A23373B0A /* Pods_WiSaw.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D6DC6FE81B70C623DB127D /* Pods_WiSaw.framework */; };
 /* End PBXBuildFile section */
@@ -34,7 +35,9 @@
 		0A5365591F9EA32F0071BF65 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		0A754D9C1FA3E8C000D18251 /* ContactFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactFormViewController.swift; sourceTree = "<group>"; };
 		0A9C322F1F9A2FF7007AC177 /* CellClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellClass.swift; sourceTree = "<group>"; };
+		0AB5AC1E1FCA48CB00463A13 /* SharedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedViewController.swift; sourceTree = "<group>"; };
 		0AF315EA1FB60092004DCD67 /* ViewControllerUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerUtils.swift; sourceTree = "<group>"; };
+		0AF8D7F91FCA21A700D7CDA5 /* WiSaw.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WiSaw.entitlements; sourceTree = "<group>"; };
 		3368ECC188274B7A4D1F94E2 /* Pods-WiSaw.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WiSaw.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WiSaw/Pods-WiSaw.debug.xcconfig"; sourceTree = "<group>"; };
 		99FF5F01D6B131F5B150D1B1 /* Pods_Echowaves.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Echowaves.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0D6DC6FE81B70C623DB127D /* Pods_WiSaw.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WiSaw.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,10 +78,12 @@
 		0A48FDA21F983CCA0004F72B /* WiSaw */ = {
 			isa = PBXGroup;
 			children = (
+				0AF8D7F91FCA21A700D7CDA5 /* WiSaw.entitlements */,
 				0A48FDA31F983CCA0004F72B /* AppDelegate.swift */,
 				0A48FDA51F983CCA0004F72B /* HomeViewController.swift */,
 				0A1D46561FB91E0700965A73 /* PageViewController.swift */,
 				0A2B046A1F9E7AD70003BF0C /* DetailedViewController.swift */,
+				0AB5AC1E1FCA48CB00463A13 /* SharedViewController.swift */,
 				0A754D9C1FA3E8C000D18251 /* ContactFormViewController.swift */,
 				0A9C322F1F9A2FF7007AC177 /* CellClass.swift */,
 				0A48FDA71F983CCA0004F72B /* Main.storyboard */,
@@ -145,6 +150,11 @@
 					0A48FD9F1F983CCA0004F72B = {
 						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -203,6 +213,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-WiSaw/Pods-WiSaw-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Branch/Branch.framework",
 				"${BUILT_PRODUCTS_DIR}/FontAwesome.swift/FontAwesome_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
 			);
@@ -210,6 +221,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Branch.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FontAwesome_swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
 			);
@@ -261,6 +273,7 @@
 				0A754D9D1FA3E8C000D18251 /* ContactFormViewController.swift in Sources */,
 				0A1D46571FB91E0700965A73 /* PageViewController.swift in Sources */,
 				0A48FDA61F983CCA0004F72B /* HomeViewController.swift in Sources */,
+				0AB5AC1F1FCA48CB00463A13 /* SharedViewController.swift in Sources */,
 				0AF315EB1FB60092004DCD67 /* ViewControllerUtils.swift in Sources */,
 				0A2B046B1F9E7AD70003BF0C /* DetailedViewController.swift in Sources */,
 				0A48FDA41F983CCA0004F72B /* AppDelegate.swift in Sources */,
@@ -402,6 +415,7 @@
 			baseConfigurationReference = 3368ECC188274B7A4D1F94E2 /* Pods-WiSaw.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WiSaw/WiSaw.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 33P3Q88Y8K;
@@ -422,6 +436,7 @@
 			baseConfigurationReference = C8CBE544228A15CCEE0293E8 /* Pods-WiSaw.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WiSaw/WiSaw.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 33P3Q88Y8K;

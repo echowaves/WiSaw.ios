@@ -8,6 +8,7 @@
 
 import Fabric
 import Crashlytics
+import Branch
 
 
 import UIKit
@@ -45,6 +46,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("UUID:", uuid!)
         
         Fabric.with([Crashlytics.self])
+        
+        
+        // for debug and development only
+        Branch.getInstance().setDebug()
+        // listener for Branch Deep Link data
+        let branch: Branch = Branch.getInstance()
+
+        branch.initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: {params, error in
+            
+            if error == nil && params!["+clicked_branch_link"] != nil && params!["$photo_id"] != nil {
+                print("clicked picture link!")
+                // load the view to show the picture
+                
+                print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ deep linking:")
+                print("photo id: \(params!["$photo_id"]!)")
+                // Option 1: read deep link data
+                
+//                // Option 3: display data
+//                let alert = UIAlertController(title: "Deep link data", message: "\(data)", preferredStyle: .alert)
+//                alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+//                self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+//
+
+                
+                
+            } else {
+                // load your normal view
+            }
+        })
+        
+        
+
+        
+        
+        
+        
         return true
     }
 
@@ -70,6 +107,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    
+    
+   // branch.io stuff
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        // handler for URI Schemes (depreciated in iOS 9.2+, but still used by some apps)
+        Branch.getInstance().application(app, open: url, options: options)
+        return true
+    }
+
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        // handler for Universal Links
+        Branch.getInstance().continue(userActivity)
+        return true
+    }
+
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        // handler for Push Notifications
+        Branch.getInstance().handlePushNotification(userInfo)
+    }
     
 }
 

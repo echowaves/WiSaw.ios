@@ -2,6 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wisaw</string>
+			</array>
+		</dict>
+	</array>
+	<key>branch_key</key>
+	<string>key_live_bfxOER1DaZ6pQzOMj9chBffdwFaB8vg4</string>
+	<key>branch_app_domain</key>
+	<string>link.wisaw.com</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -45,9 +58,9 @@
 	<key>NSContactsUsageDescription</key>
 	<string>Contacts may be used.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>When you allow the app to know your location, we will always be able to show what's happening around you.</string>
+	<string>When you allow the app to know your location, we will always be able to show what&apos;s happening around you.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>When you allow the app to know your location, we will be able to show what's happening around you while your using the app.</string>
+	<string>When you allow the app to know your location, we will be able to show what&apos;s happening around you while your using the app.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Photo will be stored in local gallery.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
