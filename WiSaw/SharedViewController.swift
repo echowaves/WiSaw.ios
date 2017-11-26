@@ -60,8 +60,6 @@ class SharedViewController:
 
         
         
-        
-        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
         
@@ -87,7 +85,16 @@ class SharedViewController:
                                 self.shareButton.isHidden = false
 
                             }
-                        }
+                        } else {
+                            let alert = UIAlertController(title: "Looks like this short lived photo has expired.", message: nil, preferredStyle: .alert)
+                            
+                            alert.addAction(UIAlertAction(title: "OK", style: .default) { (alert: UIAlertAction!) -> Void in
+                                //print("You pressed Cancel")
+                                self.dismiss(animated: true) {
+                                }
+                            })
+                            
+                            self.present(alert, animated: true, completion:nil)                        }
                     }
         }
     }
@@ -151,7 +158,7 @@ class SharedViewController:
                     .responseJSON { response in
                         self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                         if let statusCode = response.response?.statusCode {
-                            if(statusCode == 200) {
+                            if(statusCode == 201) {
                                 self.viewControllerUtils.showActivityIndicator(uiView: self.view)
                                 Alamofire.request("https://www.wisaw.com/api/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
                                     .responseJSON { response in
@@ -188,6 +195,7 @@ class SharedViewController:
     
     
     @IBAction func shareButtonClicked(_ sender: Any) {
+        DetailedViewController.share(photoId: photoId!, instance: self)
     }
     
 }

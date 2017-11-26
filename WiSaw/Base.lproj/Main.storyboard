@@ -297,7 +297,7 @@
                                     <constraint firstAttribute="height" constant="44" id="4XB-H4-Vpa"/>
                                 </constraints>
                                 <items>
-                                    <navigationItem id="xBQ-ZM-zr4">
+                                    <navigationItem title="shared today" id="xBQ-ZM-zr4">
                                         <barButtonItem key="leftBarButtonItem" title="cancel" id="F8y-6n-qz1">
                                             <connections>
                                                 <action selector="cancelButtonClicked:" destination="Xmb-bu-plI" id="TFz-mh-ZxF"/>
