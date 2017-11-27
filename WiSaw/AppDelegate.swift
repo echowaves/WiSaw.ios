@@ -64,12 +64,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // Option 1: read deep link data
                 
                 
-                let sharedViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SharedViewController") as! SharedViewController
+                let sharedViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SharingViewController") as! SharingViewController
                 
                 sharedViewController.photoId = (params!["$photo_id"]! as! NSString).integerValue
                 
                  self.window?.rootViewController?.present(sharedViewController, animated: true) {
-                    print("showing SharedViewController")
+                    print("showing SharingViewController")
                 }
                 
                 

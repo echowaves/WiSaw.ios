@@ -13,7 +13,7 @@ import FontAwesome_swift
 import Branch
 
 
-class SharedViewController:
+class SharingViewController:
     UIViewController,
     UIScrollViewDelegate
      {

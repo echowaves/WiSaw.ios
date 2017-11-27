@@ -70,7 +70,7 @@
                                 </cells>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dp0-Qd-DeS">
-                                <rect key="frame" x="192.33333333333334" y="706" width="30" height="30"/>
+                                <rect key="frame" x="192" y="706" width="30" height="30"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -283,10 +283,10 @@
             </objects>
             <point key="canvasLocation" x="118" y="972"/>
         </scene>
-        <!--Shared View Controller-->
+        <!--Sharing View Controller-->
         <scene sceneID="I8O-cy-bkG">
             <objects>
-                <viewController storyboardIdentifier="SharedViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Xmb-bu-plI" customClass="SharedViewController" customModule="WiSaw" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SharingViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Xmb-bu-plI" customClass="SharingViewController" customModule="WiSaw" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="D62-Ra-Bny">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
