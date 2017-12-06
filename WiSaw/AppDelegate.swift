@@ -68,7 +68,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 sharedViewController.photoId = (params!["$photo_id"]! as! NSString).integerValue
                 
-                 self.window?.rootViewController?.present(sharedViewController, animated: true) {
+                self.window?.rootViewController?.dismiss(animated: true, completion: nil)
+
+                self.window?.rootViewController?.present(sharedViewController, animated: true) {
                     print("showing SharingViewController")
                 }
                 
