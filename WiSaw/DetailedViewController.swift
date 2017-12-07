@@ -197,7 +197,7 @@ class DetailedViewController:
         //        buo.canonicalUrl = "https://example.com/content/123"
         buo.title = "Photo \(photoId) shared"
         //        buo.contentDescription = "Content 123 Description \(Date())"
-        //        buo.imageUrl = "http://lorempixel.com/400/400/"
+                buo.imageUrl = "https://www.wisaw.com/api/photos/\(photoId)/thumb"
         //        buo.price = 12.12
         //        buo.currency = "USD"
         
