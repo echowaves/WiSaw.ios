@@ -194,17 +194,15 @@ class DetailedViewController:
 
     class func share(photoId: Int, instance: UIViewController) {
         let buo = BranchUniversalObject(canonicalIdentifier: "photo/\(photoId)")
-        //        buo.canonicalUrl = "https://example.com/content/123"
-        buo.title = "Photo \(photoId) shared"
-        //        buo.contentDescription = "Content 123 Description \(Date())"
-                buo.imageUrl = "https://www.wisaw.com/api/photos/\(photoId)/thumb"
+        buo.canonicalUrl = "https://www.wisaw.com/api/photos/\(photoId)/thumb"
+        buo.title = "What I saw today:"
+        buo.contentDescription = "Photo \(photoId) shared"
+        buo.imageUrl = "https://www.wisaw.com/api/photos/\(photoId)/thumb"
         //        buo.price = 12.12
         //        buo.currency = "USD"
         
-        buo.contentIndexMode = .private
-        buo.automaticallyListOnSpotlight = false
-        //        buo.addMetadataKey("photoId", value: "\(photoId!)")
-        
+        buo.contentIndexMode = .public
+        buo.automaticallyListOnSpotlight = true
         
         let lp: BranchLinkProperties = BranchLinkProperties()
         lp.channel = "direct"
@@ -213,11 +211,12 @@ class DetailedViewController:
         //        lp.stage = "new user"
         //        lp.tags = ["one", "two", "three"]
         
-        //        lp.addControlParam("$desktop_url", withValue: "http://example.com/desktop")
-        //        lp.addControlParam("$ios_url", withValue: "http://example.com/ios")
-        //        lp.addControlParam("$ipad_url", withValue: "http://example.com/ios")
-        //        lp.addControlParam("$android_url", withValue: "http://example.com/android")
-        //        lp.addControlParam("$match_duration", withValue: "2000")
+//                lp.addControlParam("$desktop_url", withValue: "https://www.wisaw.com/api/photos/\(photoId)/thumb")
+//                lp.addControlParam("$ios_url", withValue: "https://www.wisaw.com/api/photos/\(photoId)/thumb")
+//                lp.addControlParam("$ipad_url", withValue: "https://www.wisaw.com/api/photos/\(photoId)/thumb")
+//                lp.addControlParam("$android_url", withValue: "https://www.wisaw.com/api/photos/\(photoId)/thumb")
+//                lp.addControlParam("$match_duration", withValue: "2000")
+
         //
         //        lp.addControlParam("custom_data", withValue: "yes")
         //        lp.addControlParam("look_at", withValue: "this")
