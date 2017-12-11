@@ -22,6 +22,11 @@ class HomeViewController:
 CLLocationManagerDelegate {
     @IBOutlet weak var contactUsButton: UIBarButtonItem!
     @IBOutlet weak var cameraButton: UIButton!
+    @IBOutlet weak var uploadCounterButton: UIButton!
+    
+    private var urlSessionConfiguration: URLSessionConfiguration!
+    private var uploadSessionManager:SessionManager!
+    
     
     var refreshControl: UIRefreshControl!
 
@@ -45,6 +50,10 @@ CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+
+        urlSessionConfiguration = URLSessionConfiguration.background(withIdentifier: "upload-session")
+        urlSessionConfiguration!.httpMaximumConnectionsPerHost = 1
+        uploadSessionManager = Alamofire.SessionManager(configuration: urlSessionConfiguration!)
         
         
         contactUsButton.image = UIImage.fontAwesomeIcon(name: .lifeSaver, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
@@ -288,25 +297,50 @@ CLLocationManagerDelegate {
             "imageData": imageBytes
         ]
 
-        viewControllerUtils.showActivityIndicator(uiView: self.view)
-        Alamofire.request("https://www.wisaw.com/api/photos", method: .post, parameters: parameters, encoding: JSONEncoding.default)
-            .responseJSON { response in
-                self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
-                if let statusCode = response.response?.statusCode {
-                    if(statusCode == 401) {
-                        
-                                    let ac = UIAlertController(title: "Unauthorized", message: "Sorry, looks like you are banned from WiSaw.", preferredStyle: .alert)
-                                    ac.addAction(UIAlertAction(title: "OK", style: .default))
-                                    self.present(ac, animated: true)
+//        viewControllerUtils.showActivityIndicator(uiView: self.view)
+        
+        
+//        let queue = DispatchQueue(label: "com.echowaves.upload-queue", qos: .utility) // crete synchonous queue
+        
+        uploadSessionManager!.request("https://www.wisaw.com/api/photos", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .response(
+                responseSerializer: DataRequest.jsonResponseSerializer(),
+                completionHandler: { response in
+                    //                self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                     
+                    self.updateCounter()
+                    
+                    if let statusCode = response.response?.statusCode {
+                        if(statusCode == 401) {
+                            let ac = UIAlertController(title: "Unauthorized", message: "Sorry, looks like you are banned from WiSaw.", preferredStyle: .alert)
+                            ac.addAction(UIAlertAction(title: "OK", style: .default))
+                            self.present(ac, animated: true)                            
+                        }
                     }
-                self.loadImages()
-                }
-        }
-        
-        
+            })
+        self.updateCounter()
         
     }
+
+    private func updateCounter() {
+        uploadSessionManager!.session.getAllTasks { tasks in
+            DispatchQueue.main.async {
+                // Update the UI to indicate the work has been completed
+                if(tasks.count == 0) {
+                    self.uploadCounterButton!.isHidden = true
+                    self.loadImages()
+                } else {
+                    self.uploadCounterButton!.isHidden = false
+                    self.uploadCounterButton!.setTitle(String(tasks.count) , for: .normal)
+                }
+            }
+            //            tasks.forEach {
+            //                $0.cancel()
+            //            }
+        }
+    }
+
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         loadImages()
         dismiss(animated: true, completion: nil)
@@ -327,7 +361,7 @@ CLLocationManagerDelegate {
 //            present(ac, animated: true)
 //        }
         
-        loadImages()
+//        loadImages()
     }
     
     
@@ -404,5 +438,23 @@ CLLocationManagerDelegate {
         return UIInterfaceOrientationMask.portrait
     }
     //lock orientation to portratin
+    
+    
+//    func uploadThread() {
+//
+//        DispatchQueue.global(qos: .background).async {
+//            var i = 0
+//            while(true) {
+//                // Do some background work
+//                DispatchQueue.main.async {
+//                    // Update the UI to indicate the work has been completed
+//                    self.uploadCounterButton!.setTitle(String(i) , for: .normal)
+//                }
+//
+//                sleep(3)
+//                i += 1
+//            }
+//        }
+//    }
 }
 
