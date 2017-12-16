@@ -74,7 +74,6 @@ CLLocationManagerDelegate {
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         collectionView.addSubview(refreshControl) // not required when using UITableViewController
         
-        
     }
     
     
@@ -100,7 +99,7 @@ CLLocationManagerDelegate {
         
         
         if(tandc == nil) {
-            let alert = UIAlertController(title: "* When you take a photo with WiSaw, it gets added to your Photo AlbUm and will be posted to GEO feed.\n* People close by can see your photo for 24 hours.\n* If you find any photo abusive or inappropriate, you can delete it from the feed, which will remove it from the cloud.\n* We will not tolerate objectionable content or abusive users.\n* The abusive users will be banned from WiSaw.", message: "By using WiSaw I agree to Terms and Conditions.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "* When you take a photo with WiSaw, it gets added to your Photo Album and will be posted to GEO feed.\n* People close by can see your photo for 24 hours.\n* If you find any photo abusive or inappropriate, you can delete it from the feed, which will remove it from the cloud.\n* We will not tolerate objectionable content or abusive users.\n* The abusive users will be banned from WiSaw.", message: "By using WiSaw I agree to Terms and Conditions.", preferredStyle: .alert)
             
             alert.addAction(
                 UIAlertAction(title: "Agree", style: .destructive) { (alert: UIAlertAction!) -> Void in
@@ -326,12 +325,24 @@ CLLocationManagerDelegate {
         uploadSessionManager!.session.getAllTasks { tasks in
             DispatchQueue.main.async {
                 // Update the UI to indicate the work has been completed
+                
                 if(tasks.count == 0) {
                     self.uploadCounterButton!.isHidden = true
                     self.loadImages()
                 } else {
                     self.uploadCounterButton!.isHidden = false
                     self.uploadCounterButton!.setTitle(String(tasks.count) , for: .normal)
+                    
+                    //        http://seanallen.co/posts/uibutton-animations
+                    let flash = CABasicAnimation(keyPath: "opacity")
+                    flash.duration = 0.5
+                    flash.fromValue = 1
+                    flash.toValue = 0.1
+                    flash.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                    flash.autoreverses = true
+                    flash.repeatCount = .infinity
+                    self.uploadCounterButton.layer.add(flash, forKey: nil)
+
                 }
             }
             //            tasks.forEach {
