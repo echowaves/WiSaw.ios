@@ -27,11 +27,10 @@ CLLocationManagerDelegate {
     private var urlSessionConfiguration: URLSessionConfiguration!
     private var uploadSessionManager:SessionManager!
     
-    
     var refreshControl: UIRefreshControl!
-
+    
     let picker = UIImagePickerController()
-
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     var locationManager:CLLocationManager!
@@ -50,7 +49,7 @@ CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
+        
         urlSessionConfiguration = URLSessionConfiguration.background(withIdentifier: "upload-session")
         urlSessionConfiguration!.httpMaximumConnectionsPerHost = 1
         uploadSessionManager = Alamofire.SessionManager(configuration: urlSessionConfiguration!)
@@ -64,7 +63,7 @@ CLLocationManagerDelegate {
         appDelegate = UIApplication.shared.delegate as! AppDelegate
         uuid = appDelegate.uuid
         
-
+        
         picker.delegate = self
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -109,7 +108,7 @@ CLLocationManagerDelegate {
             
             
             present(alert, animated: true, completion:nil)
-           
+            
         } else {
             appDelegate.tandc = tandc!
         }
@@ -223,7 +222,7 @@ CLLocationManagerDelegate {
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("item clicked: \(indexPath.row)")
-
+        
         
         
         let pageViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PageViewController") as! PageViewController
@@ -237,7 +236,7 @@ CLLocationManagerDelegate {
         }
         
     }
-
+    
     
     @IBAction func openCameraButtonClicked(_ sender: Any) {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
@@ -272,13 +271,11 @@ CLLocationManagerDelegate {
     //MARK: - Delegates
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
     {
+        
         //this is where we have to store locally and upload the photo
-        var chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage //2        
+        var chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage //2
         chosenImage = self.imageOrientation(chosenImage)
         
-        
-        // save to photo albom
-        UIImageWriteToSavedPhotosAlbum(chosenImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
         
         // send over to the API
         let size = CGSize(width: 1000, height: 1000)
@@ -288,20 +285,20 @@ CLLocationManagerDelegate {
         let imageBytes:[UInt8] = Array(imageData)
         
         let parameters: [String: Any] = [
-            "uuid" : uuid,
+            "uuid" : self.uuid,
             "location" : [
                 "type": "Point",
-                "coordinates": [ lattitude!, longitude!]
+                "coordinates": [ self.lattitude!, self.longitude!]
             ],
             "imageData": imageBytes
         ]
-
-//        viewControllerUtils.showActivityIndicator(uiView: self.view)
         
         
-//        let queue = DispatchQueue(label: "com.echowaves.upload-queue", qos: .utility) // crete synchonous queue
+        // save to photo album
+        UIImageWriteToSavedPhotosAlbum(chosenImage, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
         
-        uploadSessionManager!.request("https://www.wisaw.com/api/photos", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        
+        self.uploadSessionManager!.request("https://www.wisaw.com/api/photos", method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .response(
                 responseSerializer: DataRequest.jsonResponseSerializer(),
                 completionHandler: { response in
@@ -313,15 +310,16 @@ CLLocationManagerDelegate {
                         if(statusCode == 401) {
                             let ac = UIAlertController(title: "Unauthorized", message: "Sorry, looks like you are banned from WiSaw.", preferredStyle: .alert)
                             ac.addAction(UIAlertAction(title: "OK", style: .default))
-                            self.present(ac, animated: true)                            
+                            self.present(ac, animated: true)
                         }
                     }
             })
         self.updateCounter()
         
     }
-
+    
     private func updateCounter() {
+        
         uploadSessionManager!.session.getAllTasks { tasks in
             DispatchQueue.main.async {
                 // Update the UI to indicate the work has been completed
@@ -342,15 +340,12 @@ CLLocationManagerDelegate {
                     flash.autoreverses = true
                     flash.repeatCount = .infinity
                     self.uploadCounterButton.layer.add(flash, forKey: nil)
-
+                    
                 }
             }
-            //            tasks.forEach {
-            //                $0.cancel()
-            //            }
         }
     }
-
+    
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         loadImages()
@@ -360,19 +355,21 @@ CLLocationManagerDelegate {
     //MARK: - Add image to Library
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         dismiss(animated: true, completion: nil)
+        // save image to document directory
+        self.saveImage(image: image)
         
-//        if let error = error {
-//            // we got back an error!
-//            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
-//            ac.addAction(UIAlertAction(title: "OK", style: .default))
-//            present(ac, animated: true)
-//        } else {
-//            let ac = UIAlertController(title: "Saved!", message: "Your image has been saved to your photos.", preferredStyle: .alert)
-//            ac.addAction(UIAlertAction(title: "OK", style: .default))
-//            present(ac, animated: true)
-//        }
+        //        if let error = error {
+        //            // we got back an error!
+        //            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
+        //            ac.addAction(UIAlertAction(title: "OK", style: .default))
+        //            present(ac, animated: true)
+        //        } else {
+        //            let ac = UIAlertController(title: "Saved!", message: "Your image has been saved to your photos.", preferredStyle: .alert)
+        //            ac.addAction(UIAlertAction(title: "OK", style: .default))
+        //            present(ac, animated: true)
+        //        }
         
-//        loadImages()
+        //        loadImages()
     }
     
     
@@ -429,7 +426,7 @@ CLLocationManagerDelegate {
         
         return img
     }
-
+    
     
     
     @IBAction func contactUsButtonClicked(_ sender: Any) {
@@ -439,7 +436,7 @@ CLLocationManagerDelegate {
         present(contactFormViewController, animated: true) {
             print("showing detailed image")
         }
-
+        
         
     }
     
@@ -449,23 +446,38 @@ CLLocationManagerDelegate {
         return UIInterfaceOrientationMask.portrait
     }
     //lock orientation to portratin
+
     
     
-//    func uploadThread() {
-//
-//        DispatchQueue.global(qos: .background).async {
-//            var i = 0
-//            while(true) {
-//                // Do some background work
-//                DispatchQueue.main.async {
-//                    // Update the UI to indicate the work has been completed
-//                    self.uploadCounterButton!.setTitle(String(i) , for: .normal)
-//                }
-//
-//                sleep(3)
-//                i += 1
-//            }
-//        }
-//    }
+    
+    func saveImage(image: UIImage){
+        //        let dateFormatter = DateFormatter()
+        let currentDate = Date()
+        let imageName = "wisaw-\(currentDate.hashValue).png"
+        
+        //get the PNG data for this image
+        let data = UIImagePNGRepresentation(image)
+        //get the image path
+        let filename = getDocumentsDirectory().appendingPathComponent(imageName)
+        try? data!.write(to: filename)
+
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!getImagesToUpload() - \(self.getImagesToUpload().count)")
+    }
+
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    
+    
+
+    func getImagesToUpload() -> [URL] {
+        // Full path to documents directory
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let directoryContents = try? FileManager.default.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil, options: [])
+
+        return directoryContents!.filter { $0.absoluteString.contains("wisaw-") }
+    }
+    
 }
 
