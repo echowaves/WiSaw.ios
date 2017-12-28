@@ -54,11 +54,8 @@ CLLocationManagerDelegate {
         urlSessionConfiguration!.httpMaximumConnectionsPerHost = 1
         uploadSessionManager = Alamofire.SessionManager(configuration: urlSessionConfiguration!)
         
-        
         contactUsButton.image = UIImage.fontAwesomeIcon(name: .lifeSaver, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
         cameraButton.setImage( UIImage.fontAwesomeIcon(name: .camera, textColor: UIColor.black, size: CGSize(width: 60, height: 60)), for: UIControlState.normal)
-        
-        
         
         appDelegate = UIApplication.shared.delegate as! AppDelegate
         uuid = appDelegate.uuid
@@ -73,6 +70,16 @@ CLLocationManagerDelegate {
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         collectionView.addSubview(refreshControl) // not required when using UITableViewController
         
+        //        http://seanallen.co/posts/uibutton-animations
+        let flash = CABasicAnimation(keyPath: "opacity")
+        flash.duration = 0.5
+        flash.fromValue = 1
+        flash.toValue = 0.1
+        flash.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        flash.autoreverses = true
+        flash.repeatCount = .infinity
+        uploadCounterButton.layer.add(flash, forKey: nil)
+        
     }
     
     
@@ -81,8 +88,6 @@ CLLocationManagerDelegate {
         loadImages()
         self.refreshControl?.endRefreshing()
     }
-    
-    
     
     
     
@@ -105,28 +110,17 @@ CLLocationManagerDelegate {
                     KeychainWrapper.standard.set(true, forKey: "WiSaw-tandc")
                     self.appDelegate.tandc = true
             })
-            
-            
             present(alert, animated: true, completion:nil)
-            
         } else {
             appDelegate.tandc = tandc!
         }
-        
-        
-        
     }
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         determineMyCurrentLocation()
-        
     }
-    
-    
     
     func determineMyCurrentLocation() {
         locationManager = CLLocationManager()
@@ -140,7 +134,7 @@ CLLocationManagerDelegate {
         }
     }
     
-    
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation:CLLocation = locations[0] as CLLocation
         
@@ -157,11 +151,11 @@ CLLocationManagerDelegate {
         print("user longitude = \(longitude!)")
         
         loadImages()
-        
     }
     
     
     func loadImages() {
+
         // load images here, can only do it after the gps data is obtained
         let parameters: [String: Any] = [
             "location" : [
@@ -183,14 +177,13 @@ CLLocationManagerDelegate {
                     }
                 }
                 self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+                self.uploadImage()
         }
-        
     }
     
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
-    {
-        print("Error \(error)")
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Location manager failed with an Error: \(error)")
     }
     
     override func didReceiveMemoryWarning() {
@@ -199,10 +192,10 @@ CLLocationManagerDelegate {
     }
     
     
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photos.count
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:CellClass = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as! CellClass
@@ -222,14 +215,11 @@ CLLocationManagerDelegate {
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("item clicked: \(indexPath.row)")
-        
-        
-        
+    
         let pageViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PageViewController") as! PageViewController
         
         pageViewController.photos = self.photos
         pageViewController.pageIndex = indexPath.row
-        
         
         present(pageViewController, animated: true) {
             print("showing PageViewController")
@@ -241,7 +231,6 @@ CLLocationManagerDelegate {
     @IBAction func openCameraButtonClicked(_ sender: Any) {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                
                 picker.delegate = self
                 picker.sourceType = .camera;
                 picker.allowsEditing = false
@@ -252,7 +241,8 @@ CLLocationManagerDelegate {
         }
     }
     
-    func noCamera(){
+    
+    func noCamera() {
         let alertVC = UIAlertController(
             title: "No Camera",
             message: "Sorry, this device has no camera",
@@ -268,6 +258,7 @@ CLLocationManagerDelegate {
             completion: nil)
     }
     
+    
     //MARK: - Delegates
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
     {
@@ -276,79 +267,117 @@ CLLocationManagerDelegate {
         var chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage //2
         chosenImage = self.imageOrientation(chosenImage)
         
-        
-        // send over to the API
-        let size = CGSize(width: 1000, height: 1000)
-        let aspectScaledToFitImage = chosenImage.af_imageAspectScaled(toFit: size)
-        
-        let imageData:Data! = UIImageJPEGRepresentation(aspectScaledToFitImage, 0.4)
-        let imageBytes:[UInt8] = Array(imageData)
-        
-        let parameters: [String: Any] = [
-            "uuid" : self.uuid,
-            "location" : [
-                "type": "Point",
-                "coordinates": [ self.lattitude!, self.longitude!]
-            ],
-            "imageData": imageBytes
-        ]
-        
-        
         // save to photo album
         UIImageWriteToSavedPhotosAlbum(chosenImage, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+        uploadImage()
+    }
+    
+    
+    private func uploadImage() {
+        updateCounter()
         
-        
-        self.uploadSessionManager!.request("https://www.wisaw.com/api/photos", method: .post, parameters: parameters, encoding: JSONEncoding.default)
-            .response(
-                responseSerializer: DataRequest.jsonResponseSerializer(),
-                completionHandler: { response in
-                    //                self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
-                    
-                    self.updateCounter()
-                    
-                    if let statusCode = response.response?.statusCode {
-                        if(statusCode == 401) {
-                            let ac = UIAlertController(title: "Unauthorized", message: "Sorry, looks like you are banned from WiSaw.", preferredStyle: .alert)
-                            ac.addAction(UIAlertAction(title: "OK", style: .default))
-                            self.present(ac, animated: true)
-                        }
-                    }
-            })
-        self.updateCounter()
-        
+        uploadSessionManager!.session.getAllTasks { tasks in
+            if(tasks.count == 0) {
+                // hothing is being uploaded right now, let's upload
+                let imageFiles = self.getImagesToUpload()
+                if(imageFiles.count==0) {//no files to upload found
+                    return
+                }
+                
+                
+                let imageFilePath =  imageFiles[0].path
+                let image = UIImage(contentsOfFile:  imageFilePath)
+
+                // send over to the API
+                let size = CGSize(width: 1000, height: 1000)
+                let aspectScaledToFitImage = image?.af_imageAspectScaled(toFit: size)
+                
+                let imageData:Data! = UIImageJPEGRepresentation(aspectScaledToFitImage!, 0.4)
+                let imageBytes:[UInt8] = Array(imageData)
+
+                
+                let parameters: [String: Any] = [
+                    "uuid" : self.uuid,
+                    "location" : [
+                        "type": "Point",
+                        "coordinates": [ self.lattitude!, self.longitude!]
+                    ],
+                    "imageData": imageBytes
+                ]
+                
+                self.uploadSessionManager!.request("https://www.wisaw.com/api/photos", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+                    .response(
+                        responseSerializer: DataRequest.jsonResponseSerializer(),
+                        completionHandler: { response in
+                            //                self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+                            
+                            self.updateCounter()
+                            
+                            if let statusCode = response.response?.statusCode {
+                                if(statusCode == 401) {
+                                    let ac = UIAlertController(title: "Unauthorized", message: "Sorry, looks like you are banned from WiSaw.", preferredStyle: .alert)
+                                    ac.addAction(UIAlertAction(title: "OK", style: .default))
+                                    self.present(ac, animated: true)
+                                    
+                                    //cleanup -- delete file
+                                    do {
+                                        try FileManager.default.removeItem(atPath: imageFilePath)
+                                        self.loadImages()
+                                    }
+                                    catch let error as NSError {
+                                        print("Ooops! Something went wrong: \(error)")
+                                    }
+                                }
+                                
+                                if(statusCode == 201) {
+                                    if let json = response.result.value as? [String: Any] {
+                                        let photoId = json["id"] as! Int
+                                        print("photos id: \(photoId)")
+                                        //clean up -- rename file
+                                        do {
+                                            let documentDirectory = self.getDocumentsDirectory()
+                                            
+                                            let destinationPath = documentDirectory.appendingPathComponent("wisaw-\(photoId).png")
+                                            print("new file uploaded: \(destinationPath.absoluteString)")
+                                            try FileManager.default.moveItem(at: URL(fileURLWithPath: imageFilePath), to: destinationPath)
+                                            self.loadImages()
+                                        } catch {
+                                            print(error)
+                                        }
+
+                                    }
+                                }
+                                
+                            }
+                            
+                    })
+
+                
+            } else {
+                // still uploading something, just exit
+                return
+            }
+
+        }
+
     }
     
     private func updateCounter() {
+        let tasksCount = getImagesToUpload().count
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!tasksCount - \(tasksCount)")
         
-        uploadSessionManager!.session.getAllTasks { tasks in
-            DispatchQueue.main.async {
-                // Update the UI to indicate the work has been completed
-                
-                if(tasks.count == 0) {
-                    self.uploadCounterButton!.isHidden = true
-                    self.loadImages()
-                } else {
-                    self.uploadCounterButton!.isHidden = false
-                    self.uploadCounterButton!.setTitle(String(tasks.count) , for: .normal)
-                    
-                    //        http://seanallen.co/posts/uibutton-animations
-                    let flash = CABasicAnimation(keyPath: "opacity")
-                    flash.duration = 0.5
-                    flash.fromValue = 1
-                    flash.toValue = 0.1
-                    flash.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-                    flash.autoreverses = true
-                    flash.repeatCount = .infinity
-                    self.uploadCounterButton.layer.add(flash, forKey: nil)
-                    
-                }
-            }
+        // Update the UI to indicate the work has been completed
+        
+        if(tasksCount == 0) {
+            self.uploadCounterButton!.isHidden = true
+        } else {
+            self.uploadCounterButton!.isHidden = false
+            self.uploadCounterButton!.setTitle(String(tasksCount) , for: .normal)
         }
     }
     
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        loadImages()
         dismiss(animated: true, completion: nil)
     }
     
@@ -357,20 +386,38 @@ CLLocationManagerDelegate {
         dismiss(animated: true, completion: nil)
         // save image to document directory
         self.saveImage(image: image)
-        
-        //        if let error = error {
-        //            // we got back an error!
-        //            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
-        //            ac.addAction(UIAlertAction(title: "OK", style: .default))
-        //            present(ac, animated: true)
-        //        } else {
-        //            let ac = UIAlertController(title: "Saved!", message: "Your image has been saved to your photos.", preferredStyle: .alert)
-        //            ac.addAction(UIAlertAction(title: "OK", style: .default))
-        //            present(ac, animated: true)
-        //        }
-        
-        //        loadImages()
     }
+    
+
+    func saveImage(image: UIImage){
+        let currentDate = Date()
+        let imageName = "wisaw-new-\(currentDate.hashValue).png"
+        
+        //get the PNG data for this image
+        let data = UIImagePNGRepresentation(image)
+        //get the image path
+        let filename = getDocumentsDirectory().appendingPathComponent(imageName)
+        try? data!.write(to: filename)
+        uploadImage()
+    }
+    
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    
+    
+    
+    func getImagesToUpload() -> [URL] {
+        // Full path to documents directory
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let directoryContents = try? FileManager.default.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil, options: [])
+        
+        return directoryContents!.filter { $0.absoluteString.contains("wisaw-new-") }
+    }
+    
+
+    
     
     
     
@@ -426,8 +473,7 @@ CLLocationManagerDelegate {
         
         return img
     }
-    
-    
+
     
     @IBAction func contactUsButtonClicked(_ sender: Any) {
         
@@ -436,48 +482,14 @@ CLLocationManagerDelegate {
         present(contactFormViewController, animated: true) {
             print("showing detailed image")
         }
-        
-        
     }
-    
     
     //lock orientation to portratin
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.portrait
     }
     //lock orientation to portratin
-
     
-    
-    
-    func saveImage(image: UIImage){
-        //        let dateFormatter = DateFormatter()
-        let currentDate = Date()
-        let imageName = "wisaw-\(currentDate.hashValue).png"
-        
-        //get the PNG data for this image
-        let data = UIImagePNGRepresentation(image)
-        //get the image path
-        let filename = getDocumentsDirectory().appendingPathComponent(imageName)
-        try? data!.write(to: filename)
-
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!getImagesToUpload() - \(self.getImagesToUpload().count)")
-    }
-
-    func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
-    }
-    
-    
-
-    func getImagesToUpload() -> [URL] {
-        // Full path to documents directory
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let directoryContents = try? FileManager.default.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil, options: [])
-
-        return directoryContents!.filter { $0.absoluteString.contains("wisaw-") }
-    }
     
 }
 
