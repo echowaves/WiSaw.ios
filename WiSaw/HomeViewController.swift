@@ -70,16 +70,7 @@ CLLocationManagerDelegate {
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         collectionView.addSubview(refreshControl) // not required when using UITableViewController
         
-        //        http://seanallen.co/posts/uibutton-animations
-        let flash = CABasicAnimation(keyPath: "opacity")
-        flash.duration = 0.5
-        flash.fromValue = 1
-        flash.toValue = 0.1
-        flash.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        flash.autoreverses = true
-        flash.repeatCount = .infinity
-        uploadCounterButton.layer.add(flash, forKey: nil)
-        
+        cleanup()
     }
     
     
@@ -365,14 +356,24 @@ CLLocationManagerDelegate {
     private func updateCounter() {
         let tasksCount = getImagesToUpload().count
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!tasksCount - \(tasksCount)")
-        
+        //        http://seanallen.co/posts/uibutton-animations
+        let flash = CABasicAnimation(keyPath: "opacity")
+        flash.duration = 0.5
+        flash.fromValue = 1
+        flash.toValue = 0.1
+        flash.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        flash.autoreverses = true
+        flash.repeatCount = .infinity
+
         // Update the UI to indicate the work has been completed
-        
-        if(tasksCount == 0) {
-            self.uploadCounterButton!.isHidden = true
-        } else {
-            self.uploadCounterButton!.isHidden = false
-            self.uploadCounterButton!.setTitle(String(tasksCount) , for: .normal)
+        DispatchQueue.main.async {            
+            if(tasksCount == 0) {
+                self.uploadCounterButton!.isHidden = true
+            } else {
+                self.uploadCounterButton!.isHidden = false
+                self.uploadCounterButton!.setTitle(String(tasksCount) , for: .normal)
+                self.uploadCounterButton.layer.add(flash, forKey: nil)
+            }
         }
     }
     
@@ -390,15 +391,17 @@ CLLocationManagerDelegate {
     
 
     func saveImage(image: UIImage){
-        let currentDate = Date()
-        let imageName = "wisaw-new-\(currentDate.hashValue).png"
-        
-        //get the PNG data for this image
-        let data = UIImagePNGRepresentation(image)
-        //get the image path
-        let filename = getDocumentsDirectory().appendingPathComponent(imageName)
-        try? data!.write(to: filename)
-        uploadImage()
+        DispatchQueue(label: "com.wisaw.queue", qos: .background).async {
+            let currentDate = Date()
+            let imageName = "wisaw-new-\(currentDate.hashValue).png"
+            
+            //get the PNG data for this image
+            let data = UIImagePNGRepresentation(image)
+            //get the image path
+            let filename = self.getDocumentsDirectory().appendingPathComponent(imageName)
+            try? data!.write(to: filename)
+            self.uploadImage()
+        }
     }
     
     func getDocumentsDirectory() -> URL {
@@ -415,9 +418,6 @@ CLLocationManagerDelegate {
         
         return directoryContents!.filter { $0.absoluteString.contains("wisaw-new-") }
     }
-    
-
-    
     
     
     
@@ -490,6 +490,8 @@ CLLocationManagerDelegate {
     }
     //lock orientation to portratin
     
+    private func cleanup() {
     
+    }
 }
 
