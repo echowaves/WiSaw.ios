@@ -315,8 +315,8 @@ CLLocationManagerDelegate {
                                         try FileManager.default.removeItem(atPath: imageFilePath)
                                         self.loadImages()
                                     }
-                                    catch let error as NSError {
-                                        print("Ooops! Something went wrong: \(error)")
+                                    catch {
+                                        print("Ooops1! Something went wrong: \(error)")
                                     }
                                 }
                                 
@@ -329,20 +329,18 @@ CLLocationManagerDelegate {
                                             let documentDirectory = self.getDocumentsDirectory()
                                             
                                             let destinationPath = documentDirectory.appendingPathComponent("wisaw-\(photoId).png")
-                                            print("new file uploaded: \(destinationPath.absoluteString)")
+                                            print("new file uploaded: \(destinationPath.path)")
                                             try FileManager.default.moveItem(at: URL(fileURLWithPath: imageFilePath), to: destinationPath)
                                             self.loadImages()
                                         } catch {
-                                            print(error)
+                                            print("Ooops2! Something went wrong: \(error)")
                                         }
 
                                     }
                                 }
                                 
                             }
-                            
                     })
-
                 
             } else {
                 // still uploading something, just exit
@@ -366,7 +364,7 @@ CLLocationManagerDelegate {
         flash.repeatCount = .infinity
 
         // Update the UI to indicate the work has been completed
-        DispatchQueue.main.async {            
+        DispatchQueue.main.async {
             if(tasksCount == 0) {
                 self.uploadCounterButton!.isHidden = true
             } else {
@@ -391,7 +389,7 @@ CLLocationManagerDelegate {
     
 
     func saveImage(image: UIImage){
-        DispatchQueue(label: "com.wisaw.queue", qos: .background).async {
+        DispatchQueue(label: "com.wisaw.saveimagequeue", qos: .background).async {
             let currentDate = Date()
             let imageName = "wisaw-new-\(currentDate.hashValue).png"
             
@@ -416,7 +414,7 @@ CLLocationManagerDelegate {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let directoryContents = try? FileManager.default.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil, options: [])
         
-        return directoryContents!.filter { $0.absoluteString.contains("wisaw-new-") }
+        return directoryContents!.filter { $0.path.contains("wisaw-new-") }
     }
     
     
@@ -491,7 +489,37 @@ CLLocationManagerDelegate {
     //lock orientation to portratin
     
     private func cleanup() {
-    
+        DispatchQueue(label: "com.wisaw.cleanupqueue", qos: .background).async {
+            let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let directoryContents = try? FileManager.default.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil, options: [])
+            
+            for filePathUrl in directoryContents! {
+                if(!filePathUrl.path.contains("-new")) {
+                    print("^^^^^^^^^^^^^^^^^^^^deleting cached file: \(filePathUrl.path)")
+
+                    do {
+                        let attributes = try FileManager.default.attributesOfItem(atPath: filePathUrl.path) as NSDictionary
+    //                    print("#####################################1")
+    //                    print(attributes)
+    //                    print("#####################################2")
+                        let modificationDate = attributes["NSFileModificationDate"] as! Date
+                        
+                        let diffInDays = Calendar.current.dateComponents([.day], from: modificationDate, to: Date()).day
+                    
+                        if (diffInDays! > 10) {
+                            // delete
+                            try FileManager.default.removeItem(atPath: filePathUrl.path)
+                            print("^^^^^^^^^^^^^^^^^^^^deleted cached file: \(filePathUrl.path)")
+                        }
+                        
+                    } catch {
+                        print("Ooops3! Something went wrong: \(error)")
+                    }
+
+                }
+            }
+        }
+
     }
 }
 
