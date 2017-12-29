@@ -16,17 +16,17 @@ import Branch
 class SharingViewController:
     UIViewController,
     UIScrollViewDelegate
-     {
+{
     
     
     var photoId: Int!
     var uuid: String!
-//    var photoJSON: [String: Any]!
+    //    var photoJSON: [String: Any]!
     
     let viewControllerUtils = ViewControllerUtils()
-
+    
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-
+    
     
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var reportAbuseButton: UIBarButtonItem!
@@ -45,29 +45,24 @@ class SharingViewController:
         reportAbuseButton.image = UIImage.fontAwesomeIcon(name: .ban, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
         trashButton.image = UIImage.fontAwesomeIcon(name: .trash, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
         shareButton.setImage( UIImage.fontAwesomeIcon(name: .share, textColor: UIColor.black, size: CGSize(width: 60, height: 60)), for: UIControlState.normal)
+        
+        let image = appDelegate.getImageFromCahcheById(id: photoId!)
+        
+        if(image == nil) {
+            reportAbuseButton.isEnabled = false
+            trashButton.isEnabled = false
+            shareButton.isHidden = true
+            
+            viewControllerUtils.showActivityIndicator(uiView: self.view)
 
-        
-        reportAbuseButton.isEnabled = false
-        trashButton.isEnabled = false
-        shareButton.isHidden = true
-
-        
-        viewControllerUtils.showActivityIndicator(uiView: self.view)
-        
-        
-//        let photoJSON = self.photos[pageIndex] as! [String: Any]
-//        photoId = photoJSON["id"] as! Int
-//        uuid = photoJSON["uuid"] as! String
-
-        
             Alamofire.request("https://www.wisaw.com/api/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
                 .responseJSON { response in
                     self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                     if let statusCode = response.response?.statusCode {
                         if(statusCode == 200) {
-    //                    print("loaded detailed photo ----------------- \(self.photoId!)")
+                            //                    print("loaded detailed photo ----------------- \(self.photoId!)")
                             if let json = response.result.value as? [String: Any] {
-
+                                
                                 let photoJson = json["photo"] as! [String: Any]
                                 let imageDataJson = photoJson["imageData"] as! [String: Any]
                                 let imageDataArray = imageDataJson["data"] as! [UInt8]
@@ -80,7 +75,7 @@ class SharingViewController:
                                 self.reportAbuseButton.isEnabled = true
                                 self.trashButton.isEnabled = true
                                 self.shareButton.isHidden = false
-
+                                
                             }
                         } else {
                             let alert = UIAlertController(title: "Looks like this short lived photo has expired.", message: nil, preferredStyle: .alert)
@@ -93,6 +88,9 @@ class SharingViewController:
                             
                             self.present(alert, animated: true, completion:nil)                        }
                     }
+            }
+        } else {
+            self.imageView.image = image
         }
     }
     
@@ -125,25 +123,25 @@ class SharingViewController:
                         }
                 }
         })
-                
+        
         alert.addAction(UIAlertAction(title: "No", style: .default) { (alert: UIAlertAction!) -> Void in
             //print("You pressed Cancel")
             
             self.dismiss(animated: true) {
             }
         })
-            
+        
         present(alert, animated: true, completion:nil)
     }
     
-
+    
     @IBAction func reportAbuseButtonClicked(_ sender: Any) {
         let alert = UIAlertController(title: "The user who posted this photo will be banned.", message: "Are you sure?", preferredStyle: .alert)
         
         alert.addAction(
             UIAlertAction(title: "Report", style: .destructive) { (alert: UIAlertAction!) -> Void in
                 
-        
+                
                 let parameters: [String: Any] = [
                     "uuid" : self.uuid!
                 ]
@@ -167,7 +165,7 @@ class SharingViewController:
                         }
                         
                 }
-            
+                
                 
         })
         
@@ -182,7 +180,7 @@ class SharingViewController:
     }
     
     
-//    UIScrollViewDelegate methods
+    //    UIScrollViewDelegate methods
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
