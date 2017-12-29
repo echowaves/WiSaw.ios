@@ -25,7 +25,8 @@ class SharingViewController:
     
     let viewControllerUtils = ViewControllerUtils()
 
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
     
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var reportAbuseButton: UIBarButtonItem!
@@ -59,10 +60,6 @@ class SharingViewController:
 //        uuid = photoJSON["uuid"] as! String
 
         
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-
-        
             Alamofire.request("https://www.wisaw.com/api/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
                 .responseJSON { response in
                     self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
@@ -78,7 +75,7 @@ class SharingViewController:
                                 
                                 self.uuid = photoJson["uuid"] as! String
                                 self.imageView.image = UIImage(data:imageData as Data)
-                                appDelegate.imagesCache[self.photoId] = self.imageView.image
+                                self.appDelegate.saveImageToCache(id: self.photoId, image:  self.imageView.image!)
                                 
                                 self.reportAbuseButton.isEnabled = true
                                 self.trashButton.isEnabled = true
@@ -112,9 +109,6 @@ class SharingViewController:
         
     }
     
-    
-    
- 
     
     @IBAction func trashButtonClicked(_ sender: Any) {
         let alert = UIAlertController(title: "This photo will be obliterated from the cloud.", message: "Are you sure?", preferredStyle: .alert)

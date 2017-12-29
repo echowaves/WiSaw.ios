@@ -24,8 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var uuid: String?
     var tandc = false
 
-    var imagesCache = [Int: UIImage]()
-
     
     let themeColor = UIColor(red: 0.01, green: 0.41, blue: 0.22, alpha: 1.0)
 
@@ -132,5 +130,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Branch.getInstance().handlePushNotification(userInfo)
     }
     
+    
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+
+    func getImageFromCahcheById(id: Int) -> UIImage! {
+        let imageFilePath = self.getDocumentsDirectory().appendingPathComponent("wisaw-\(id).png").path
+        let image = UIImage(contentsOfFile:  imageFilePath)
+        return image
+    }
+    
+    func saveImageToCache(id: Int, image: UIImage){
+        DispatchQueue(label: "com.wisaw.saveimagetocachequeu", qos: .background).async {
+            let imageName = "wisaw-\(id).png"
+            
+            //get the PNG data for this image
+            let data = UIImagePNGRepresentation(image)
+            //get the image path
+            let filename = self.getDocumentsDirectory().appendingPathComponent(imageName)
+            try? data!.write(to: filename)
+        }
+    }
+
 }
 

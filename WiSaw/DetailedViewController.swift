@@ -26,6 +26,8 @@ class DetailedViewController:
     var photoJSON: [String: Any]!
     
     let viewControllerUtils = ViewControllerUtils()
+    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     
     
@@ -62,9 +64,8 @@ class DetailedViewController:
         let imageData = Data(bytes: imageDataArray)
         self.imageView.image = UIImage(data:imageData as Data)
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-        if let image = appDelegate.imagesCache[photoId] { // get image from cache
+        if let image = self.appDelegate.getImageFromCahcheById(id: photoId!) { // get image from cache
             viewControllerUtils.hideActivityIndicator(uiView: self.view)
             self.imageView.image = image
         } else {
@@ -83,7 +84,7 @@ class DetailedViewController:
                                 let imageData = Data(bytes: imageDataArray)
                                 
                                 self.imageView.image = UIImage(data:imageData as Data)
-                                appDelegate.imagesCache[self.photoId] = self.imageView.image
+                                self.appDelegate.saveImageToCache(id: self.photoId, image: self.imageView.image!)
                             }
                         }
                     }

@@ -50,6 +50,7 @@ CLLocationManagerDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+
         urlSessionConfiguration = URLSessionConfiguration.background(withIdentifier: "upload-session")
         urlSessionConfiguration!.httpMaximumConnectionsPerHost = 1
         uploadSessionManager = Alamofire.SessionManager(configuration: urlSessionConfiguration!)
@@ -268,7 +269,7 @@ CLLocationManagerDelegate {
         updateCounter()
         
         uploadSessionManager!.session.getAllTasks { tasks in
-            if(tasks.count == 0) {
+            if(tasks.count == 0) { // check if upload is in progress
                 // hothing is being uploaded right now, let's upload
                 let imageFiles = self.getImagesToUpload()
                 if(imageFiles.count==0) {//no files to upload found
@@ -326,7 +327,7 @@ CLLocationManagerDelegate {
                                         print("photos id: \(photoId)")
                                         //clean up -- rename file
                                         do {
-                                            let documentDirectory = self.getDocumentsDirectory()
+                                            let documentDirectory = self.appDelegate.getDocumentsDirectory()
                                             
                                             let destinationPath = documentDirectory.appendingPathComponent("wisaw-\(photoId).png")
                                             print("new file uploaded: \(destinationPath.path)")
@@ -396,18 +397,12 @@ CLLocationManagerDelegate {
             //get the PNG data for this image
             let data = UIImagePNGRepresentation(image)
             //get the image path
-            let filename = self.getDocumentsDirectory().appendingPathComponent(imageName)
+            let filename = self.appDelegate.getDocumentsDirectory().appendingPathComponent(imageName)
             try? data!.write(to: filename)
             self.uploadImage()
         }
     }
-    
-    func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
-    }
-    
-    
+        
     
     func getImagesToUpload() -> [URL] {
         // Full path to documents directory
