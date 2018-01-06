@@ -45,8 +45,12 @@ class DetailedViewController:
         scrollView.maximumZoomScale = 5.0
         
         cancelButton.image = UIImage.fontAwesomeIcon(name: .chevronLeft, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+        cancelButton.title = "" // for compatibility with older devices
         reportAbuseButton.image = UIImage.fontAwesomeIcon(name: .ban, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+        reportAbuseButton.title = "" // for compatibility with older devices
+
         trashButton.image = UIImage.fontAwesomeIcon(name: .trash, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+        trashButton.title = "" // for compatibility with older devices
         shareButton.setImage( UIImage.fontAwesomeIcon(name: .share, textColor: UIColor.black, size: CGSize(width: 60, height: 60)), for: UIControlState.normal)
 
         viewControllerUtils.showActivityIndicator(uiView: self.view)

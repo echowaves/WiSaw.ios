@@ -56,6 +56,7 @@ CLLocationManagerDelegate {
         uploadSessionManager = Alamofire.SessionManager(configuration: urlSessionConfiguration!)
         
         contactUsButton.image = UIImage.fontAwesomeIcon(name: .lifeSaver, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+        contactUsButton.title = "" // for compatibility with older devices
         cameraButton.setImage( UIImage.fontAwesomeIcon(name: .camera, textColor: UIColor.black, size: CGSize(width: 60, height: 60)), for: UIControlState.normal)
         
         appDelegate = UIApplication.shared.delegate as! AppDelegate

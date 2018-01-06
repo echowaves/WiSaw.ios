@@ -37,7 +37,11 @@ class ContactFormViewController:
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         cancelButton.image = UIImage.fontAwesomeIcon(name: .chevronLeft, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+        cancelButton.title = "" // for compatibility with older devices
+
         doneButton.image = UIImage.fontAwesomeIcon(name: .send, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+        doneButton.title = "" // for compatibility with older devices
+
     }
     
     
