@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var uuid: String?
     var tandc = false
-
+    var host = "https://testapi.wisaw.com"
     
     let themeColor = UIColor(red: 0.01, green: 0.41, blue: 0.22, alpha: 1.0)
 
@@ -130,23 +130,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return paths[0]
     }
 
-    func getImageFromCahcheById(id: Int) -> UIImage! {
-        let imageFilePath = self.getDocumentsDirectory().appendingPathComponent("wisaw-\(id).png").path
-        let image = UIImage(contentsOfFile:  imageFilePath)
-        return image
-    }
-    
-    func saveImageToCache(id: Int, image: UIImage){
-        DispatchQueue(label: "com.wisaw.saveimagetocachequeu", qos: .background).async {
-            let imageName = "wisaw-\(id).png"
-            
-            //get the PNG data for this image
-            let data = UIImagePNGRepresentation(image)
-            //get the image path
-            let filename = self.getDocumentsDirectory().appendingPathComponent(imageName)
-            try? data!.write(to: filename)
-        }
-    }
+//    func getImageFromCahcheById(id: Int) -> UIImage! {
+//        let imageFilePath = self.getDocumentsDirectory().appendingPathComponent("wisaw-\(id).jpg").path
+//        let image = UIImage(contentsOfFile:  imageFilePath)
+//        return image
+//    }
+//    
+//    func saveImageToCache(id: Int, image: UIImage){
+//        DispatchQueue(label: "com.wisaw.saveimagetocachequeu", qos: .background).async {
+//            let imageName = "wisaw-\(id).jpg"
+//            
+//            //get the JPG data for this image
+//            let data = UIImageJPEGRepresentation(image, 0.9)
+//            //get the image path
+//            let filename = self.getDocumentsDirectory().appendingPathComponent(imageName)
+//            try? data!.write(to: filename)
+//        }
+//    }
 
 }
 

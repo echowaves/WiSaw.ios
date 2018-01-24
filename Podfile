@@ -19,6 +19,5 @@ target 'WiSaw' do
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Branch'
-
-
+  
 end

@@ -26,7 +26,8 @@ class SharingViewController:
     let viewControllerUtils = ViewControllerUtils()
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
+    var downloader: ImageDownloader? // This acts as the 'strong reference'.
+
     
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var reportAbuseButton: UIBarButtonItem!
@@ -52,51 +53,56 @@ class SharingViewController:
 
         shareButton.setImage( UIImage.fontAwesomeIcon(name: .share, textColor: UIColor.black, size: CGSize(width: 60, height: 60)), for: UIControlState.normal)
         
-        let image = appDelegate.getImageFromCahcheById(id: photoId!)
+    
+        reportAbuseButton.isEnabled = false
+        trashButton.isEnabled = false
+        shareButton.isHidden = true
         
-        if(image == nil) {
-            reportAbuseButton.isEnabled = false
-            trashButton.isEnabled = false
-            shareButton.isHidden = true
-            
-            viewControllerUtils.showActivityIndicator(uiView: self.view)
+        viewControllerUtils.showActivityIndicator(uiView: self.view)
 
-            Alamofire.request("https://www.wisaw.com/api/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
-                .responseJSON { response in
-                    self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
-                    if let statusCode = response.response?.statusCode {
-                        if(statusCode == 200) {
-                            //                    print("loaded detailed photo ----------------- \(self.photoId!)")
-                            if let json = response.result.value as? [String: Any] {
-                                
-                                let photoJson = json["photo"] as! [String: Any]
-                                let imageDataJson = photoJson["imageData"] as! [String: Any]
-                                let imageDataArray = imageDataJson["data"] as! [UInt8]
-                                let imageData = Data(bytes: imageDataArray)
-                                
-                                self.uuid = photoJson["uuid"] as! String
-                                self.imageView.image = UIImage(data:imageData as Data)
-                                self.appDelegate.saveImageToCache(id: self.photoId, image:  self.imageView.image!)
-                                
-                                self.reportAbuseButton.isEnabled = true
-                                self.trashButton.isEnabled = true
-                                self.shareButton.isHidden = false
-                                
-                            }
-                        } else {
-                            let alert = UIAlertController(title: "Looks like this short lived photo has expired.", message: nil, preferredStyle: .alert)
+        
+        
+        
+        Alamofire.request("\(appDelegate.host)/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
+            .responseJSON { response in
+                self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+                if let statusCode = response.response?.statusCode {
+                    if(statusCode == 200) {
+                        //                    print("loaded detailed photo ----------------- \(self.photoId!)")
+                        if let json = response.result.value as? [String: Any] {
                             
-                            alert.addAction(UIAlertAction(title: "OK", style: .default) { (alert: UIAlertAction!) -> Void in
-                                //print("You pressed Cancel")
-                                self.dismiss(animated: true) {
+                            let photoJson = json["photo"] as! [String: Any]
+                            
+                            
+                            self.uuid = photoJson["uuid"] as! String
+
+                            let imgUrl = photoJson["getImgUrl"] as! String
+                            
+                            self.downloader = ImageDownloader()
+                            let urlRequest = URLRequest(url: URL(string: imgUrl)!)
+                            self.downloader!.download(urlRequest) { response in
+                                if let image = response.result.value {
+                                    self.imageView.image = image
+                                    
+                                    self.reportAbuseButton.isEnabled = true
+                                    self.trashButton.isEnabled = true
+                                    self.shareButton.isHidden = false
+                                    
                                 }
-                            })
-                            
-                            self.present(alert, animated: true, completion:nil)                        }
-                    }
-            }
-        } else {
-            self.imageView.image = image
+                            }
+
+                        }
+                    } else {
+                        let alert = UIAlertController(title: "Looks like this short lived photo has expired.", message: nil, preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "OK", style: .default) { (alert: UIAlertAction!) -> Void in
+                            //print("You pressed Cancel")
+                            self.dismiss(animated: true) {
+                            }
+                        })
+                        
+                        self.present(alert, animated: true, completion:nil)                        }
+                }
         }
     }
     
@@ -121,7 +127,7 @@ class SharingViewController:
             UIAlertAction(title: "Delete", style: .destructive) { (alert: UIAlertAction!) -> Void in
                 
                 self.viewControllerUtils.showActivityIndicator(uiView: self.view)
-                Alamofire.request("https://www.wisaw.com/api/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
+                Alamofire.request("\(self.appDelegate.host)/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
                     .responseJSON { response in
                         self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                         print("deleted detailed photo ----------------- \(self.photoId!)")
@@ -152,13 +158,13 @@ class SharingViewController:
                     "uuid" : self.uuid!
                 ]
                 self.viewControllerUtils.showActivityIndicator(uiView: self.view)
-                Alamofire.request("https://www.wisaw.com/api/abusereport", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+                Alamofire.request("\(self.appDelegate.host)/abusereport", method: .post, parameters: parameters, encoding: JSONEncoding.default)
                     .responseJSON { response in
                         self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                         if let statusCode = response.response?.statusCode {
                             if(statusCode == 201) {
                                 self.viewControllerUtils.showActivityIndicator(uiView: self.view)
-                                Alamofire.request("https://www.wisaw.com/api/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
+                                Alamofire.request("\(self.appDelegate.host)/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
                                     .responseJSON { response in
                                         self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                                         print("deleted detailed photo ----------------- \(self.photoId!)")

@@ -39,6 +39,7 @@ CLLocationManagerDelegate {
     var longitude: String!
     
     var uuid: String!
+    
     var appDelegate:AppDelegate!
     
     var photos: [Any] = []
@@ -61,7 +62,6 @@ CLLocationManagerDelegate {
         
         appDelegate = UIApplication.shared.delegate as! AppDelegate
         uuid = appDelegate.uuid
-        
         
         picker.delegate = self
         collectionView.dataSource = self
@@ -158,7 +158,7 @@ CLLocationManagerDelegate {
             
         ]
         viewControllerUtils.showActivityIndicator(uiView: self.view)
-        Alamofire.request("https://www.wisaw.com/api/photos/feed", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        Alamofire.request("\(appDelegate.host)/photos/feed", method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .responseJSON { response in
                 if let statusCode = response.response?.statusCode {
                     if(statusCode == 200) {
@@ -194,13 +194,10 @@ CLLocationManagerDelegate {
         let cell:CellClass = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as! CellClass
         
         let photoJSON = self.photos[indexPath.row] as! [String: Any]
-        let thumbNailJson = photoJSON["thumbNail"] as! [String: Any]
         
-        let thumbData = thumbNailJson["data"] as! [UInt8]
-        let imageData = Data(bytes: thumbData)
+        let thumbUrl = photoJSON["getThumbUrl"] as! String
         
-        
-        cell.uiImage.image = UIImage(data:imageData as Data)
+        cell.configure(url: thumbUrl)
         
         return cell
     }
@@ -286,7 +283,7 @@ CLLocationManagerDelegate {
                 let aspectScaledToFitImage = image?.af_imageAspectScaled(toFit: size)
                 
                 let imageData:Data! = UIImageJPEGRepresentation(aspectScaledToFitImage!, 0.4)
-                let imageBytes:[UInt8] = Array(imageData)
+//                let imageBytes:[UInt8] = Array(imageData)
 
                 
                 let parameters: [String: Any] = [
@@ -294,11 +291,10 @@ CLLocationManagerDelegate {
                     "location" : [
                         "type": "Point",
                         "coordinates": [ self.lattitude!, self.longitude!]
-                    ],
-                    "imageData": imageBytes
+                    ]
                 ]
                 
-                self.uploadSessionManager!.request("https://www.wisaw.com/api/photos", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+                self.uploadSessionManager!.request("\(self.appDelegate.host)/photos", method: .post, parameters: parameters, encoding: JSONEncoding.default)
                     .response(
                         responseSerializer: DataRequest.jsonResponseSerializer(),
                         completionHandler: { response in
@@ -324,16 +320,37 @@ CLLocationManagerDelegate {
                                 
                                 if(statusCode == 201) {
                                     if let json = response.result.value as? [String: Any] {
-                                        let photoId = json["id"] as! Int
+                                        let photo = json["photo"] as! [String: Any]
+                                        let photoId = photo["id"] as! Int
                                         print("photos id: \(photoId)")
                                         //clean up -- rename file
                                         do {
                                             let documentDirectory = self.appDelegate.getDocumentsDirectory()
                                             
-                                            let destinationPath = documentDirectory.appendingPathComponent("wisaw-\(photoId).png")
+                                            let destinationPath = documentDirectory.appendingPathComponent("wisaw-\(photoId).jpg")
                                             print("new file uploaded: \(destinationPath.path)")
                                             try FileManager.default.moveItem(at: URL(fileURLWithPath: imageFilePath), to: destinationPath)
-                                            self.loadImages()
+                                            
+                                            
+                                            let headers = [
+                                                    "Content-Type": "image/jpeg"
+                                                ]
+                                
+                                            let uploadUrl = json["uploadURL"] as! String
+
+                                            Alamofire.upload(imageData, to: uploadUrl, method: .put, headers: headers)
+                                                .responseData {
+                                                    response in
+                                                     if let statusCode = response.response?.statusCode {
+                                                        if(statusCode == 200) {
+//                                                            self.loadImages()
+                                                            print("done uploading \(statusCode)")
+                                                        } else {
+                                                            print("error uploading, response code: \(statusCode)")
+                                                        }
+                                                        
+                                                    }
+                                            }
                                         } catch {
                                             print("Ooops2! Something went wrong: \(error)")
                                         }
@@ -393,10 +410,10 @@ CLLocationManagerDelegate {
     func saveImage(image: UIImage){
         DispatchQueue(label: "com.wisaw.saveimagequeue", qos: .background).async {
             let currentDate = Date()
-            let imageName = "wisaw-new-\(currentDate.hashValue).png"
+            let imageName = "wisaw-new-\(currentDate.hashValue).jpg"
             
-            //get the PNG data for this image
-            let data = UIImagePNGRepresentation(image)
+            //get the JPG data for this image
+            let data = UIImageJPEGRepresentation(image, 0.9)
             //get the image path
             let filename = self.appDelegate.getDocumentsDirectory().appendingPathComponent(imageName)
             try? data!.write(to: filename)

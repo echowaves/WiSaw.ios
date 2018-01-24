@@ -24,7 +24,8 @@ class DetailedViewController:
     var photoId: Int!
     var uuid: String!
     var photoJSON: [String: Any]!
-    
+    var downloader: ImageDownloader? // This acts as the 'strong reference'.
+
     let viewControllerUtils = ViewControllerUtils()
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -37,7 +38,7 @@ class DetailedViewController:
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var shareButton: UIButton!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -55,45 +56,40 @@ class DetailedViewController:
 
         viewControllerUtils.showActivityIndicator(uiView: self.view)
         
-        
-//        let photoJSON = self.photos[pageIndex] as! [String: Any]
         photoId = photoJSON["id"] as! Int
         uuid = photoJSON["uuid"] as! String
+//        let thumbUrl = photoJSON["getThumbUrl"] as! String
+        let imgUrl = photoJSON["getImgUrl"] as! String
 
-        
-        
-        
-        let thumbNailJson = photoJSON["thumbNail"] as! [String: Any]
-        let imageDataArray = thumbNailJson["data"] as! [UInt8]
-        let imageData = Data(bytes: imageDataArray)
-        self.imageView.image = UIImage(data:imageData as Data)
-        
-
-        if let image = self.appDelegate.getImageFromCahcheById(id: photoId!) { // get image from cache
-            viewControllerUtils.hideActivityIndicator(uiView: self.view)
-            self.imageView.image = image
-        } else {
-        
-            Alamofire.request("https://www.wisaw.com/api/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
-                .responseJSON { response in
-                    self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
-                    if let statusCode = response.response?.statusCode {
-                        if(statusCode == 200) {
-    //                    print("loaded detailed photo ----------------- \(self.photoId!)")
-                            if let json = response.result.value as? [String: Any] {
-
-                                let photoJson = json["photo"] as! [String: Any]
-                                let imageDataJson = photoJson["imageData"] as! [String: Any]
-                                let imageDataArray = imageDataJson["data"] as! [UInt8]
-                                let imageData = Data(bytes: imageDataArray)
-                                
-                                self.imageView.image = UIImage(data:imageData as Data)
-                                self.appDelegate.saveImageToCache(id: self.photoId, image: self.imageView.image!)
-                            }
-                        }
-                    }
+        downloader = ImageDownloader()
+        let urlRequest = URLRequest(url: URL(string: imgUrl)!)
+        downloader!.download(urlRequest) { response in
+            if let image = response.result.value {
+                self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+                self.imageView.image = image
             }
         }
+
+//            Alamofire.request("\(appDelegate.host)/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
+//                .responseJSON { response in
+//                    self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+//                    if let statusCode = response.response?.statusCode {
+//                        if(statusCode == 200) {
+//    //                    print("loaded detailed photo ----------------- \(self.photoId!)")
+//                            if let json = response.result.value as? [String: Any] {
+//
+//                                let photoJson = json["photo"] as! [String: Any]
+//                                let imageDataJson = photoJson["imageData"] as! [String: Any]
+//                                let imageDataArray = imageDataJson["data"] as! [UInt8]
+//                                let imageData = Data(bytes: imageDataArray)
+//
+//                                self.imageView.image = UIImage(data:imageData as Data)
+//                                self.appDelegate.saveImageToCache(id: self.photoId, image: self.imageView.image!)
+//                            }
+//                        }
+//                    }
+//            }
+//        }
     }
     
     
@@ -120,7 +116,7 @@ class DetailedViewController:
             UIAlertAction(title: "Delete", style: .destructive) { (alert: UIAlertAction!) -> Void in
                 
                 self.viewControllerUtils.showActivityIndicator(uiView: self.view)
-                Alamofire.request("https://www.wisaw.com/api/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
+                Alamofire.request("\(self.appDelegate.host)/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
                     .responseJSON { response in
                         self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                         print("deleted detailed photo ----------------- \(self.photoId!)")
@@ -151,13 +147,13 @@ class DetailedViewController:
                     "uuid" : self.uuid!
                 ]
                 self.viewControllerUtils.showActivityIndicator(uiView: self.view)
-                Alamofire.request("https://www.wisaw.com/api/abusereport", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+                Alamofire.request("\(self.appDelegate.host)/abusereport", method: .post, parameters: parameters, encoding: JSONEncoding.default)
                     .responseJSON { response in
                         self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                         if let statusCode = response.response?.statusCode {
                             if(statusCode == 201) {
                                 self.viewControllerUtils.showActivityIndicator(uiView: self.view)
-                                Alamofire.request("https://www.wisaw.com/api/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
+                                Alamofire.request("\(self.appDelegate.host)/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
                                     .responseJSON { response in
                                         self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                                         print("deleted detailed photo ----------------- \(self.photoId!)")
