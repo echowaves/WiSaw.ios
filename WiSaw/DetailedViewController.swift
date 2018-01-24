@@ -24,6 +24,9 @@ class DetailedViewController:
     var photoId: Int!
     var uuid: String!
     var photoJSON: [String: Any]!
+    var imgUrl: String!
+    var thumbUrl: String!
+    
     var downloader: ImageDownloader? // This acts as the 'strong reference'.
 
     let viewControllerUtils = ViewControllerUtils()
@@ -58,8 +61,8 @@ class DetailedViewController:
         
         photoId = photoJSON["id"] as! Int
         uuid = photoJSON["uuid"] as! String
-//        let thumbUrl = photoJSON["getThumbUrl"] as! String
-        let imgUrl = photoJSON["getImgUrl"] as! String
+        thumbUrl = photoJSON["getThumbUrl"] as! String
+        imgUrl = photoJSON["getImgUrl"] as! String
 
         downloader = ImageDownloader()
         let urlRequest = URLRequest(url: URL(string: imgUrl)!)
@@ -190,15 +193,21 @@ class DetailedViewController:
     
     
     @IBAction func shareButtonClicked(_ sender: Any) {
-        DetailedViewController.share(photoId: photoId!, instance: self)
+        DetailedViewController.share(photoJSON: photoJSON, instance: self)
     }
 
-    class func share(photoId: Int, instance: UIViewController) {
+    
+    class func share(photoJSON: [String: Any], instance: UIViewController) {
+        let photoId = photoJSON["id"] as! Int
+//        let uuid = photoJSON["uuid"] as! String
+        let thumbUrl = photoJSON["getThumbUrl"] as! String
+//        let imgUrl = photoJSON["getImgUrl"] as! String
+        
         let buo = BranchUniversalObject(canonicalIdentifier: "photo/\(photoId)")
-        buo.canonicalUrl = "https://www.wisaw.com/api/photos/\(photoId)/thumb"
+        buo.canonicalUrl = thumbUrl
         buo.title = "What I saw today:"
         buo.contentDescription = "Photo \(photoId) shared"
-        buo.imageUrl = "https://www.wisaw.com/api/photos/\(photoId)/thumb"
+        buo.imageUrl = thumbUrl
         //        buo.price = 12.12
         //        buo.currency = "USD"
         
@@ -212,12 +221,12 @@ class DetailedViewController:
         //        lp.stage = "new user"
         //        lp.tags = ["one", "two", "three"]
         
-//                lp.addControlParam("$desktop_url", withValue: "https://www.wisaw.com/api/photos/\(photoId)/thumb")
-//                lp.addControlParam("$ios_url", withValue: "https://www.wisaw.com/api/photos/\(photoId)/thumb")
-//                lp.addControlParam("$ipad_url", withValue: "https://www.wisaw.com/api/photos/\(photoId)/thumb")
-//                lp.addControlParam("$android_url", withValue: "https://www.wisaw.com/api/photos/\(photoId)/thumb")
-//                lp.addControlParam("$match_duration", withValue: "2000")
-
+        //                lp.addControlParam("$desktop_url", withValue: "https://www.wisaw.com/api/photos/\(photoId)/thumb")
+        //                lp.addControlParam("$ios_url", withValue: "https://www.wisaw.com/api/photos/\(photoId)/thumb")
+        //                lp.addControlParam("$ipad_url", withValue: "https://www.wisaw.com/api/photos/\(photoId)/thumb")
+        //                lp.addControlParam("$android_url", withValue: "https://www.wisaw.com/api/photos/\(photoId)/thumb")
+        //                lp.addControlParam("$match_duration", withValue: "2000")
+        
         //
         //        lp.addControlParam("custom_data", withValue: "yes")
         //        lp.addControlParam("look_at", withValue: "this")
@@ -228,7 +237,7 @@ class DetailedViewController:
         buo.showShareSheet(with: lp, andShareText: message, from: instance) { (activityType, completed) in
             print("shared")
         }
-        
+
     }
     
 }

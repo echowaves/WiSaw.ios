@@ -21,7 +21,7 @@ class SharingViewController:
     
     var photoId: Int!
     var uuid: String!
-    //    var photoJSON: [String: Any]!
+    var photoJSON: [String: Any]!
     
     let viewControllerUtils = ViewControllerUtils()
     
@@ -71,12 +71,9 @@ class SharingViewController:
                         //                    print("loaded detailed photo ----------------- \(self.photoId!)")
                         if let json = response.result.value as? [String: Any] {
                             
-                            let photoJson = json["photo"] as! [String: Any]
-                            
-                            
-                            self.uuid = photoJson["uuid"] as! String
-
-                            let imgUrl = photoJson["getImgUrl"] as! String
+                            self.photoJSON = json["photo"] as! [String: Any]
+                            self.uuid = self.photoJSON["uuid"] as! String
+                            let imgUrl = self.photoJSON["getImgUrl"] as! String
                             
                             self.downloader = ImageDownloader()
                             let urlRequest = URLRequest(url: URL(string: imgUrl)!)
@@ -169,16 +166,11 @@ class SharingViewController:
                                         self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                                         print("deleted detailed photo ----------------- \(self.photoId!)")
                                         self.dismiss(animated: true) {
-                                        }
-                                        
+                                        }                                        
                                 }
                             }
-                            
                         }
-                        
                 }
-                
-                
         })
         
         alert.addAction(UIAlertAction(title: "No", style: .default) { (alert: UIAlertAction!) -> Void in
@@ -199,7 +191,7 @@ class SharingViewController:
     
     
     @IBAction func shareButtonClicked(_ sender: Any) {
-        DetailedViewController.share(photoId: photoId!, instance: self)
+        DetailedViewController.share(photoJSON: photoJSON, instance: self)
     }
     
 }
