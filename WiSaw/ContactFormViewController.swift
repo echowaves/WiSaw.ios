@@ -76,7 +76,7 @@ class ContactFormViewController:
         ]
         
         viewControllerUtils.showActivityIndicator(uiView: self.view)
-        Alamofire.request("\(appDelegate.host)/contactform", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        Alamofire.request("\(appDelegate.HOST)/contactform", method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .responseJSON { response in
                 self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
 

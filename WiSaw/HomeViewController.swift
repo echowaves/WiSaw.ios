@@ -158,7 +158,7 @@ CLLocationManagerDelegate {
             
         ]
         viewControllerUtils.showActivityIndicator(uiView: self.view)
-        Alamofire.request("\(appDelegate.host)/photos/feed", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        Alamofire.request("\(appDelegate.HOST)/photos/feed", method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .responseJSON { response in
                 if let statusCode = response.response?.statusCode {
                     if(statusCode == 200) {
@@ -294,7 +294,7 @@ CLLocationManagerDelegate {
                     ]
                 ]
                 
-                self.uploadSessionManager!.request("\(self.appDelegate.host)/photos", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+                self.uploadSessionManager!.request("\(self.appDelegate.HOST)/photos", method: .post, parameters: parameters, encoding: JSONEncoding.default)
                     .response(
                         responseSerializer: DataRequest.jsonResponseSerializer(),
                         completionHandler: { response in

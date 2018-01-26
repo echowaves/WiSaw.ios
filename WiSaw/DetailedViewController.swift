@@ -107,9 +107,6 @@ class DetailedViewController:
         }
         
     }
-    
-    
-    
  
     
     @IBAction func trashButtonClicked(_ sender: Any) {
@@ -119,7 +116,7 @@ class DetailedViewController:
             UIAlertAction(title: "Delete", style: .destructive) { (alert: UIAlertAction!) -> Void in
                 
                 self.viewControllerUtils.showActivityIndicator(uiView: self.view)
-                Alamofire.request("\(self.appDelegate.host)/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
+                Alamofire.request("\(self.appDelegate.HOST)/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
                     .responseJSON { response in
                         self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                         print("deleted detailed photo ----------------- \(self.photoId!)")
@@ -150,13 +147,13 @@ class DetailedViewController:
                     "uuid" : self.uuid!
                 ]
                 self.viewControllerUtils.showActivityIndicator(uiView: self.view)
-                Alamofire.request("\(self.appDelegate.host)/abusereport", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+                Alamofire.request("\(self.appDelegate.HOST)/abusereport", method: .post, parameters: parameters, encoding: JSONEncoding.default)
                     .responseJSON { response in
                         self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                         if let statusCode = response.response?.statusCode {
                             if(statusCode == 201) {
                                 self.viewControllerUtils.showActivityIndicator(uiView: self.view)
-                                Alamofire.request("\(self.appDelegate.host)/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
+                                Alamofire.request("\(self.appDelegate.HOST)/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
                                     .responseJSON { response in
                                         self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                                         print("deleted detailed photo ----------------- \(self.photoId!)")

@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var uuid: String?
     var tandc = false
-    var host = "https://testapi.wisaw.com"
+    let HOST = "https://testapi.wisaw.com"
     
     let themeColor = UIColor(red: 0.01, green: 0.41, blue: 0.22, alpha: 1.0)
 
