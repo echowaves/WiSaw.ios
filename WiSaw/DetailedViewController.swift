@@ -65,11 +65,18 @@ class DetailedViewController:
         imgUrl = photoJSON["getImgUrl"] as! String
 
         downloader = ImageDownloader()
-        let urlRequest = URLRequest(url: URL(string: imgUrl)!)
+        let urlRequest = URLRequest(url: URL(string: thumbUrl)!)
         downloader!.download(urlRequest) { response in
             if let image = response.result.value {
-                self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                 self.imageView.image = image
+                let urlRequest = URLRequest(url: URL(string: self.imgUrl)!)
+                self.downloader!.download(urlRequest) { response in
+                    if let image = response.result.value {
+                        self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+                        self.imageView.image = image
+                    }
+                }
+
             }
         }
 
