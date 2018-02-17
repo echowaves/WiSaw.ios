@@ -16,8 +16,8 @@ target 'WiSaw' do
   pod 'SwiftKeychainWrapper', '~> 3.0.1'
   pod 'FontAwesome.swift', '~> 1.3.1'
 
-  pod 'Fabric'
-  pod 'Crashlytics'
+  pod 'Fabric', '~> 1.7.3'
+  pod 'Crashlytics', '~>  3.10.0'
   pod 'Branch'
   
 end
