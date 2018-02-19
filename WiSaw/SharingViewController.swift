@@ -152,7 +152,8 @@ class SharingViewController:
                 
                 
                 let parameters: [String: Any] = [
-                    "uuid" : self.uuid!
+                    "uuid" : self.uuid!,
+                    "photoId" : self.photoId!
                 ]
                 self.viewControllerUtils.showActivityIndicator(uiView: self.view)
                 Alamofire.request("\(self.appDelegate.HOST)/abusereport", method: .post, parameters: parameters, encoding: JSONEncoding.default)
