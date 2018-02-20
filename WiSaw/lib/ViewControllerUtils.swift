@@ -59,6 +59,7 @@ class ViewControllerUtils {
     
 }
 
+
 //// In order to show the activity indicator, call the function from your view controller
 //// ViewControllerUtils().showActivityIndicator(self.view)
 

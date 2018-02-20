@@ -216,8 +216,8 @@ class DetailedViewController:
         //        buo.price = 12.12
         //        buo.currency = "USD"
         
-        buo.contentIndexMode = .public
-        buo.automaticallyListOnSpotlight = true
+        buo.publiclyIndex = true
+        buo.locallyIndex = true
         
         let lp: BranchLinkProperties = BranchLinkProperties()
         lp.channel = "direct"

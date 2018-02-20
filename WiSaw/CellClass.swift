@@ -9,9 +9,12 @@
 import UIKit
 import Alamofire
 import AlamofireImage
+import BadgeSwift
 
 class CellClass: UICollectionViewCell {
     @IBOutlet weak var uiImage: UIImageView!
+    @IBOutlet weak var badgeView: BadgeSwift!
+    
     var downloader: ImageDownloader? // This acts as the 'strong reference'.
 
     func configure(url: String) {
@@ -22,7 +25,23 @@ class CellClass: UICollectionViewCell {
                 self.uiImage.image = image
             }
         }
-
+        
+        badgeView!.text = "2312"
+        
     }
-
+    
+    
+    // MARK: - View Lifecycle
+//    override func awakeFromNib() {
+//        super.awakeFromNib()
+////        styleSetup()
+//    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        uiImage.af_cancelImageRequest() // NOTE: - Using AlamofireImage
+        uiImage.image = nil
+    }
+    
 }

@@ -61,9 +61,18 @@
                                                 <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="acj-sm-rmb">
                                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                                 </imageView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kb4-ab-k9u" userLabel="badgeView" customClass="BadgeSwift" customModule="BadgeSwift">
+                                                    <rect key="frame" x="95" y="166" width="10" height="34"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="34" id="oCz-ky-reQ"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                         </view>
                                         <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="kb4-ab-k9u" secondAttribute="bottom" id="3M7-c3-suE"/>
+                                            <constraint firstItem="kb4-ab-k9u" firstAttribute="centerX" secondItem="ba0-t9-wva" secondAttribute="centerX" id="XZh-QD-2X4"/>
                                             <constraint firstItem="acj-sm-rmb" firstAttribute="top" secondItem="ba0-t9-wva" secondAttribute="top" id="YkH-oC-kIO"/>
                                             <constraint firstAttribute="bottom" secondItem="acj-sm-rmb" secondAttribute="bottom" id="gqq-Jd-AXL"/>
                                             <constraint firstAttribute="trailing" secondItem="acj-sm-rmb" secondAttribute="trailing" id="tTx-7p-iAY"/>
@@ -71,6 +80,7 @@
                                         </constraints>
                                         <size key="customSize" width="200" height="200"/>
                                         <connections>
+                                            <outlet property="badgeView" destination="kb4-ab-k9u" id="zoV-fR-AKM"/>
                                             <outlet property="uiImage" destination="acj-sm-rmb" id="vag-kK-WHX"/>
                                         </connections>
                                     </collectionViewCell>
