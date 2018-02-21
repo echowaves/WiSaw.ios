@@ -195,11 +195,11 @@
                                 </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ez-0E-pfV">
-                                <rect key="frame" x="192" y="686" width="30" height="30"/>
+                                <rect key="frame" x="364" y="686" width="30" height="30"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="etg-Wu-tsa"/>
-                                    <constraint firstAttribute="height" constant="30" id="gmF-dg-8Zt"/>
+                                    <constraint firstAttribute="height" constant="30" id="S1S-rE-Lyd"/>
+                                    <constraint firstAttribute="width" constant="30" id="gSm-Jl-4n0"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -211,17 +211,36 @@
                                     <action selector="shareButtonClicked:" destination="peZ-1k-WQg" eventType="touchUpInside" id="esN-vn-NbV"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l0A-Np-mna" userLabel="Like Button">
+                                <rect key="frame" x="20" y="686" width="30" height="30"/>
+                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="TF8-k0-tYx"/>
+                                    <constraint firstAttribute="height" constant="30" id="cLZ-EA-yik"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="openCameraButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PBZ-tP-qqa"/>
+                                    <action selector="shareButtonClicked:" destination="peZ-1k-WQg" eventType="touchUpInside" id="Xaz-gH-LLY"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="kB5-Gn-DlQ" firstAttribute="trailing" secondItem="va2-p2-HiI" secondAttribute="trailing" id="1HB-pT-fuF"/>
                             <constraint firstItem="va2-p2-HiI" firstAttribute="trailing" secondItem="aZM-dl-r7U" secondAttribute="trailing" id="5Cb-qm-G1C"/>
                             <constraint firstItem="va2-p2-HiI" firstAttribute="leading" secondItem="aZM-dl-r7U" secondAttribute="leading" id="7tZ-PV-NfD"/>
+                            <constraint firstItem="aZM-dl-r7U" firstAttribute="bottom" secondItem="l0A-Np-mna" secondAttribute="bottom" constant="20" id="Eml-XW-bwf"/>
+                            <constraint firstItem="aZM-dl-r7U" firstAttribute="bottom" secondItem="0Ez-0E-pfV" secondAttribute="bottom" constant="20" id="Ep1-SA-fVs"/>
                             <constraint firstItem="va2-p2-HiI" firstAttribute="top" secondItem="aZM-dl-r7U" secondAttribute="top" id="Hlx-1w-mIP"/>
-                            <constraint firstItem="0Ez-0E-pfV" firstAttribute="centerX" secondItem="tL4-gz-POM" secondAttribute="centerX" id="QeE-XQ-6Ba"/>
+                            <constraint firstItem="l0A-Np-mna" firstAttribute="leading" secondItem="aZM-dl-r7U" secondAttribute="leading" constant="20" id="Oir-Bm-wbY"/>
+                            <constraint firstItem="aZM-dl-r7U" firstAttribute="trailing" secondItem="0Ez-0E-pfV" secondAttribute="trailing" constant="20" id="Pb1-w4-rvk"/>
                             <constraint firstItem="kB5-Gn-DlQ" firstAttribute="bottom" secondItem="aZM-dl-r7U" secondAttribute="bottom" id="Txq-NV-5wx"/>
                             <constraint firstItem="kB5-Gn-DlQ" firstAttribute="top" secondItem="va2-p2-HiI" secondAttribute="bottom" id="Usu-XB-iWR"/>
-                            <constraint firstItem="aZM-dl-r7U" firstAttribute="bottom" secondItem="0Ez-0E-pfV" secondAttribute="bottom" constant="20" id="fgN-Hg-XVS"/>
                             <constraint firstItem="kB5-Gn-DlQ" firstAttribute="leading" secondItem="va2-p2-HiI" secondAttribute="leading" id="wKZ-Qz-hTl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="aZM-dl-r7U"/>
@@ -229,6 +248,7 @@
                     <connections>
                         <outlet property="cancelButton" destination="eZ6-re-LBc" id="dKQ-1f-bez"/>
                         <outlet property="imageView" destination="MjT-NI-B6q" id="AyC-U7-ppC"/>
+                        <outlet property="likeButton" destination="l0A-Np-mna" id="jY2-J7-GdM"/>
                         <outlet property="reportAbuseButton" destination="F4e-cd-93A" id="gZn-U2-ulR"/>
                         <outlet property="scrollView" destination="kB5-Gn-DlQ" id="wA3-Ay-cat"/>
                         <outlet property="shareButton" destination="0Ez-0E-pfV" id="tjH-TL-5MW"/>
@@ -364,11 +384,11 @@
                                 </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aDe-yG-tyx">
-                                <rect key="frame" x="192" y="686" width="30" height="30"/>
+                                <rect key="frame" x="364" y="686" width="30" height="30"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="iHK-8m-xyV"/>
-                                    <constraint firstAttribute="height" constant="30" id="rSl-EI-p8n"/>
+                                    <constraint firstAttribute="height" constant="30" id="7L6-1g-kjF"/>
+                                    <constraint firstAttribute="width" constant="30" id="B6h-Yj-lni"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -380,24 +400,44 @@
                                     <action selector="shareButtonClicked:" destination="Xmb-bu-plI" eventType="touchUpInside" id="IeK-ea-Eso"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U7S-q3-rMK" userLabel="Like Button">
+                                <rect key="frame" x="20" y="686" width="30" height="30"/>
+                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="474-da-UZj"/>
+                                    <constraint firstAttribute="height" constant="30" id="qcw-WW-dah"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="openCameraButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="K8g-1T-31e"/>
+                                    <action selector="shareButtonClicked:" destination="peZ-1k-WQg" eventType="touchUpInside" id="vUB-og-60R"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="ZLb-Rv-54p" firstAttribute="bottom" secondItem="U7S-q3-rMK" secondAttribute="bottom" constant="20" id="1w5-5s-dOX"/>
                             <constraint firstItem="QkL-9L-ba3" firstAttribute="trailing" secondItem="jdu-2z-3Q5" secondAttribute="trailing" id="2Ke-Fc-Lvs"/>
+                            <constraint firstItem="ZLb-Rv-54p" firstAttribute="trailing" secondItem="aDe-yG-tyx" secondAttribute="trailing" constant="20" id="47a-bR-Kta"/>
                             <constraint firstItem="QkL-9L-ba3" firstAttribute="leading" secondItem="jdu-2z-3Q5" secondAttribute="leading" id="4Xs-II-nxt"/>
                             <constraint firstItem="jdu-2z-3Q5" firstAttribute="top" secondItem="ZLb-Rv-54p" secondAttribute="top" id="65G-hJ-3hw"/>
-                            <constraint firstItem="aDe-yG-tyx" firstAttribute="centerX" secondItem="D62-Ra-Bny" secondAttribute="centerX" id="9fC-PU-D2R"/>
-                            <constraint firstItem="ZLb-Rv-54p" firstAttribute="bottom" secondItem="aDe-yG-tyx" secondAttribute="bottom" constant="20" id="Crn-bN-0MJ"/>
+                            <constraint firstItem="U7S-q3-rMK" firstAttribute="leading" secondItem="ZLb-Rv-54p" secondAttribute="leading" constant="20" id="7ab-Zq-Lqt"/>
                             <constraint firstItem="jdu-2z-3Q5" firstAttribute="trailing" secondItem="ZLb-Rv-54p" secondAttribute="trailing" id="Git-7P-czU"/>
                             <constraint firstItem="QkL-9L-ba3" firstAttribute="bottom" secondItem="ZLb-Rv-54p" secondAttribute="bottom" id="KP4-bT-bBZ"/>
                             <constraint firstItem="QkL-9L-ba3" firstAttribute="top" secondItem="jdu-2z-3Q5" secondAttribute="bottom" id="mZV-eH-3lN"/>
                             <constraint firstItem="jdu-2z-3Q5" firstAttribute="leading" secondItem="ZLb-Rv-54p" secondAttribute="leading" id="nVd-db-pt3"/>
+                            <constraint firstItem="ZLb-Rv-54p" firstAttribute="bottom" secondItem="aDe-yG-tyx" secondAttribute="bottom" constant="20" id="rde-d8-jsx"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZLb-Rv-54p"/>
                     </view>
                     <connections>
                         <outlet property="cancelButton" destination="F8y-6n-qz1" id="ljs-mE-x1j"/>
                         <outlet property="imageView" destination="MVd-ZP-6L4" id="0Yo-a1-dBd"/>
+                        <outlet property="likeButton" destination="U7S-q3-rMK" id="s3X-DA-yyl"/>
                         <outlet property="reportAbuseButton" destination="YaA-MC-x7g" id="crq-Qp-HGX"/>
                         <outlet property="scrollView" destination="QkL-9L-ba3" id="r3U-Zn-j6V"/>
                         <outlet property="shareButton" destination="aDe-yG-tyx" id="fQs-Jz-Mtz"/>
