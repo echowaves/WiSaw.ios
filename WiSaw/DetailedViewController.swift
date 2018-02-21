@@ -11,7 +11,7 @@ import Alamofire
 import AlamofireImage
 import FontAwesome_swift
 import Branch
-
+import BadgeSwift
 
 class DetailedViewController:
     UIViewController,
@@ -42,6 +42,7 @@ class DetailedViewController:
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var badgeCounter: BadgeSwift!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +60,9 @@ class DetailedViewController:
         shareButton.setImage( UIImage.fontAwesomeIcon(name: .share, textColor: UIColor.black, size: CGSize(width: 60, height: 60)), for: UIControlState.normal)
         likeButton.setImage( UIImage.fontAwesomeIcon(name: .thumbsUp, textColor: UIColor.black, size: CGSize(width: 60, height: 60)), for: UIControlState.normal)
 
+        badgeCounter!.text = (photoJSON["likes"] as! NSNumber).stringValue
+        badgeCounter!.textColor = UIColor.white
+            
         viewControllerUtils.showActivityIndicator(uiView: self.view)
         
         photoId = photoJSON["id"] as! Int
@@ -247,6 +251,8 @@ class DetailedViewController:
 
     }
     
+    @IBAction func likeButtonClicked(_ sender: Any) {
+    }
 }
 
 

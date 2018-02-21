@@ -11,6 +11,7 @@ import Alamofire
 import AlamofireImage
 import FontAwesome_swift
 import Branch
+import BadgeSwift
 
 
 class SharingViewController:
@@ -36,7 +37,8 @@ class SharingViewController:
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
-    
+    @IBOutlet weak var badgeCounter: BadgeSwift!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -54,7 +56,6 @@ class SharingViewController:
 
         shareButton.setImage( UIImage.fontAwesomeIcon(name: .share, textColor: UIColor.black, size: CGSize(width: 60, height: 60)), for: UIControlState.normal)
         likeButton.setImage( UIImage.fontAwesomeIcon(name: .thumbsUp, textColor: UIColor.black, size: CGSize(width: 60, height: 60)), for: UIControlState.normal)
-
     
         reportAbuseButton.isEnabled = false
         trashButton.isEnabled = false
@@ -76,7 +77,10 @@ class SharingViewController:
                             self.photoJSON = json["photo"] as! [String: Any]
                             self.uuid = self.photoJSON["uuid"] as! String
                             let imgUrl = self.photoJSON["getImgUrl"] as! String
-                            
+
+                            self.badgeCounter!.text = (self.photoJSON["likes"] as! NSNumber).stringValue
+                            self.badgeCounter!.textColor = UIColor.white
+
                             self.downloader = ImageDownloader()
                             let urlRequest = URLRequest(url: URL(string: imgUrl)!)
                             self.downloader!.download(urlRequest) { response in
@@ -197,6 +201,9 @@ class SharingViewController:
         DetailedViewController.share(photoJSON: photoJSON, instance: self)
     }
     
+    @IBAction func likeButtonClicked(_ sender: Any) {
+    }
+
 }
 
 //http://artoftheapp.com/ios/zoom-uiscrollview-swift/
