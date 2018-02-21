@@ -13,7 +13,6 @@ import Branch
 
 import UIKit
 import SwiftKeychainWrapper
-//import AlamofireNetworkActivityIndicator
 
 
 @UIApplicationMain
@@ -130,24 +129,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
-
-//    func getImageFromCahcheById(id: Int) -> UIImage! {
-//        let imageFilePath = self.getDocumentsDirectory().appendingPathComponent("wisaw-\(id).jpg").path
-//        let image = UIImage(contentsOfFile:  imageFilePath)
-//        return image
-//    }
-//    
-//    func saveImageToCache(id: Int, image: UIImage){
-//        DispatchQueue(label: "com.wisaw.saveimagetocachequeu", qos: .background).async {
-//            let imageName = "wisaw-\(id).jpg"
-//            
-//            //get the JPG data for this image
-//            let data = UIImageJPEGRepresentation(image, 0.9)
-//            //get the image path
-//            let filename = self.getDocumentsDirectory().appendingPathComponent(imageName)
-//            try? data!.write(to: filename)
-//        }
-//    }
 
 }
 

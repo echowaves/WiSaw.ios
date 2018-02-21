@@ -422,7 +422,7 @@ CLLocationManagerDelegate {
     
     func getImagesToUpload() -> [URL] {
         // Full path to documents directory
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let documentsDirectory = self.appDelegate.getDocumentsDirectory()
         let directoryContents = try? FileManager.default.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil, options: [])
         
         return directoryContents!.filter { $0.path.contains("wisaw-new-") }
@@ -501,11 +501,11 @@ CLLocationManagerDelegate {
     
     private func cleanup() {
         DispatchQueue(label: "com.wisaw.cleanupqueue", qos: .background).async {
-            let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let documentsDirectory = self.appDelegate.getDocumentsDirectory()
             let directoryContents = try? FileManager.default.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil, options: [])
             
             for filePathUrl in directoryContents! {
-                if(!filePathUrl.path.contains("-new")) {
+                if(!filePathUrl.path.contains("wisaw-new")) {
                     print("^^^^^^^^^^^^^^^^^^^^deleting cached file: \(filePathUrl.path)")
 
                     do {
@@ -517,7 +517,7 @@ CLLocationManagerDelegate {
                         
                         let diffInDays = Calendar.current.dateComponents([.day], from: modificationDate, to: Date()).day
                     
-                        if (diffInDays! > 10) {
+                        if (diffInDays! > 30) {
                             // delete
                             try FileManager.default.removeItem(atPath: filePathUrl.path)
                             print("^^^^^^^^^^^^^^^^^^^^deleted cached file: \(filePathUrl.path)")
