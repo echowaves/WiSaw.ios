@@ -17,9 +17,12 @@ class CellClass: UICollectionViewCell {
     
     var downloader: ImageDownloader? // This acts as the 'strong reference'.
 
-    func configure(url: String) {
+    func configure(photoJSON:[String: Any]) {
+        let thumbUrl = photoJSON["getThumbUrl"] as! String
+        let likes = photoJSON["likes"] as! NSNumber
+
         downloader = ImageDownloader()
-        let urlRequest = URLRequest(url: URL(string: url)!)
+        let urlRequest = URLRequest(url: URL(string: thumbUrl)!)
         downloader!.download(urlRequest) { response in
             if let image = response.result.value {
                 self.uiImage.image = image
@@ -29,8 +32,10 @@ class CellClass: UICollectionViewCell {
         badgeView!.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.footnote)
         badgeView!.textColor = UIColor.white
 
-        badgeView!.text = " "
-        
+        badgeView!.text = likes.stringValue
+        if(likes == 0) {
+            badgeView!.isHidden = true
+        }
     }
     
     

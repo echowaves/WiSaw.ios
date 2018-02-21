@@ -195,10 +195,7 @@ CLLocationManagerDelegate {
         
         let photoJSON = self.photos[indexPath.row] as! [String: Any]
         
-        let thumbUrl = photoJSON["getThumbUrl"] as! String
-        
-        cell.configure(url: thumbUrl)
-//        cell.badgeCount = 3321
+        cell.configure(photoJSON: photoJSON)
 
         return cell
     }
