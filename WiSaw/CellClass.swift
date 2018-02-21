@@ -26,7 +26,10 @@ class CellClass: UICollectionViewCell {
             }
         }
         
-        badgeView!.text = "2312"
+        badgeView!.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.footnote)
+        badgeView!.textColor = UIColor.white
+
+        badgeView!.text = " "
         
     }
     
