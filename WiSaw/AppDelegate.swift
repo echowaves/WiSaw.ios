@@ -125,9 +125,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
-    func getDocumentsDirectory() -> URL {
+    class func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
+    }
+
+    
+    class func photoLiked(photoId: String) -> Void {
+        
+    }
+    
+    class func photoViewed(photoId: String) -> Void {
+        
+    }
+
+    class func isPhotoLiked(photoId: String) -> Bool {
+        return true
+    }
+    
+   class func isPhotoViewed(photoId: String) -> Bool {
+        return false
     }
 
 }

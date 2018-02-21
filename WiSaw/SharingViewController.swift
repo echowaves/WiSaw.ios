@@ -65,7 +65,6 @@ class SharingViewController:
 
         
         
-        
         Alamofire.request("\(appDelegate.HOST)/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
             .responseJSON { response in
                 self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
@@ -77,6 +76,11 @@ class SharingViewController:
                             self.photoJSON = json["photo"] as! [String: Any]
                             self.uuid = self.photoJSON["uuid"] as! String
                             let imgUrl = self.photoJSON["getImgUrl"] as! String
+                            let photoId = self.photoJSON["id"] as! Int
+
+                            if(AppDelegate.isPhotoLiked(photoId: "\(photoId)")) {
+                                self.likeButton.isEnabled = false
+                            }
 
                             self.badgeCounter!.text = (self.photoJSON["likes"] as! NSNumber).stringValue
                             self.badgeCounter!.textColor = UIColor.white

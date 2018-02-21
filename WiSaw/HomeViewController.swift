@@ -323,7 +323,7 @@ CLLocationManagerDelegate {
                                         print("photos id: \(photoId)")
                                         //clean up -- rename file
                                         do {
-                                            let documentDirectory = self.appDelegate.getDocumentsDirectory()
+                                            let documentDirectory = AppDelegate.getDocumentsDirectory()
                                             
                                             let destinationPath = documentDirectory.appendingPathComponent("wisaw-\(photoId).jpg")
                                             print("new file uploaded: \(destinationPath.path)")
@@ -413,7 +413,7 @@ CLLocationManagerDelegate {
             //get the JPG data for this image
             let data = UIImageJPEGRepresentation(image, 0.9)
             //get the image path
-            let filename = self.appDelegate.getDocumentsDirectory().appendingPathComponent(imageName)
+            let filename = AppDelegate.getDocumentsDirectory().appendingPathComponent(imageName)
             try? data!.write(to: filename)
             self.uploadImage()
         }
@@ -422,7 +422,7 @@ CLLocationManagerDelegate {
     
     func getImagesToUpload() -> [URL] {
         // Full path to documents directory
-        let documentsDirectory = self.appDelegate.getDocumentsDirectory()
+        let documentsDirectory = AppDelegate.getDocumentsDirectory()
         let directoryContents = try? FileManager.default.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil, options: [])
         
         return directoryContents!.filter { $0.path.contains("wisaw-new-") }
@@ -501,7 +501,7 @@ CLLocationManagerDelegate {
     
     private func cleanup() {
         DispatchQueue(label: "com.wisaw.cleanupqueue", qos: .background).async {
-            let documentsDirectory = self.appDelegate.getDocumentsDirectory()
+            let documentsDirectory = AppDelegate.getDocumentsDirectory()
             let directoryContents = try? FileManager.default.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil, options: [])
             
             for filePathUrl in directoryContents! {

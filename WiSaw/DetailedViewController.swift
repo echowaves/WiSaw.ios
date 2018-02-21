@@ -47,6 +47,11 @@ class DetailedViewController:
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        photoId = photoJSON["id"] as! Int
+        uuid = photoJSON["uuid"] as! String
+        thumbUrl = photoJSON["getThumbUrl"] as! String
+        imgUrl = photoJSON["getImgUrl"] as! String
+
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 5.0
         
@@ -59,16 +64,15 @@ class DetailedViewController:
         trashButton.title = "" // for compatibility with older devices
         shareButton.setImage( UIImage.fontAwesomeIcon(name: .share, textColor: UIColor.black, size: CGSize(width: 60, height: 60)), for: UIControlState.normal)
         likeButton.setImage( UIImage.fontAwesomeIcon(name: .thumbsUp, textColor: UIColor.black, size: CGSize(width: 60, height: 60)), for: UIControlState.normal)
+        if(AppDelegate.isPhotoLiked(photoId: "\(photoId)")) {
+            likeButton.isEnabled = false
+        }
 
         badgeCounter!.text = (photoJSON["likes"] as! NSNumber).stringValue
         badgeCounter!.textColor = UIColor.white
             
         viewControllerUtils.showActivityIndicator(uiView: self.view)
         
-        photoId = photoJSON["id"] as! Int
-        uuid = photoJSON["uuid"] as! String
-        thumbUrl = photoJSON["getThumbUrl"] as! String
-        imgUrl = photoJSON["getImgUrl"] as! String
 
         downloader = ImageDownloader()
         let urlRequest = URLRequest(url: URL(string: thumbUrl)!)

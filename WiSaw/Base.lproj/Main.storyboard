@@ -62,7 +62,7 @@
                                                 <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="acj-sm-rmb">
                                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                                 </imageView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kb4-ab-k9u" userLabel="badgeView" customClass="BadgeSwift" customModule="BadgeSwift">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kb4-ab-k9u" userLabel="likesView" customClass="BadgeSwift" customModule="BadgeSwift">
                                                     <rect key="frame" x="190" y="190" width="10" height="10"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -87,7 +87,7 @@
                                         </constraints>
                                         <size key="customSize" width="200" height="200"/>
                                         <connections>
-                                            <outlet property="badgeView" destination="kb4-ab-k9u" id="zoV-fR-AKM"/>
+                                            <outlet property="likesView" destination="kb4-ab-k9u" id="FtZ-rx-dc1"/>
                                             <outlet property="uiImage" destination="acj-sm-rmb" id="vag-kK-WHX"/>
                                         </connections>
                                     </collectionViewCell>
