@@ -65,7 +65,7 @@ class SharingViewController:
 
         
         
-        Alamofire.request("\(appDelegate.HOST)/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
+        Alamofire.request("\(AppDelegate.HOST)/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
             .responseJSON { response in
                 self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                 if let statusCode = response.response?.statusCode {
@@ -78,7 +78,7 @@ class SharingViewController:
                             let imgUrl = self.photoJSON["getImgUrl"] as! String
                             let photoId = self.photoJSON["id"] as! Int
 
-                            if(AppDelegate.isPhotoLiked(photoId: "\(photoId)")) {
+                            if(AppDelegate.isPhotoLiked(photoId: photoId)) {
                                 self.likeButton.isEnabled = false
                             }
 
@@ -134,7 +134,7 @@ class SharingViewController:
             UIAlertAction(title: "Delete", style: .destructive) { (alert: UIAlertAction!) -> Void in
                 
                 self.viewControllerUtils.showActivityIndicator(uiView: self.view)
-                Alamofire.request("\(self.appDelegate.HOST)/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
+                Alamofire.request("\(AppDelegate.HOST)/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
                     .responseJSON { response in
                         self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                         print("deleted detailed photo ----------------- \(self.photoId!)")
@@ -166,13 +166,13 @@ class SharingViewController:
                     "photoId" : self.photoId!
                 ]
                 self.viewControllerUtils.showActivityIndicator(uiView: self.view)
-                Alamofire.request("\(self.appDelegate.HOST)/abusereport", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+                Alamofire.request("\(AppDelegate.HOST)/abusereport", method: .post, parameters: parameters, encoding: JSONEncoding.default)
                     .responseJSON { response in
                         self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                         if let statusCode = response.response?.statusCode {
                             if(statusCode == 201) {
                                 self.viewControllerUtils.showActivityIndicator(uiView: self.view)
-                                Alamofire.request("\(self.appDelegate.HOST)/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
+                                Alamofire.request("\(AppDelegate.HOST)/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
                                     .responseJSON { response in
                                         self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                                         print("deleted detailed photo ----------------- \(self.photoId!)")
@@ -206,6 +206,7 @@ class SharingViewController:
     }
     
     @IBAction func likeButtonClicked(_ sender: Any) {
+        DetailedViewController.like(photoJSON: photoJSON, instance: self)
     }
 
 }

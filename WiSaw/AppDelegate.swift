@@ -22,8 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var uuid: String?
     var tandc = false
-//    let HOST = "https://testapi.wisaw.com"
-    let HOST = "https://api.wisaw.com"
+//    static let HOST = "https://testapi.wisaw.com"
+    static let HOST = "https://api.wisaw.com"
     
     let themeColor = UIColor(red: 0.01, green: 0.41, blue: 0.22, alpha: 1.0)
 
@@ -131,21 +131,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     
-    class func photoLiked(photoId: String) -> Void {
-        
+    class func photoLiked(photoId: Int) -> Void {
+        FileManager.default.createFile(atPath: getDocumentsDirectory().appendingPathComponent("wisaw-liked-\(photoId)").absoluteString, contents: nil)
     }
     
-    class func photoViewed(photoId: String) -> Void {
-        
+    class func photoViewed(photoId: Int) -> Void {
+        FileManager.default.createFile(atPath: getDocumentsDirectory().appendingPathComponent("wisaw-viewed-\(photoId)").absoluteString, contents: nil)
     }
 
-    class func isPhotoLiked(photoId: String) -> Bool {
-        return true
+    class func isPhotoLiked(photoId: Int) -> Bool {
+        let val = FileManager.default.fileExists(atPath: getDocumentsDirectory().appendingPathComponent("wisaw-liked-\(photoId)").absoluteString)
+        return val
     }
     
-   class func isPhotoViewed(photoId: String) -> Bool {
-        return false
-    }
+   class func isPhotoViewed(photoId: Int) -> Bool {
+        let val = FileManager.default.fileExists(atPath: getDocumentsDirectory().appendingPathComponent("wisaw-viewed-\(photoId)").absoluteString)
+        return val
+   }
 
 }
 

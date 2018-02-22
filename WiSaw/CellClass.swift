@@ -20,7 +20,7 @@ class CellClass: UICollectionViewCell {
     func configure(photoJSON:[String: Any]) {
         let thumbUrl = photoJSON["getThumbUrl"] as! String
         let likes = photoJSON["likes"] as! NSNumber
-        let photoId = photoJSON["id"] as! NSNumber
+        let photoId = photoJSON["id"] as! Int
 
         downloader = ImageDownloader()
         let urlRequest = URLRequest(url: URL(string: thumbUrl)!)
@@ -35,7 +35,7 @@ class CellClass: UICollectionViewCell {
 
         likesView!.text = likes.stringValue
         
-        if(!AppDelegate.isPhotoViewed(photoId: photoId.stringValue)) {
+        if(!AppDelegate.isPhotoViewed(photoId: photoId)) {
             likesView!.badgeColor = UIColor.red
             if(likes == 0) {
                 likesView!.text = ""
