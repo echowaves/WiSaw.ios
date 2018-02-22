@@ -52,6 +52,8 @@ class DetailedViewController:
         thumbUrl = photoJSON["getThumbUrl"] as! String
         imgUrl = photoJSON["getImgUrl"] as! String
 
+        AppDelegate.photoViewed(photoId: photoId)
+
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 5.0
         
@@ -251,24 +253,34 @@ class DetailedViewController:
         let message = "Check out what I saw today:"
         buo.showShareSheet(with: lp, andShareText: message, from: instance) { (activityType, completed) in
             print("shared")
+            Alamofire.request("\(AppDelegate.HOST)/photos/\(photoId)/like", method: .put, encoding: JSONEncoding.default)
+                .responseJSON { response in
+                    if let statusCode = response.response?.statusCode {
+                        if(statusCode == 200) {
+                            instance.viewDidLoad()
+                        }
+                    }
+            }
+
         }
 
     }
     
     @IBAction func likeButtonClicked(_ sender: Any) {
-        DetailedViewController.like(photoJSON: photoJSON, instance: self)
+        DetailedViewController.like(photoJSON: photoJSON, instance: self, badgeCounter: self.badgeCounter)
     }
     
-    class func like(photoJSON: [String: Any], instance: UIViewController) {
+    class func like(photoJSON: [String: Any], instance: UIViewController, badgeCounter: BadgeSwift!) {
         let photoId = photoJSON["id"] as! Int
-        
         
         Alamofire.request("\(AppDelegate.HOST)/photos/\(photoId)/like", method: .put, encoding: JSONEncoding.default)
             .responseJSON { response in
                 if let statusCode = response.response?.statusCode {
                     if(statusCode == 200) {
                         AppDelegate.photoLiked(photoId: photoId)
+                        badgeCounter!.text = "110" //"\(Int(badgeCounter!.text!)! + 1)"
                         instance.reloadInputViews()
+                        instance.viewDidLoad()
                     }                    
                 }
         }

@@ -132,21 +132,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     
     class func photoLiked(photoId: Int) -> Void {
-        FileManager.default.createFile(atPath: getDocumentsDirectory().appendingPathComponent("wisaw-liked-\(photoId)").absoluteString, contents: nil)
+        FileManager.default.createFile(atPath: getDocumentsDirectory().appendingPathComponent("wisaw-liked-\(photoId)").path, contents: nil)
     }
     
     class func photoViewed(photoId: Int) -> Void {
-        FileManager.default.createFile(atPath: getDocumentsDirectory().appendingPathComponent("wisaw-viewed-\(photoId)").absoluteString, contents: nil)
+        FileManager.default.createFile(atPath: getDocumentsDirectory().appendingPathComponent("wisaw-viewed-\(photoId)").path, contents: nil)
     }
 
     class func isPhotoLiked(photoId: Int) -> Bool {
-        let val = FileManager.default.fileExists(atPath: getDocumentsDirectory().appendingPathComponent("wisaw-liked-\(photoId)").absoluteString)
-        return val
+        let liked = FileManager.default.fileExists(atPath: getDocumentsDirectory().appendingPathComponent("wisaw-liked-\(photoId)").path)
+        return liked
     }
     
    class func isPhotoViewed(photoId: Int) -> Bool {
-        let val = FileManager.default.fileExists(atPath: getDocumentsDirectory().appendingPathComponent("wisaw-viewed-\(photoId)").absoluteString)
-        return val
+        let viewed = FileManager.default.fileExists(atPath: getDocumentsDirectory().appendingPathComponent("wisaw-viewed-\(photoId)").path)
+        return viewed
    }
 
 }

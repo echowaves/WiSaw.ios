@@ -78,6 +78,8 @@ class SharingViewController:
                             let imgUrl = self.photoJSON["getImgUrl"] as! String
                             let photoId = self.photoJSON["id"] as! Int
 
+                            AppDelegate.photoViewed(photoId: photoId)
+
                             if(AppDelegate.isPhotoLiked(photoId: photoId)) {
                                 self.likeButton.isEnabled = false
                             }
@@ -206,7 +208,7 @@ class SharingViewController:
     }
     
     @IBAction func likeButtonClicked(_ sender: Any) {
-        DetailedViewController.like(photoJSON: photoJSON, instance: self)
+        DetailedViewController.like(photoJSON: photoJSON, instance: self, badgeCounter: self.badgeCounter)
     }
 
 }

@@ -32,17 +32,21 @@ class CellClass: UICollectionViewCell {
         
         likesView!.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.footnote)
         likesView!.textColor = UIColor.white
-
-        likesView!.text = likes.stringValue
+        likesView!.isHidden = false
         
         if(!AppDelegate.isPhotoViewed(photoId: photoId)) {
             likesView!.badgeColor = UIColor.red
             if(likes == 0) {
                 likesView!.text = ""
+            } else {
+                 likesView!.text = "\(likes)"
             }
         } else {
+            likesView!.badgeColor = UIColor(red: 0.1412, green: 0.6078, blue: 0, alpha: 1.0) /* #249b00 */
             if(likes == 0) {
                 likesView!.isHidden = true
+            } else {
+                likesView!.text = "\(likes)"
             }
         }
     }
@@ -59,6 +63,7 @@ class CellClass: UICollectionViewCell {
         
         uiImage.af_cancelImageRequest() // NOTE: - Using AlamofireImage
         uiImage.image = nil
+        likesView!.isHidden = true
     }
     
 }
