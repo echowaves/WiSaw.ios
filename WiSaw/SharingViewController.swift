@@ -23,6 +23,8 @@ class SharingViewController:
     var photoId: Int!
     var uuid: String!
     var photoJSON: [String: Any]!
+    var imgUrl: String!
+    var likes: Int!
     
     let viewControllerUtils = ViewControllerUtils()
     
@@ -75,20 +77,21 @@ class SharingViewController:
                             
                             self.photoJSON = json["photo"] as! [String: Any]
                             self.uuid = self.photoJSON["uuid"] as! String
-                            let imgUrl = self.photoJSON["getImgUrl"] as! String
-                            let photoId = self.photoJSON["id"] as! Int
+                            self.imgUrl = self.photoJSON["getImgUrl"] as! String
+                            self.photoId = self.photoJSON["id"] as! Int
+                            self.likes = self.photoJSON["likes"] as! Int
+                            
+                            AppDelegate.photoViewed(photoId: self.photoId)
 
-                            AppDelegate.photoViewed(photoId: photoId)
-
-                            if(AppDelegate.isPhotoLiked(photoId: photoId)) {
+                            if(AppDelegate.isPhotoLiked(photoId: self.photoId)) {
                                 self.likeButton.isEnabled = false
                             }
 
-                            self.badgeCounter!.text = (self.photoJSON["likes"] as! NSNumber).stringValue
+                            self.badgeCounter!.text = "\(self.likes!)"
                             self.badgeCounter!.textColor = UIColor.white
 
                             self.downloader = ImageDownloader()
-                            let urlRequest = URLRequest(url: URL(string: imgUrl)!)
+                            let urlRequest = URLRequest(url: URL(string: self.imgUrl)!)
                             self.downloader!.download(urlRequest) { response in
                                 if let image = response.result.value {
                                     self.imageView.image = image
@@ -208,7 +211,7 @@ class SharingViewController:
     }
     
     @IBAction func likeButtonClicked(_ sender: Any) {
-        DetailedViewController.like(photoJSON: photoJSON, instance: self, badgeCounter: self.badgeCounter)
+        DetailedViewController.like(photoJSON: photoJSON, instance: self)
     }
 
 }

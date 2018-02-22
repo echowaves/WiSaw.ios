@@ -26,6 +26,7 @@ class DetailedViewController:
     var photoJSON: [String: Any]!
     var imgUrl: String!
     var thumbUrl: String!
+    var likes: Int!
     
     var downloader: ImageDownloader? // This acts as the 'strong reference'.
 
@@ -51,7 +52,8 @@ class DetailedViewController:
         uuid = photoJSON["uuid"] as! String
         thumbUrl = photoJSON["getThumbUrl"] as! String
         imgUrl = photoJSON["getImgUrl"] as! String
-
+        likes = photoJSON["likes"] as! Int
+        
         AppDelegate.photoViewed(photoId: photoId)
 
         scrollView.minimumZoomScale = 1.0
@@ -70,7 +72,7 @@ class DetailedViewController:
         likeButton.isEnabled = !AppDelegate.isPhotoLiked(photoId: photoId)
         
 
-        badgeCounter!.text = (photoJSON["likes"] as! NSNumber).stringValue
+        badgeCounter!.text = "\(likes!)"
         badgeCounter!.textColor = UIColor.white
             
         viewControllerUtils.showActivityIndicator(uiView: self.view)
@@ -253,24 +255,24 @@ class DetailedViewController:
         let message = "Check out what I saw today:"
         buo.showShareSheet(with: lp, andShareText: message, from: instance) { (activityType, completed) in
             print("shared")
-            Alamofire.request("\(AppDelegate.HOST)/photos/\(photoId)/like", method: .put, encoding: JSONEncoding.default)
-                .responseJSON { response in
-                    if let statusCode = response.response?.statusCode {
-                        if(statusCode == 200) {
-                            instance.viewDidLoad()
-                        }
-                    }
-            }
+//            Alamofire.request("\(AppDelegate.HOST)/photos/\(photoId)/like", method: .put, encoding: JSONEncoding.default)
+//                .responseJSON { response in
+//                    if let statusCode = response.response?.statusCode {
+//                        if(statusCode == 200) {
+//                            instance.viewDidLoad()
+//                        }
+//                    }
+//            }
 
         }
 
     }
     
     @IBAction func likeButtonClicked(_ sender: Any) {
-        DetailedViewController.like(photoJSON: photoJSON, instance: self, badgeCounter: self.badgeCounter)
+        DetailedViewController.like(photoJSON: photoJSON, instance: self)
     }
     
-    class func like(photoJSON: [String: Any], instance: UIViewController, badgeCounter: BadgeSwift!) {
+    class func like(photoJSON: [String: Any], instance: UIViewController) {
         let photoId = photoJSON["id"] as! Int
         
         Alamofire.request("\(AppDelegate.HOST)/photos/\(photoId)/like", method: .put, encoding: JSONEncoding.default)
@@ -278,9 +280,14 @@ class DetailedViewController:
                 if let statusCode = response.response?.statusCode {
                     if(statusCode == 200) {
                         AppDelegate.photoLiked(photoId: photoId)
-                        badgeCounter!.text = "110" //"\(Int(badgeCounter!.text!)! + 1)"
-                        instance.reloadInputViews()
-                        instance.viewDidLoad()
+//                        badgeCounter!.text = "110" //"\(Int(badgeCounter!.text!)! + 1)"
+                        
+                        if let detailedViewContoller = instance as? DetailedViewController {
+                            detailedViewContoller.badgeCounter!.text = "\(Int(detailedViewContoller.badgeCounter!.text!)! + 1)"
+                            detailedViewContoller.likeButton!.isEnabled = false
+                        } else {
+                            instance.viewDidLoad()
+                        }
                     }                    
                 }
         }
