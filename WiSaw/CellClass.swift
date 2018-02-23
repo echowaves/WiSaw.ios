@@ -19,7 +19,7 @@ class CellClass: UICollectionViewCell {
 
     func configure(photoJSON:[String: Any]) {
         let thumbUrl = photoJSON["getThumbUrl"] as! String
-        let likes = photoJSON["likes"] as! NSNumber
+        let likes = photoJSON["likes"] as! Int
         let photoId = photoJSON["id"] as! Int
 
         downloader = ImageDownloader()
