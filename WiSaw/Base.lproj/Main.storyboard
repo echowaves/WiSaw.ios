@@ -195,15 +195,15 @@
                                 </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ez-0E-pfV">
-                                <rect key="frame" x="364" y="686" width="30" height="30"/>
+                                <rect key="frame" x="344" y="666" width="50" height="50"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="YIZ-mD-p17"/>
-                                    <constraint firstAttribute="width" constant="30" id="vYy-gG-wkW"/>
+                                    <constraint firstAttribute="height" constant="50" id="YIZ-mD-p17"/>
+                                    <constraint firstAttribute="width" constant="50" id="vYy-gG-wkW"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="15"/>
+                                        <integer key="value" value="25"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -211,15 +211,15 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l0A-Np-mna" userLabel="Like Button">
-                                <rect key="frame" x="20" y="686" width="30" height="30"/>
+                                <rect key="frame" x="20" y="666" width="50" height="50"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="BWB-Qq-ZVt"/>
-                                    <constraint firstAttribute="width" constant="30" id="BwC-1F-YHc"/>
+                                    <constraint firstAttribute="height" constant="50" id="BWB-Qq-ZVt"/>
+                                    <constraint firstAttribute="width" constant="50" id="BwC-1F-YHc"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="15"/>
+                                        <integer key="value" value="25"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -271,7 +271,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AMQ-kX-HnZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1688" y="115"/>
+            <point key="canvasLocation" x="1686.9565217391305" y="114.94565217391305"/>
         </scene>
         <!--Contact Form View Controller-->
         <scene sceneID="NCx-JB-ooF">
@@ -398,15 +398,15 @@
                                 </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aDe-yG-tyx">
-                                <rect key="frame" x="364" y="686" width="30" height="30"/>
+                                <rect key="frame" x="344" y="666" width="50" height="50"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="7L6-1g-kjF"/>
-                                    <constraint firstAttribute="width" constant="30" id="B6h-Yj-lni"/>
+                                    <constraint firstAttribute="height" constant="50" id="7L6-1g-kjF"/>
+                                    <constraint firstAttribute="width" constant="50" id="B6h-Yj-lni"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="15"/>
+                                        <integer key="value" value="25"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -414,15 +414,15 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U7S-q3-rMK" userLabel="Like Button">
-                                <rect key="frame" x="20" y="686" width="30" height="30"/>
+                                <rect key="frame" x="20" y="666" width="50" height="50"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="474-da-UZj"/>
-                                    <constraint firstAttribute="height" constant="30" id="qcw-WW-dah"/>
+                                    <constraint firstAttribute="width" constant="50" id="474-da-UZj"/>
+                                    <constraint firstAttribute="height" constant="50" id="qcw-WW-dah"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="15"/>
+                                        <integer key="value" value="25"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -474,7 +474,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bNv-NV-R3h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2545" y="118"/>
+            <point key="canvasLocation" x="2544.9275362318845" y="117.39130434782609"/>
         </scene>
     </scenes>
 </document>

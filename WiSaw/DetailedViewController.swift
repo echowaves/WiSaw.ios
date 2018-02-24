@@ -273,18 +273,22 @@ class DetailedViewController:
     }
     
     class func like(photoJSON: [String: Any], instance: UIViewController) {
+        if let detailedViewContoller = instance as? DetailedViewController {
+            detailedViewContoller.likeButton!.isEnabled = false
+        }
+        if let sharingViewController = instance as? SharingViewController {
+            sharingViewController.likeButton!.isEnabled = false
+        }
+
         let photoId = photoJSON["id"] as! Int
-        
         Alamofire.request("\(AppDelegate.HOST)/photos/\(photoId)/like", method: .put, encoding: JSONEncoding.default)
             .responseJSON { response in
                 if let statusCode = response.response?.statusCode {
                     if(statusCode == 200) {
                         AppDelegate.photoLiked(photoId: photoId)
 //                        badgeCounter!.text = "110" //"\(Int(badgeCounter!.text!)! + 1)"
-                        
                         if let detailedViewContoller = instance as? DetailedViewController {
                             detailedViewContoller.badgeCounter!.text = "\(Int(detailedViewContoller.badgeCounter!.text!)! + 1)"
-                            detailedViewContoller.likeButton!.isEnabled = false
                         } else {
                             instance.viewDidLoad()
                         }
