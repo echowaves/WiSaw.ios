@@ -87,6 +87,7 @@ CLLocationManagerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         presentTandCAlert()
+        determineMyCurrentLocation()
     }
     
     
@@ -111,8 +112,6 @@ CLLocationManagerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        determineMyCurrentLocation()
     }
     
     func determineMyCurrentLocation() {
@@ -122,9 +121,16 @@ CLLocationManagerDelegate {
         locationManager.requestWhenInUseAuthorization()
         
         if CLLocationManager.locationServicesEnabled() {
-            locationManager.startUpdatingLocation()
-            //locationManager.startUpdatingHeading()
+            switch CLLocationManager.authorizationStatus() {
+            case .notDetermined, .restricted, .denied:
+                showLocationAcessDeniedAlert()
+            case .authorizedAlways, .authorizedWhenInUse:
+                locationManager.startUpdatingLocation()
+            }
         }
+//        else {
+//            showLocationAcessDeniedAlert()
+//        }
     }
     
 
@@ -148,29 +154,32 @@ CLLocationManagerDelegate {
     
     
     func loadImages() {
-
-        // load images here, can only do it after the gps data is obtained
-        let parameters: [String: Any] = [
-            "location" : [
-                "type": "Point",
-                "coordinates": [ lattitude!, longitude!]
+        if lattitude == nil || longitude == nil {
+            showLocationAcessDeniedAlert()
+        } else {
+            // load images here, can only do it after the gps data is obtained
+            let parameters: [String: Any] = [
+                "location" : [
+                    "type": "Point",
+                    "coordinates": [ lattitude!, longitude!]
+                ]
+                
             ]
-            
-        ]
-        viewControllerUtils.showActivityIndicator(uiView: self.view)
-        Alamofire.request("\(AppDelegate.HOST)/photos/feed", method: .post, parameters: parameters, encoding: JSONEncoding.default)
-            .responseJSON { response in
-                if let statusCode = response.response?.statusCode {
-                    if(statusCode == 200) {
-                        if let json = response.result.value as? [String: Any] {
-                            self.photos = json["photos"] as! [Any]
-                            print("photos length: \(self.photos.count)")
-                            self.collectionView.reloadData()
+            viewControllerUtils.showActivityIndicator(uiView: self.view)
+            Alamofire.request("\(AppDelegate.HOST)/photos/feed", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+                .responseJSON { response in
+                    if let statusCode = response.response?.statusCode {
+                        if(statusCode == 200) {
+                            if let json = response.result.value as? [String: Any] {
+                                self.photos = json["photos"] as! [Any]
+                                print("photos length: \(self.photos.count)")
+                                self.collectionView.reloadData()
+                            }
                         }
                     }
-                }
-                self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
-                self.uploadImage()
+                    self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+                    self.uploadImage()
+            }
         }
     }
     
@@ -532,5 +541,28 @@ CLLocationManagerDelegate {
         }
 
     }
+    
+    func showLocationAcessDeniedAlert() {
+        let alertController = UIAlertController(title: "How am I going to show you geo relevant photos if you disabbled your location?",
+                                                message: "Why don't you enable Location in Settings to continue?",
+                                                preferredStyle: .alert)
+        
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alertAction) in
+            
+            // THIS IS WHERE THE MAGIC HAPPENS!!!!
+            if let appSettings = NSURL(string: UIApplicationOpenSettingsURLString) {
+                UIApplication.shared.openURL(appSettings as URL)
+            }
+        }
+        alertController.addAction(settingsAction)
+        
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    
+//    https://www.natashatherobot.com/ios-taking-the-user-to-settings/
 }
 

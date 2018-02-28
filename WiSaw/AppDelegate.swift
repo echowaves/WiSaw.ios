@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
         // Override point for customization after application launch.
         window?.tintColor = themeColor
 //        NetworkActivityIndicatorManager.shared.isEnabled = true
@@ -78,6 +79,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // load your normal view
             }
         })
+
+        application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.badge ], categories: nil))
+
+        application.setMinimumBackgroundFetchInterval(1800) // 30 minutes
+        application.applicationIconBadgeNumber = 0
         
         return true
     }
@@ -149,5 +155,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return viewed
    }
 
+    
+    // Support for background fetch
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        application.applicationIconBadgeNumber = 11
+        completionHandler(.newData)
+    }
+    
 }
 
