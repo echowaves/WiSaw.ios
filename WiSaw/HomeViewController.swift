@@ -87,6 +87,7 @@ CLLocationManagerDelegate {
     @objc func refresh(sender:AnyObject) {
         // Code to refresh table view        
         loadImages()
+        locationManager.startUpdatingLocation()
         self.refreshControl?.endRefreshing()
     }
     
@@ -133,7 +134,6 @@ CLLocationManagerDelegate {
             // Call stopUpdatingLocation() to stop listening for location updates,
             // other wise this function will be called every time when user location changes.\
             manager.stopUpdatingLocation()
-            
             loadImages()
         }
     }
@@ -153,6 +153,7 @@ CLLocationManagerDelegate {
         if lattitude == nil || longitude == nil {
             showLocationAcessDeniedAlert()
         } else {
+//            locationManager.startUpdatingLocation()
             // load images here, can only do it after the gps data is obtained
             let parameters: [String: Any] = [
                 "location" : [
@@ -346,7 +347,7 @@ CLLocationManagerDelegate {
                                                     response in
                                                      if let statusCode = response.response?.statusCode {
                                                         if(statusCode == 200) {
-//                                                            self.loadImages()
+                                                            self.loadImages()
                                                             print("done uploading \(statusCode)")
                                                         } else {
                                                             print("error uploading, response code: \(statusCode)")
