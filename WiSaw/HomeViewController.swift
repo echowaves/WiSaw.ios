@@ -33,8 +33,8 @@ CLLocationManagerDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var locationManager:CLLocationManager!
-    
+    let locationManager = CLLocationManager()
+
     var uuid: String!
     
     var appDelegate:AppDelegate!
@@ -70,6 +70,17 @@ CLLocationManagerDelegate {
         collectionView.addSubview(refreshControl) // not required when using UITableViewController
         
         cleanup()
+        
+        
+        // For use when the app is open
+        locationManager.requestWhenInUseAuthorization()
+        
+        // If location services is enabled get the users location
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers // You can change the locaiton accuary here.
+            locationManager.startUpdatingLocation()
+        }
     }
     
     
@@ -84,9 +95,11 @@ CLLocationManagerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         presentTandCAlert()
-        determineMyCurrentLocation()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
     
     func presentTandCAlert() {
         let tandc =  KeychainWrapper.standard.bool(forKey: "WiSaw-tandc")
@@ -104,42 +117,32 @@ CLLocationManagerDelegate {
         }
     }
     
-    func determineMyCurrentLocation() {
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers // we do not need the best possibble location accuracy, we need to preserve the battery as a priority
-        locationManager.requestWhenInUseAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled() {
-            switch CLLocationManager.authorizationStatus() {
-            case .notDetermined, .restricted, .denied:
-                showLocationAcessDeniedAlert()
-            case .authorizedAlways, .authorizedWhenInUse:
-                locationManager.startUpdatingLocation()
-            }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            let lattitude = location.coordinate.latitude.description
+            let longitude = location.coordinate.longitude.description
+            
+            print("------------------------------")
+            print("user latitude = \(lattitude)")
+            print("user longitude = \(longitude)")
+            UserDefaults.standard.set(lattitude, forKey: "lattitude")
+            UserDefaults.standard.set(longitude, forKey: "longitude")
+            UserDefaults.standard.synchronize()
+            
+            // Call stopUpdatingLocation() to stop listening for location updates,
+            // other wise this function will be called every time when user location changes.\
+            manager.stopUpdatingLocation()
+            
+            loadImages()
         }
     }
     
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let userLocation:CLLocation = locations[0] as CLLocation
-        
-        // Call stopUpdatingLocation() to stop listening for location updates,
-        // other wise this function will be called every time when user location changes.
-        
-        manager.stopUpdatingLocation()
-        
-        let lattitude = userLocation.coordinate.latitude.description
-        let longitude = userLocation.coordinate.longitude.description
-        
-        print("------------------------------")
-        print("user latitude = \(lattitude)")
-        print("user longitude = \(longitude)")
-        UserDefaults.standard.set(lattitude, forKey: "lattitude")
-        UserDefaults.standard.set(longitude, forKey: "longitude")
-        UserDefaults.standard.synchronize()
-
-        loadImages()
+    // If we have been deined access give the user the option to change it
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if(status == CLAuthorizationStatus.denied) {
+            showLocationAcessDeniedAlert()
+        }
     }
     
     
@@ -181,11 +184,6 @@ CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location manager failed with an Error: \(error)")
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     
@@ -549,17 +547,20 @@ CLLocationManagerDelegate {
             // THIS IS WHERE THE MAGIC HAPPENS!!!!
             if let appSettings = NSURL(string: UIApplicationOpenSettingsURLString) {
                 UIApplication.shared.openURL(appSettings as URL)
+//                UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
+
         }
         alertController.addAction(settingsAction)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:  nil)
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true, completion: nil)
     }
     
 //    https://www.natashatherobot.com/ios-taking-the-user-to-settings/
+//    http://www.seemuapps.com/swift-get-users-location-gps-coordinates
     
     
 }

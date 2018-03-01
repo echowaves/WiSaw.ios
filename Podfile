@@ -17,7 +17,7 @@ target 'WiSaw' do
   pod 'FontAwesome.swift', '~> 1.3.1'
 
   pod 'Fabric', '~> 1.7.3'
-  pod 'Crashlytics', '~>  3.10.0'
+  pod 'Crashlytics', '~>  3.10.1'
   pod 'Branch', '~> 0.22.5'
   pod 'BadgeSwift', '~> 5.0'
 
