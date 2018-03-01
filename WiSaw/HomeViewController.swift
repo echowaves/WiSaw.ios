@@ -96,6 +96,7 @@ CLLocationManagerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         presentTandCAlert()
+        loadImages()
     }
     
     override func viewWillAppear(_ animated: Bool) {
