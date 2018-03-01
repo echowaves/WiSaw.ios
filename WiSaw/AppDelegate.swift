@@ -9,6 +9,7 @@
 import Fabric
 import Crashlytics
 import Branch
+import Alamofire
 
 
 import UIKit
@@ -165,7 +166,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 AppDelegate.photoViewed(photoId: photoId)
             }
         }
-        
+        updateAppBadge(photosJSON: photosJSON)
+    }
+    
+    class func updateAppBadge(photosJSON: [Any]) {
         var updates = 0
         for photoJSON in photosJSON {
             let photoId = (photoJSON as! [String:Any])["id"] as! Int
@@ -178,8 +182,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Support for background fetch
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        application.applicationIconBadgeNumber = 11
-        completionHandler(.newData)
+        
+        let lattitude = UserDefaults.standard.string(forKey: "lattitude")
+        let longitude = UserDefaults.standard.string(forKey: "longitude")
+        
+        if lattitude == nil || longitude == nil {
+            completionHandler(.noData)
+        } else {
+            // load images here, can only do it after the gps data is obtained
+            let parameters: [String: Any] = [
+                "location" : [
+                    "type": "Point",
+                    "coordinates": [ lattitude!, longitude!]
+                ]
+                
+            ]
+            Alamofire.request("\(AppDelegate.HOST)/photos/feed", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+                .responseJSON { response in
+                    if let statusCode = response.response?.statusCode {
+                        if(statusCode == 200) {
+                            if let photosJSON = response.result.value as? [Any] {
+                                AppDelegate.updateAppBadge(photosJSON: photosJSON)
+                                completionHandler(.newData)
+                            }
+                        }
+                    }
+            }
+        }
     }
     
 }
