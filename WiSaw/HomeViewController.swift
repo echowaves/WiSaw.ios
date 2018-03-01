@@ -35,9 +35,6 @@ CLLocationManagerDelegate {
     
     var locationManager:CLLocationManager!
     
-    var lattitude: String!
-    var longitude: String!
-    
     var uuid: String!
     
     var appDelegate:AppDelegate!
@@ -92,10 +89,7 @@ CLLocationManagerDelegate {
     
     
     func presentTandCAlert() {
-        
         let tandc =  KeychainWrapper.standard.bool(forKey: "WiSaw-tandc")
-        
-        
         if(tandc == nil) {
             let alert = UIAlertController(title: "* When you take a photo with WiSaw, it gets added to your Photo Album and will be posted to GEO feed.\n* People close by can see your photo for 24 hours.\n* If you find any photo abusive or inappropriate, you can delete it from the feed, which will remove it from the cloud.\n* We will not tolerate objectionable content or abusive users.\n* The abusive users will be banned from WiSaw.", message: "By using WiSaw I agree to Terms and Conditions.", preferredStyle: .alert)
             
@@ -108,10 +102,6 @@ CLLocationManagerDelegate {
         } else {
             appDelegate.tandc = tandc!
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
     
     func determineMyCurrentLocation() {
@@ -128,9 +118,6 @@ CLLocationManagerDelegate {
                 locationManager.startUpdatingLocation()
             }
         }
-//        else {
-//            showLocationAcessDeniedAlert()
-//        }
     }
     
 
@@ -142,18 +129,24 @@ CLLocationManagerDelegate {
         
         manager.stopUpdatingLocation()
         
-        lattitude = userLocation.coordinate.latitude.description
-        longitude = userLocation.coordinate.longitude.description
+        let lattitude = userLocation.coordinate.latitude.description
+        let longitude = userLocation.coordinate.longitude.description
         
         print("------------------------------")
-        print("user latitude = \(lattitude!)")
-        print("user longitude = \(longitude!)")
-        
+        print("user latitude = \(lattitude)")
+        print("user longitude = \(longitude)")
+        UserDefaults.standard.set(lattitude, forKey: "lattitude")
+        UserDefaults.standard.set(longitude, forKey: "longitude")
+        UserDefaults.standard.synchronize()
+
         loadImages()
     }
     
     
     func loadImages() {
+        let lattitude = UserDefaults.standard.string(forKey: "lattitude")
+        let longitude = UserDefaults.standard.string(forKey: "longitude")
+        
         if lattitude == nil || longitude == nil {
             showLocationAcessDeniedAlert()
         } else {
@@ -173,7 +166,9 @@ CLLocationManagerDelegate {
                             if let json = response.result.value as? [String: Any] {
                                 self.photos = json["photos"] as! [Any]
                                 print("photos length: \(self.photos.count)")
+                                AppDelegate.updateNewPhotosStatus(photosJSON: self.photos)
                                 self.collectionView.reloadData()
+                                
                             }
                         }
                     }
@@ -271,6 +266,9 @@ CLLocationManagerDelegate {
     
     
     private func uploadImage() {
+        let lattitude = UserDefaults.standard.string(forKey: "lattitude")
+        let longitude = UserDefaults.standard.string(forKey: "longitude")
+
         updateCounter()
         
         uploadSessionManager!.session.getAllTasks { tasks in
@@ -297,7 +295,7 @@ CLLocationManagerDelegate {
                     "uuid" : self.uuid,
                     "location" : [
                         "type": "Point",
-                        "coordinates": [ self.lattitude!, self.longitude!]
+                        "coordinates": [ lattitude, longitude]
                     ]
                 ]
                 
@@ -539,11 +537,10 @@ CLLocationManagerDelegate {
                 }
             }
         }
-
     }
     
     func showLocationAcessDeniedAlert() {
-        let alertController = UIAlertController(title: "How am I going to show you geo relevant photos if you disabbled your location?",
+        let alertController = UIAlertController(title: "How am I supposed to show you geo relevant photos?",
                                                 message: "Why don't you enable Location in Settings to continue?",
                                                 preferredStyle: .alert)
         
@@ -556,13 +553,14 @@ CLLocationManagerDelegate {
         }
         alertController.addAction(settingsAction)
         
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//        alertController.addAction(cancelAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
         
         present(alertController, animated: true, completion: nil)
     }
     
-    
 //    https://www.natashatherobot.com/ios-taking-the-user-to-settings/
+    
+    
 }
 
