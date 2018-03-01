@@ -84,7 +84,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.badge ], categories: nil))
         
         application.setMinimumBackgroundFetchInterval(1800) // 30 minutes
-        application.applicationIconBadgeNumber = 0
         
         return true
     }
