@@ -144,6 +144,7 @@ CLLocationManagerDelegate {
         if(status == CLAuthorizationStatus.denied) {
             showLocationAcessDeniedAlert()
         }
+        
     }
     
     
@@ -152,7 +153,8 @@ CLLocationManagerDelegate {
         let longitude = UserDefaults.standard.string(forKey: "longitude")
         
         if lattitude == nil || longitude == nil {
-            showLocationAcessDeniedAlert()
+//            showLocationAcessDeniedAlert()
+            return
         } else {
 //            locationManager.startUpdatingLocation()
             // load images here, can only do it after the gps data is obtained
@@ -172,8 +174,7 @@ CLLocationManagerDelegate {
                                 self.photos = json["photos"] as! [Any]
                                 print("photos length: \(self.photos.count)")
                                 AppDelegate.updateNewPhotosStatus(photosJSON: self.photos)
-                                self.collectionView.reloadData()
-                                
+                                self.collectionView.reloadData()                                
                             }
                         }
                     }
@@ -547,8 +548,10 @@ CLLocationManagerDelegate {
         let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alertAction) in
             
             // THIS IS WHERE THE MAGIC HAPPENS!!!!
-            if let appSettings = NSURL(string: UIApplicationOpenSettingsURLString) {
-                UIApplication.shared.openURL(appSettings as URL)
+            if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
+                UIApplication.shared.open(appSettings, options: [:], completionHandler: { (success) in
+                    print("Open url @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@: \(success)")
+                })
 //                UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
 

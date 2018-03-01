@@ -10,6 +10,7 @@ import Fabric
 import Crashlytics
 import Branch
 import Alamofire
+import UserNotifications
 
 
 import UIKit
@@ -80,11 +81,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // load your normal view
             }
         })
-        
-        application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.badge ], categories: nil))
-        
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.badge]) { (granted, error) in
+            // Enable or disable features based on authorization.
+        }
         application.setMinimumBackgroundFetchInterval(1800) // 30 minutes
-        
+
         return true
     }
     
