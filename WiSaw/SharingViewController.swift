@@ -176,13 +176,13 @@ class SharingViewController:
                         self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                         if let statusCode = response.response?.statusCode {
                             if(statusCode == 201) {
-                                self.viewControllerUtils.showActivityIndicator(uiView: self.view)
-                                Alamofire.request("\(AppDelegate.HOST)/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
-                                    .responseJSON { response in
+//                                self.viewControllerUtils.showActivityIndicator(uiView: self.view)
+//                                Alamofire.request("\(AppDelegate.HOST)/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
+//                                    .responseJSON { response in
                                         self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                                         print("deleted detailed photo ----------------- \(self.photoId!)")
                                         self.dismiss(animated: true) {
-                                        }                                        
+//                                        }                                        
                                 }
                             }
                         }
