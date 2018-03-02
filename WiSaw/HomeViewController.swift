@@ -93,7 +93,6 @@ CLLocationManagerDelegate {
     }
     
     
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         presentTandCAlert()
@@ -277,7 +276,7 @@ CLLocationManagerDelegate {
                     if newStatus ==  PHAuthorizationStatus.authorized {
                         UIImageWriteToSavedPhotosAlbum(chosenImage, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
                     } else {
-                        self.showPhotoLibbraryAcessDeniedAlert()
+                        self.showPhotoLibraryAcessDeniedAlert()
                     }
                 })
             })
@@ -611,7 +610,7 @@ CLLocationManagerDelegate {
         present(alertController, animated: true, completion: nil)
     }
 
-    func showPhotoLibbraryAcessDeniedAlert() {
+    func showPhotoLibraryAcessDeniedAlert() {
         let alertController = UIAlertController(title: "How am I supposed to save your photo?",
                                                 message: "Why don't you enable Photos in Settings and try again?",
                                                 preferredStyle: .alert)
@@ -625,7 +624,6 @@ CLLocationManagerDelegate {
                 })
                 //                UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
-            
         }
         alertController.addAction(settingsAction)
         
