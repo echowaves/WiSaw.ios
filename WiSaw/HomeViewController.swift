@@ -8,9 +8,12 @@
 
 import UIKit
 import CoreLocation
+import Photos
+import AVFoundation
 import Alamofire
 import AlamofireImage
 import SwiftKeychainWrapper
+
 import FontAwesome_swift
 
 class HomeViewController:
@@ -71,7 +74,6 @@ CLLocationManagerDelegate {
         
         cleanup()
         
-        
         // For use when the app is open
         locationManager.requestWhenInUseAuthorization()
         
@@ -82,7 +84,6 @@ CLLocationManagerDelegate {
             locationManager.startUpdatingLocation()
         }
     }
-    
     
     @objc func refresh(sender:AnyObject) {
         // Code to refresh table view        
@@ -144,7 +145,6 @@ CLLocationManagerDelegate {
         if(status == CLAuthorizationStatus.denied) {
             showLocationAcessDeniedAlert()
         }
-        
     }
     
     
@@ -223,14 +223,33 @@ CLLocationManagerDelegate {
     
     @IBAction func openCameraButtonClicked(_ sender: Any) {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                picker.delegate = self
-                picker.sourceType = .camera;
-                picker.allowsEditing = false
-                self.present(picker, animated: true, completion: nil)
-            } else {
-                noCamera()
+            
+            //Camera
+            AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
+                if response {
+                    //access granted
+                    /* do stuff here */
+                    self.picker.delegate = self
+                    self.picker.sourceType = .camera;
+                    self.picker.allowsEditing = false
+                    self.present(self.picker, animated: true, completion: nil)
+                } else {
+                    self.showCameraAcessDeniedAlert()
+                }
             }
+//
+//            if( PHPhotoLibrary.authorizationStatus() == .authorized ) {
+//
+//            } else {
+//                PHPhotoLibrary.requestAuthorization({
+//                    (newStatus) in
+//                    if newStatus ==  PHAuthorizationStatus.authorized {
+//                    } else {
+//                    }
+//                })
+//            }
+        } else {
+            noCamera()
         }
     }
     
@@ -542,7 +561,7 @@ CLLocationManagerDelegate {
     
     func showLocationAcessDeniedAlert() {
         let alertController = UIAlertController(title: "How am I supposed to show you geo relevant photos?",
-                                                message: "Why don't you enable Location in Settings to continue?",
+                                                message: "Why don't you enable Location in Settings and try again?",
                                                 preferredStyle: .alert)
         
         let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alertAction) in
@@ -563,7 +582,32 @@ CLLocationManagerDelegate {
         
         present(alertController, animated: true, completion: nil)
     }
+
     
+    func showCameraAcessDeniedAlert() {
+        let alertController = UIAlertController(title: "How am I supposed to take your photos?",
+                                                message: "Why don't you enable Camera in Settings and try again",
+                                                preferredStyle: .alert)
+        
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alertAction) in
+            
+            // THIS IS WHERE THE MAGIC HAPPENS!!!!
+            if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
+                UIApplication.shared.open(appSettings, options: [:], completionHandler: { (success) in
+                    print("Open url @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@: \(success)")
+                })
+                //                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+            
+        }
+        alertController.addAction(settingsAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:  nil)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+
 //    https://www.natashatherobot.com/ios-taking-the-user-to-settings/
 //    http://www.seemuapps.com/swift-get-users-location-gps-coordinates
     
