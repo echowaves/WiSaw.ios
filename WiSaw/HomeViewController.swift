@@ -217,7 +217,6 @@ CLLocationManagerDelegate {
         present(pageViewController, animated: true) {
             print("showing PageViewController")
         }
-        
     }
     
     
@@ -237,17 +236,6 @@ CLLocationManagerDelegate {
                     self.showCameraAcessDeniedAlert()
                 }
             }
-//
-//            if( PHPhotoLibrary.authorizationStatus() == .authorized ) {
-//
-//            } else {
-//                PHPhotoLibrary.requestAuthorization({
-//                    (newStatus) in
-//                    if newStatus ==  PHAuthorizationStatus.authorized {
-//                    } else {
-//                    }
-//                })
-//            }
         } else {
             noCamera()
         }
@@ -280,7 +268,22 @@ CLLocationManagerDelegate {
         chosenImage = self.imageOrientation(chosenImage)
         
         // save to photo album
-        UIImageWriteToSavedPhotosAlbum(chosenImage, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+        if( PHPhotoLibrary.authorizationStatus() == .authorized ) {
+            UIImageWriteToSavedPhotosAlbum(chosenImage, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+        } else {
+            dismiss(animated: true, completion: {
+                PHPhotoLibrary.requestAuthorization({
+                    (newStatus) in
+                    if newStatus ==  PHAuthorizationStatus.authorized {
+                        UIImageWriteToSavedPhotosAlbum(chosenImage, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+                    } else {
+                        self.showPhotoLibbraryAcessDeniedAlert()
+                    }
+                })
+            })
+
+        }
+        
         uploadImage()
     }
     
@@ -586,7 +589,7 @@ CLLocationManagerDelegate {
     
     func showCameraAcessDeniedAlert() {
         let alertController = UIAlertController(title: "How am I supposed to take your photos?",
-                                                message: "Why don't you enable Camera in Settings and try again",
+                                                message: "Why don't you enable Camera in Settings and try again?",
                                                 preferredStyle: .alert)
         
         let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alertAction) in
@@ -608,6 +611,32 @@ CLLocationManagerDelegate {
         present(alertController, animated: true, completion: nil)
     }
 
+    func showPhotoLibbraryAcessDeniedAlert() {
+        let alertController = UIAlertController(title: "How am I supposed to save your photo?",
+                                                message: "Why don't you enable Photos in Settings and try again?",
+                                                preferredStyle: .alert)
+        
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alertAction) in
+            
+            // THIS IS WHERE THE MAGIC HAPPENS!!!!
+            if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
+                UIApplication.shared.open(appSettings, options: [:], completionHandler: { (success) in
+                    print("Open url @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@: \(success)")
+                })
+                //                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+            
+        }
+        alertController.addAction(settingsAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:  nil)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+
+    
+    
 //    https://www.natashatherobot.com/ios-taking-the-user-to-settings/
 //    http://www.seemuapps.com/swift-get-users-location-gps-coordinates
     
