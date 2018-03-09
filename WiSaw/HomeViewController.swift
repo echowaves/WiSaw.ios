@@ -142,7 +142,8 @@ CLLocationManagerDelegate {
     // If we have been deined access give the user the option to change it
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if(status == CLAuthorizationStatus.denied) {
-            showLocationAcessDeniedAlert()
+            showAcessDeniedAlert(title: "How am I supposed to show you geo relevant photos?",
+                                 message: "Why don't you enable Location in Settings and try again?")
         }
     }
     
@@ -232,7 +233,8 @@ CLLocationManagerDelegate {
                     self.picker.allowsEditing = false
                     self.present(self.picker, animated: true, completion: nil)
                 } else {
-                    self.showCameraAcessDeniedAlert()
+                    self.showAcessDeniedAlert(title: "How am I supposed to take your photos?",
+                                              message: "Why don't you enable Camera in Settings and try again?")
                 }
             }
         } else {
@@ -276,7 +278,8 @@ CLLocationManagerDelegate {
                     if newStatus ==  PHAuthorizationStatus.authorized {
                         UIImageWriteToSavedPhotosAlbum(chosenImage, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
                     } else {
-                        self.showPhotoLibraryAcessDeniedAlert()
+                        self.showAcessDeniedAlert(title: "How am I supposed to save your photo?",
+                                                  message: "Why don't you enable Photos in Settings and try again?")
                     }
                 })
             })
@@ -561,9 +564,10 @@ CLLocationManagerDelegate {
         }
     }
     
-    func showLocationAcessDeniedAlert() {
-        let alertController = UIAlertController(title: "How am I supposed to show you geo relevant photos?",
-                                                message: "Why don't you enable Location in Settings and try again?",
+    
+    func showAcessDeniedAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title,
+                                                message: message,
                                                 preferredStyle: .alert)
         
         let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alertAction) in
@@ -586,53 +590,6 @@ CLLocationManagerDelegate {
     }
 
     
-    func showCameraAcessDeniedAlert() {
-        let alertController = UIAlertController(title: "How am I supposed to take your photos?",
-                                                message: "Why don't you enable Camera in Settings and try again?",
-                                                preferredStyle: .alert)
-        
-        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alertAction) in
-            
-            // THIS IS WHERE THE MAGIC HAPPENS!!!!
-            if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
-                UIApplication.shared.open(appSettings, options: [:], completionHandler: { (success) in
-                    print("Open url @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@: \(success)")
-                })
-                //                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-            
-        }
-        alertController.addAction(settingsAction)
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:  nil)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
-    }
-
-    func showPhotoLibraryAcessDeniedAlert() {
-        let alertController = UIAlertController(title: "How am I supposed to save your photo?",
-                                                message: "Why don't you enable Photos in Settings and try again?",
-                                                preferredStyle: .alert)
-        
-        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alertAction) in
-            
-            // THIS IS WHERE THE MAGIC HAPPENS!!!!
-            if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
-                UIApplication.shared.open(appSettings, options: [:], completionHandler: { (success) in
-                    print("Open url @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@: \(success)")
-                })
-                //                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-        }
-        alertController.addAction(settingsAction)
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:  nil)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
-    }
-
     
     
 //    https://www.natashatherobot.com/ios-taking-the-user-to-settings/
