@@ -142,7 +142,7 @@ CLLocationManagerDelegate {
     // If we have been deined access give the user the option to change it
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if(status == CLAuthorizationStatus.denied) {
-            showAcessDeniedAlert(title: "How am I supposed to show you geo relevant photos?",
+            showAcessDeniedAlert(title: "How am I supposed to show you photos for your location?",
                                  message: "Why don't you enable Location in Settings and try again?")
         }
     }
@@ -416,6 +416,7 @@ CLLocationManagerDelegate {
         DispatchQueue.main.async {
             if(tasksCount == 0) {
                 self.uploadCounterButton!.isHidden = true
+                self.loadImages()
             } else {
                 self.uploadCounterButton!.isHidden = false
                 self.uploadCounterButton!.setTitle(String(tasksCount) , for: .normal)
