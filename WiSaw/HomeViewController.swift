@@ -416,7 +416,7 @@ CLLocationManagerDelegate {
         DispatchQueue.main.async {
             if(tasksCount == 0) {
                 self.uploadCounterButton!.isHidden = true
-                self.loadImages()
+//                self.loadImages()
             } else {
                 self.uploadCounterButton!.isHidden = false
                 self.uploadCounterButton!.setTitle(String(tasksCount) , for: .normal)
