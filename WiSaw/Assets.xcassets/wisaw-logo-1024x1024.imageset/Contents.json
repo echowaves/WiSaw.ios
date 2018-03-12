@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "Logo_Wisaw_Apple-1.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "wisaw-logo-1024x1024.png",
+      "filename" : "Logo_Wisaw_Apple.png",
       "scale" : "2x"
     },
     {
