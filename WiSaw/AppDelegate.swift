@@ -75,8 +75,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.window?.rootViewController?.present(sharedViewController, animated: true) {
                     print("showing SharingViewController")
                 }
-                
-                
             } else {
                 // load your normal view
             }
@@ -203,7 +201,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 .responseJSON { response in
                     if let statusCode = response.response?.statusCode {
                         if(statusCode == 200) {
-                            if let photosJSON = response.result.value as? [Any] {
+                            if let json = response.result.value as? [String:Any] {
+                                let photosJSON = json["photos"] as! [Any]
                                 AppDelegate.updateAppBadge(photosJSON: photosJSON)
                                 completionHandler(.newData)
                             }
