@@ -9,16 +9,16 @@ target 'WiSaw' do
   use_frameworks!
 
   # Pods for WiSaw
-  pod 'Alamofire', '~> 4.6.0'
-  pod 'AlamofireImage', '~> 3.3.0'
+  pod 'Alamofire', '~> 4.7.2'
+  pod 'AlamofireImage', '~> 3.3.1'
 #  pod 'AlamofireNetworkActivityIndicator', '~> 2.2'
 
   pod 'SwiftKeychainWrapper', '~> 3.0.1'
-  pod 'FontAwesome.swift', '~> 1.3.1'
+  pod 'FontAwesome.swift', '~> 1.3.2'
 
-  pod 'Fabric', '~> 1.7.3'
-  pod 'Crashlytics', '~>  3.10.1'
-  pod 'Branch', '~> 0.22.5'
-  pod 'BadgeSwift', '~> 5.0'
+  pod 'Fabric', '~> 1.7.7'
+  pod 'Crashlytics', '~>  3.10.2'
+  pod 'Branch', '~> 0.25.0'
+  pod 'BadgeSwift', '~> 5.0.1'
 
 end
