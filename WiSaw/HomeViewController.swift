@@ -44,6 +44,7 @@ CLLocationManagerDelegate {
     
     var photos: [Any] = []
     
+    var currentDateShift = 0
     
     let viewControllerUtils = ViewControllerUtils()
     
@@ -147,8 +148,19 @@ CLLocationManagerDelegate {
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == photos.count - 1 {  //numberofitem count
+            loadMoreImages()
+        }
+    }
+
     
-    func loadImages() {
+    func loadMoreImages() {
+        currentDateShift += 1
+        loadImages(forDaysAgo:currentDateShift)
+    }
+    
+    func loadImages(forDaysAgo: Int = 0) {
         let lattitude = UserDefaults.standard.string(forKey: "lattitude")
         let longitude = UserDefaults.standard.string(forKey: "longitude")
         
@@ -163,7 +175,7 @@ CLLocationManagerDelegate {
                     "type": "Point",
                     "coordinates": [ lattitude!, longitude!],
                 ],
-                "daysAgo" : 0,
+                "daysAgo" : forDaysAgo,
                 "timeZoneShiftHours" : AppDelegate.timeZoneOffset()
             ]
             viewControllerUtils.showActivityIndicator(uiView: self.view)
@@ -172,7 +184,11 @@ CLLocationManagerDelegate {
                     if let statusCode = response.response?.statusCode {
                         if(statusCode == 200) {
                             if let json = response.result.value as? [String: Any] {
-                                self.photos = json["photos"] as! [Any]
+                                if(forDaysAgo == 0) {
+                                    self.photos = json["photos"] as! [Any]
+                                } else {
+                                    self.photos.append(contentsOf: json["photos"] as! [Any])
+                                }
                                 print("photos length: \(self.photos.count)")
                                 AppDelegate.updateNewPhotosStatus(photosJSON: self.photos)
                                 self.collectionView.reloadData()
@@ -190,7 +206,7 @@ CLLocationManagerDelegate {
         print("Location manager failed with an Error: \(error)")
     }
     
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photos.count
     }
