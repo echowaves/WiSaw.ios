@@ -37,7 +37,7 @@ CLLocationManagerDelegate {
     @IBOutlet weak var collectionView: UICollectionView!
     
     let locationManager = CLLocationManager()
-
+    
     var uuid: String!
     
     var appDelegate:AppDelegate!
@@ -51,7 +51,7 @@ CLLocationManagerDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-
+        
         urlSessionConfiguration = URLSessionConfiguration.background(withIdentifier: "upload-session")
         urlSessionConfiguration!.httpMaximumConnectionsPerHost = 1
         uploadSessionManager = Alamofire.SessionManager(configuration: urlSessionConfiguration!)
@@ -153,20 +153,21 @@ CLLocationManagerDelegate {
         let longitude = UserDefaults.standard.string(forKey: "longitude")
         
         if lattitude == nil || longitude == nil {
-//            showLocationAcessDeniedAlert()
+            //            showLocationAcessDeniedAlert()
             return
         } else {
-//            locationManager.startUpdatingLocation()
+            //            locationManager.startUpdatingLocation()
             // load images here, can only do it after the gps data is obtained
             let parameters: [String: Any] = [
                 "location" : [
                     "type": "Point",
-                    "coordinates": [ lattitude!, longitude!]
-                ]
-                
+                    "coordinates": [ lattitude!, longitude!],
+                ],
+                "daysAgo" : 0,
+                "timeZoneShiftHours" : AppDelegate.timeZoneOffset()
             ]
             viewControllerUtils.showActivityIndicator(uiView: self.view)
-            Alamofire.request("\(AppDelegate.HOST)/photos/feed", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            Alamofire.request("\(AppDelegate.HOST)/photos/feedByDate", method: .post, parameters: parameters, encoding: JSONEncoding.default)
                 .responseJSON { response in
                     if let statusCode = response.response?.statusCode {
                         if(statusCode == 200) {
@@ -174,7 +175,7 @@ CLLocationManagerDelegate {
                                 self.photos = json["photos"] as! [Any]
                                 print("photos length: \(self.photos.count)")
                                 AppDelegate.updateNewPhotosStatus(photosJSON: self.photos)
-                                self.collectionView.reloadData()                                
+                                self.collectionView.reloadData()
                             }
                         }
                     }
@@ -201,14 +202,14 @@ CLLocationManagerDelegate {
         let photoJSON = self.photos[indexPath.row] as! [String: Any]
         
         cell.configure(photoJSON: photoJSON)
-
+        
         return cell
     }
     
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("item clicked: \(indexPath.row)")
-    
+        
         let pageViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PageViewController") as! PageViewController
         
         pageViewController.photos = self.photos
@@ -283,7 +284,7 @@ CLLocationManagerDelegate {
                     }
                 })
             })
-
+            
         }
         
         uploadImage()
@@ -293,7 +294,7 @@ CLLocationManagerDelegate {
     private func uploadImage() {
         let lattitude = UserDefaults.standard.string(forKey: "lattitude")
         let longitude = UserDefaults.standard.string(forKey: "longitude")
-
+        
         updateCounter()
         
         uploadSessionManager!.session.getAllTasks { tasks in
@@ -307,14 +308,14 @@ CLLocationManagerDelegate {
                 
                 let imageFilePath =  imageFiles[0].path
                 let image = UIImage(contentsOfFile:  imageFilePath)
-
+                
                 // send over to the API
                 let size = CGSize(width: 1000, height: 1000)
                 let aspectScaledToFitImage = image?.af_imageAspectScaled(toFit: size)
                 
                 let imageData:Data! = UIImageJPEGRepresentation(aspectScaledToFitImage!, 0.4)
-//                let imageBytes:[UInt8] = Array(imageData)
-
+                //                let imageBytes:[UInt8] = Array(imageData)
+                
                 
                 let parameters: [String: Any] = [
                     "uuid" : self.uuid,
@@ -363,15 +364,15 @@ CLLocationManagerDelegate {
                                             
                                             
                                             let headers = [
-                                                    "Content-Type": "image/jpeg"
-                                                ]
-                                
+                                                "Content-Type": "image/jpeg"
+                                            ]
+                                            
                                             let uploadUrl = json["uploadURL"] as! String
-
+                                            
                                             Alamofire.upload(imageData, to: uploadUrl, method: .put, headers: headers)
                                                 .responseData {
                                                     response in
-                                                     if let statusCode = response.response?.statusCode {
+                                                    if let statusCode = response.response?.statusCode {
                                                         if(statusCode == 200) {
                                                             self.loadImages()
                                                             print("done uploading \(statusCode)")
@@ -384,7 +385,7 @@ CLLocationManagerDelegate {
                                         } catch {
                                             print("Ooops2! Something went wrong: \(error)")
                                         }
-
+                                        
                                     }
                                 }
                                 
@@ -395,9 +396,9 @@ CLLocationManagerDelegate {
                 // still uploading something, just exit
                 return
             }
-
+            
         }
-
+        
     }
     
     private func updateCounter() {
@@ -411,12 +412,12 @@ CLLocationManagerDelegate {
         flash.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         flash.autoreverses = true
         flash.repeatCount = .infinity
-
+        
         // Update the UI to indicate the work has been completed
         DispatchQueue.main.async {
             if(tasksCount == 0) {
                 self.uploadCounterButton!.isHidden = true
-//                self.loadImages()
+                //                self.loadImages()
             } else {
                 self.uploadCounterButton!.isHidden = false
                 self.uploadCounterButton!.setTitle(String(tasksCount) , for: .normal)
@@ -437,7 +438,7 @@ CLLocationManagerDelegate {
         self.saveImage(image: image)
     }
     
-
+    
     func saveImage(image: UIImage){
         DispatchQueue(label: "com.wisaw.saveimagequeue", qos: .background).async {
             let currentDate = Date()
@@ -451,7 +452,7 @@ CLLocationManagerDelegate {
             self.uploadImage()
         }
     }
-        
+    
     
     func getImagesToUpload() -> [URL] {
         // Full path to documents directory
@@ -515,7 +516,7 @@ CLLocationManagerDelegate {
         
         return img
     }
-
+    
     
     @IBAction func contactUsButtonClicked(_ sender: Any) {
         
@@ -540,16 +541,16 @@ CLLocationManagerDelegate {
             for filePathUrl in directoryContents! {
                 if(!filePathUrl.path.contains("wisaw-new")) {
                     print("^^^^^^^^^^^^^^^^^^^^deleting cached file: \(filePathUrl.path)")
-
+                    
                     do {
                         let attributes = try FileManager.default.attributesOfItem(atPath: filePathUrl.path) as NSDictionary
-    //                    print("#####################################1")
-    //                    print(attributes)
-    //                    print("#####################################2")
+                        //                    print("#####################################1")
+                        //                    print(attributes)
+                        //                    print("#####################################2")
                         let modificationDate = attributes["NSFileModificationDate"] as! Date
                         
                         let diffInDays = Calendar.current.dateComponents([.day], from: modificationDate, to: Date()).day
-                    
+                        
                         if (diffInDays! > 30) {
                             // delete
                             try FileManager.default.removeItem(atPath: filePathUrl.path)
@@ -559,7 +560,7 @@ CLLocationManagerDelegate {
                     } catch {
                         print("Ooops3! Something went wrong: \(error)")
                     }
-
+                    
                 }
             }
         }
@@ -578,9 +579,9 @@ CLLocationManagerDelegate {
                 UIApplication.shared.open(appSettings, options: [:], completionHandler: { (success) in
                     print("Open url @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@: \(success)")
                 })
-//                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                //                UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
-
+            
         }
         alertController.addAction(settingsAction)
         
@@ -589,12 +590,12 @@ CLLocationManagerDelegate {
         
         present(alertController, animated: true, completion: nil)
     }
-
     
     
     
-//    https://www.natashatherobot.com/ios-taking-the-user-to-settings/
-//    http://www.seemuapps.com/swift-get-users-location-gps-coordinates
+    
+    //    https://www.natashatherobot.com/ios-taking-the-user-to-settings/
+    //    http://www.seemuapps.com/swift-get-users-location-gps-coordinates
     
     
 }

@@ -30,6 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let themeColor = UIColor(red: 0.01, green: 0.41, blue: 0.22, alpha: 1.0)
     
     
+    // Returns the difference in hours between the receiver and Greenwich Mean Time at a given date.
+    static func timeZoneOffset() -> Int {
+        return NSTimeZone.system.secondsFromGMT(for: Date()) / 3600
+    }
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // Override point for customization after application launch.
@@ -84,7 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Enable or disable features based on authorization.
         }
         application.setMinimumBackgroundFetchInterval(1800) // 30 minutes
-
+        
         return true
     }
     
@@ -158,26 +164,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     class func updateNewPhotosStatus(photosJSON: [Any]) {
-        if UserDefaults.standard.object(forKey: "firstRun") == nil {
-            UserDefaults.standard.set("no", forKey: "firstRun")
-            // mark all photos as read
-            for photoJSON in photosJSON {
-                let photoId = (photoJSON as! [String:Any])["id"] as! Int
-                AppDelegate.photoViewed(photoId: photoId)
-            }
-        }
+//        if UserDefaults.standard.object(forKey: "firstRun") == nil {
+//            UserDefaults.standard.set("no", forKey: "firstRun")
+//            // mark all photos as read
+//            for photoJSON in photosJSON {
+//                let photoId = (photoJSON as! [String:Any])["id"] as! Int
+//                AppDelegate.photoViewed(photoId: photoId)
+//            }
+//        }
         updateAppBadge(photosJSON: photosJSON)
     }
     
     class func updateAppBadge(photosJSON: [Any]) {
-        var updates = 0
-        for photoJSON in photosJSON {
-            let photoId = (photoJSON as! [String:Any])["id"] as! Int
-            if !AppDelegate.isPhotoViewed(photoId: photoId) {
-                updates = updates + 1
-            }
-        }
-        UIApplication.shared.applicationIconBadgeNumber = updates
+//        var updates = 0
+//        for photoJSON in photosJSON {
+//            let photoId = (photoJSON as! [String:Any])["id"] as! Int
+//            if !AppDelegate.isPhotoViewed(photoId: photoId) {
+//                updates = updates + 1
+//            }
+//        }
+//        UIApplication.shared.applicationIconBadgeNumber = updates
     }
     
     // Support for background fetch
