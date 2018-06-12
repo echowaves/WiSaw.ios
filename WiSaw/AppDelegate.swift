@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Returns the difference in hours between the receiver and Greenwich Mean Time at a given date.
     static func timeZoneOffset() -> Int {
-        return NSTimeZone.system.secondsFromGMT(for: Date()) / 3600
+        return NSTimeZone.system.secondsFromGMT(for: Date()) / -3600
     }
     
     
@@ -158,8 +158,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     class func isPhotoViewed(photoId: Int) -> Bool {
-        let viewed = FileManager.default.fileExists(atPath: getDocumentsDirectory().appendingPathComponent("wisaw-viewed-\(photoId)").path)
-        return viewed
+//        let viewed = FileManager.default.fileExists(atPath: getDocumentsDirectory().appendingPathComponent("wisaw-viewed-\(photoId)").path)
+//        return viewed
+        return true
     }
     
     

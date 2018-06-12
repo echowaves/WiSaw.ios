@@ -178,6 +178,9 @@ CLLocationManagerDelegate {
                 "daysAgo" : forDaysAgo,
                 "timeZoneShiftHours" : AppDelegate.timeZoneOffset()
             ]
+            print("****************************************")
+            print(parameters)
+            print("****************************************")
             viewControllerUtils.showActivityIndicator(uiView: self.view)
             Alamofire.request("\(AppDelegate.HOST)/photos/feedByDate", method: .post, parameters: parameters, encoding: JSONEncoding.default)
                 .responseJSON { response in
