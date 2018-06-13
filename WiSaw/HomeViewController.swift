@@ -152,7 +152,7 @@ CLLocationManagerDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row >= photos.count - 1 &&  photos.count < 50 {
+        if indexPath.row == photos.count - 1 {
             loadMoreImages()
         }
     }
