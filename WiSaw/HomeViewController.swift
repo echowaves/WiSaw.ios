@@ -211,8 +211,9 @@ CLLocationManagerDelegate {
                                     self.collectionView.reloadData()
                                 } else {
                                     self.photos.append(contentsOf: json["photos"] as! [Any])
-//                                    self.collectionView.reloadItems(at: indexPaths)
-                                    self.collectionView.reloadData()
+                                    self.collectionView!.insertItems(at: indexPaths)
+                                    self.collectionView!.reloadItems(at: indexPaths)
+//                                    self.collectionView.reloadData()
 
                                 }
                                 print("photos length: \(self.photos.count)")
