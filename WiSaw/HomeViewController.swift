@@ -20,6 +20,7 @@ class HomeViewController:
     UIViewController,
     UICollectionViewDataSource,
     UICollectionViewDelegate,
+    UICollectionViewDataSourcePrefetching,
     UIImagePickerControllerDelegate,
     UINavigationControllerDelegate,
 CLLocationManagerDelegate {
@@ -66,6 +67,7 @@ CLLocationManagerDelegate {
         
         picker.delegate = self
         collectionView.dataSource = self
+        collectionView.prefetchDataSource = self
         collectionView.delegate = self
         
         refreshControl = UIRefreshControl()
@@ -103,6 +105,7 @@ CLLocationManagerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
+    
     
     func presentTandCAlert() {
         let tandc =  KeychainWrapper.standard.bool(forKey: "WiSaw-tandc")
@@ -149,11 +152,21 @@ CLLocationManagerDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row == photos.count - 1 {  //numberofitem count
+        if indexPath.row >= photos.count - 1 &&  photos.count < 50 {
             loadMoreImages()
         }
     }
 
+    
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+//        for indexPath in indexPaths {
+            // calculate/update/collect some data
+        if (indexPaths.last?.row)! >= photos.count - 1 {  //numberofitem count
+                loadMoreImages()
+            }
+//        }
+    }
+    
     
     func loadMoreImages() {
         currentDateShift += 1
@@ -187,14 +200,26 @@ CLLocationManagerDelegate {
                     if let statusCode = response.response?.statusCode {
                         if(statusCode == 200) {
                             if let json = response.result.value as? [String: Any] {
+                                
+                                var indexPaths: [IndexPath] =  [IndexPath]()
+                                for col in self.photos.count ..< (self.photos.count + (json["photos"] as! [Any]).count) {
+                                    indexPaths.append(IndexPath(row: col, section: 0))
+                                }
+                                
                                 if(forDaysAgo == 0) {
                                     self.photos = json["photos"] as! [Any]
+                                    self.collectionView.reloadData()
                                 } else {
                                     self.photos.append(contentsOf: json["photos"] as! [Any])
+//                                    self.collectionView.reloadItems(at: indexPaths)
+                                    self.collectionView.reloadData()
+
                                 }
                                 print("photos length: \(self.photos.count)")
-                                AppDelegate.updateNewPhotosStatus(photosJSON: self.photos)
-                                self.collectionView.reloadData()
+                                
+                                if(self.photos.count == 0) {
+                                    self.loadMoreImages()
+                                }
                             }
                         }
                     }
