@@ -16,10 +16,10 @@ import BadgeSwift
 class DetailedViewController:
     UIViewController,
     UIScrollViewDelegate
-     {
+{
     
-//    var photos: [Any] = []
-//    var pageIndex = 0
+    //    var photos: [Any] = []
+    //    var pageIndex = 0
     
     var photoId: Int!
     var uuid: String!
@@ -29,11 +29,11 @@ class DetailedViewController:
     var likes: Int!
     
     var downloader: ImageDownloader? // This acts as the 'strong reference'.
-
+    
     let viewControllerUtils = ViewControllerUtils()
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-
+    
     
     
     @IBOutlet weak var cancelButton: UIBarButtonItem!
@@ -55,7 +55,7 @@ class DetailedViewController:
         likes = photoJSON["likes"] as! Int
         
         AppDelegate.photoViewed(photoId: photoId)
-
+        
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 5.0
         
@@ -63,7 +63,7 @@ class DetailedViewController:
         cancelButton.title = "" // for compatibility with older devices
         reportAbuseButton.image = UIImage.fontAwesomeIcon(name: .ban, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
         reportAbuseButton.title = "" // for compatibility with older devices
-
+        
         trashButton.image = UIImage.fontAwesomeIcon(name: .trash, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
         trashButton.title = "" // for compatibility with older devices
         shareButton.setImage( UIImage.fontAwesomeIcon(name: .share, textColor: UIColor.black, size: CGSize(width: 60, height: 60)), for: UIControlState.normal)
@@ -71,13 +71,13 @@ class DetailedViewController:
         
         likeButton.isEnabled = !AppDelegate.isPhotoLiked(photoId: photoId)
         
-
+        
         badgeCounter!.text = "\(likes!)"
         badgeCounter!.textColor = UIColor.white
-            
+        
         viewControllerUtils.showActivityIndicator(uiView: self.view)
         
-
+        
         downloader = ImageDownloader()
         let urlRequest = URLRequest(url: URL(string: thumbUrl)!)
         downloader!.download(urlRequest) { response in
@@ -90,30 +90,30 @@ class DetailedViewController:
                         self.imageView.image = image
                     }
                 }
-
+                
             }
         }
-
-//            Alamofire.request("\(appDelegate.host)/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
-//                .responseJSON { response in
-//                    self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
-//                    if let statusCode = response.response?.statusCode {
-//                        if(statusCode == 200) {
-//    //                    print("loaded detailed photo ----------------- \(self.photoId!)")
-//                            if let json = response.result.value as? [String: Any] {
-//
-//                                let photoJson = json["photo"] as! [String: Any]
-//                                let imageDataJson = photoJson["imageData"] as! [String: Any]
-//                                let imageDataArray = imageDataJson["data"] as! [UInt8]
-//                                let imageData = Data(bytes: imageDataArray)
-//
-//                                self.imageView.image = UIImage(data:imageData as Data)
-//                                self.appDelegate.saveImageToCache(id: self.photoId, image: self.imageView.image!)
-//                            }
-//                        }
-//                    }
-//            }
-//        }
+        
+        //            Alamofire.request("\(appDelegate.host)/photos/\(photoId!)", method: .get, encoding: JSONEncoding.default)
+        //                .responseJSON { response in
+        //                    self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+        //                    if let statusCode = response.response?.statusCode {
+        //                        if(statusCode == 200) {
+        //    //                    print("loaded detailed photo ----------------- \(self.photoId!)")
+        //                            if let json = response.result.value as? [String: Any] {
+        //
+        //                                let photoJson = json["photo"] as! [String: Any]
+        //                                let imageDataJson = photoJson["imageData"] as! [String: Any]
+        //                                let imageDataArray = imageDataJson["data"] as! [UInt8]
+        //                                let imageData = Data(bytes: imageDataArray)
+        //
+        //                                self.imageView.image = UIImage(data:imageData as Data)
+        //                                self.appDelegate.saveImageToCache(id: self.photoId, image: self.imageView.image!)
+        //                            }
+        //                        }
+        //                    }
+        //            }
+        //        }
     }
     
     
@@ -128,7 +128,7 @@ class DetailedViewController:
         }
         
     }
- 
+    
     
     @IBAction func trashButtonClicked(_ sender: Any) {
         let alert = UIAlertController(title: "This photo will be obliterated from the cloud.", message: "Are you sure?", preferredStyle: .alert)
@@ -145,25 +145,25 @@ class DetailedViewController:
                         }
                 }
         })
-                
+        
         alert.addAction(UIAlertAction(title: "No", style: .default) { (alert: UIAlertAction!) -> Void in
             //print("You pressed Cancel")
             
             self.dismiss(animated: true) {
             }
         })
-            
+        
         present(alert, animated: true, completion:nil)
     }
     
-
+    
     @IBAction func reportAbuseButtonClicked(_ sender: Any) {
         let alert = UIAlertController(title: "The user who posted this photo will be banned.", message: "Are you sure?", preferredStyle: .alert)
         
         alert.addAction(
             UIAlertAction(title: "Report", style: .destructive) { (alert: UIAlertAction!) -> Void in
                 
-        
+                
                 let parameters: [String: Any] = [
                     "uuid" : self.uuid!,
                     "photoId" : self.photoId!
@@ -174,21 +174,21 @@ class DetailedViewController:
                         self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
                         if let statusCode = response.response?.statusCode {
                             if(statusCode == 201) {
-//                                self.viewControllerUtils.showActivityIndicator(uiView: self.view)
-//                                Alamofire.request("\(AppDelegate.HOST)/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
-//                                    .responseJSON { response in
-                                        self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
-                                        print("deleted detailed photo ----------------- \(self.photoId!)")
-                                        self.dismiss(animated: true) {
-//                                        }
-                                        
+                                //                                self.viewControllerUtils.showActivityIndicator(uiView: self.view)
+                                //                                Alamofire.request("\(AppDelegate.HOST)/photos/\(self.photoId!)", method: .delete, encoding: JSONEncoding.default)
+                                //                                    .responseJSON { response in
+                                self.viewControllerUtils.hideActivityIndicator(uiView: self.view)
+                                print("deleted detailed photo ----------------- \(self.photoId!)")
+                                self.dismiss(animated: true) {
+                                    //                                        }
+                                    
                                 }
                             }
                             
                         }
                         
                 }
-            
+                
                 
         })
         
@@ -203,7 +203,7 @@ class DetailedViewController:
     }
     
     
-//    UIScrollViewDelegate methods
+    //    UIScrollViewDelegate methods
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
@@ -214,13 +214,13 @@ class DetailedViewController:
     @IBAction func shareButtonClicked(_ sender: Any) {
         DetailedViewController.share(photoJSON: photoJSON, instance: self)
     }
-
+    
     
     class func share(photoJSON: [String: Any], instance: UIViewController) {
         let photoId = photoJSON["id"] as! Int
-//        let uuid = photoJSON["uuid"] as! String
+        //        let uuid = photoJSON["uuid"] as! String
         let thumbUrl = photoJSON["getThumbUrl"] as! String
-//        let imgUrl = photoJSON["getImgUrl"] as! String
+        //        let imgUrl = photoJSON["getImgUrl"] as! String
         
         let buo = BranchUniversalObject(canonicalIdentifier: "photo/\(photoId)")
         buo.canonicalUrl = thumbUrl
@@ -255,17 +255,17 @@ class DetailedViewController:
         let message = "Check out what I saw today:"
         buo.showShareSheet(with: lp, andShareText: message, from: instance) { (activityType, completed) in
             print("shared")
-//            Alamofire.request("\(AppDelegate.HOST)/photos/\(photoId)/like", method: .put, encoding: JSONEncoding.default)
-//                .responseJSON { response in
-//                    if let statusCode = response.response?.statusCode {
-//                        if(statusCode == 200) {
-//                            instance.viewDidLoad()
-//                        }
-//                    }
-//            }
-
+            //            Alamofire.request("\(AppDelegate.HOST)/photos/\(photoId)/like", method: .put, encoding: JSONEncoding.default)
+            //                .responseJSON { response in
+            //                    if let statusCode = response.response?.statusCode {
+            //                        if(statusCode == 200) {
+            //                            instance.viewDidLoad()
+            //                        }
+            //                    }
+            //            }
+            
         }
-
+        
     }
     
     @IBAction func likeButtonClicked(_ sender: Any) {
@@ -279,14 +279,14 @@ class DetailedViewController:
         if let sharingViewController = instance as? SharingViewController {
             sharingViewController.likeButton!.isEnabled = false
         }
-
+        
         let photoId = photoJSON["id"] as! Int
         Alamofire.request("\(AppDelegate.HOST)/photos/\(photoId)/like", method: .put, encoding: JSONEncoding.default)
             .responseJSON { response in
                 if let statusCode = response.response?.statusCode {
                     if(statusCode == 200) {
                         AppDelegate.photoLiked(photoId: photoId)
-//                        badgeCounter!.text = "110" //"\(Int(badgeCounter!.text!)! + 1)"
+                        //                        badgeCounter!.text = "110" //"\(Int(badgeCounter!.text!)! + 1)"
                         if let detailedViewContoller = instance as? DetailedViewController {
                             detailedViewContoller.badgeCounter!.text = "\(Int(detailedViewContoller.badgeCounter!.text!)! + 1)"
                         } else {
@@ -297,7 +297,7 @@ class DetailedViewController:
         }
         
     }
-
+    
 }
 
 

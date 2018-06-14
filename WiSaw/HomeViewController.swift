@@ -89,7 +89,8 @@ CLLocationManagerDelegate {
     }
     
     @objc func refresh(sender:AnyObject) {
-        // Code to refresh table view        
+        // Code to refresh table view
+        currentDateShift = 0
         loadImages()
         locationManager.startUpdatingLocation()
         self.refreshControl?.endRefreshing()
@@ -99,6 +100,7 @@ CLLocationManagerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         presentTandCAlert()
+        currentDateShift = 0
         loadImages()
     }
     
@@ -139,6 +141,7 @@ CLLocationManagerDelegate {
             // Call stopUpdatingLocation() to stop listening for location updates,
             // other wise this function will be called every time when user location changes.\
             manager.stopUpdatingLocation()
+            currentDateShift = 0
             loadImages()
         }
     }
@@ -387,6 +390,7 @@ CLLocationManagerDelegate {
                                     //cleanup -- delete file
                                     do {
                                         try FileManager.default.removeItem(atPath: imageFilePath)
+                                        self.currentDateShift = 0
                                         self.loadImages()
                                     }
                                     catch {
@@ -419,6 +423,7 @@ CLLocationManagerDelegate {
                                                     response in
                                                     if let statusCode = response.response?.statusCode {
                                                         if(statusCode == 200) {
+                                                            self.currentDateShift = 0
                                                             self.loadImages()
                                                             print("done uploading \(statusCode)")
                                                         } else {
